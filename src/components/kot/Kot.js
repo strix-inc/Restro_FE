@@ -29,19 +29,21 @@ const Kot = (props) => {
             items: itemsInput,
         }
 
+        // sending the post request to the backend !!
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
         axios.post('https://restrofin.pythonanywhere.com/finance/kot', InputData, {
             headers: headers
-        })
-            .then(function (response) {
-                console.log(response);
-            })
-            .catch(function (error) {
-                console.log(error);
-            });
+        }).then(val => {
+            console.log(val.data.data.id);
+            localStorage.setItem('kotID', val.data.data.id);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        setTableNo('');
     }
 
     // Add Item Input table as extra !!
@@ -55,18 +57,13 @@ const Kot = (props) => {
         setItemInput(listItem);
     }
 
-    // clear the local storage 
-    const clearLS = () => {
-        localStorage.clear();
-    }
-
     return (
         <>
             {/* <Arrow /> */}
             <div className={`flex flex-col w-[80%] ml-[20%]`}>
                 <form onSubmit={handleFormSubmit}>
                     <div className={`kot w-[96%] m-auto relative top-[5rem] flex flex-col justify-center rounded-md p-[2rem] z-1 border border-t-slate-200 shadow-slate-400 shadow-sm ${props.mode === 'black' ? 'nav_bg text-white border-slate-700 border-t-slate-700' : 'bg-white'}`}>
-                        <div className='grid grid-cols-2 mb-2 '>
+                        <div className='grid grid-cols-2 mb-2'>
                             <div className="table-number flex flex-col col-span-1">
                                 <label htmlFor="table-no" className='font-medium text-[0.85rem] m-1'>Table NO.</label>
                                 <input type="text" name='TableNo' value={tableNo} placeholder='Enter Item Table No.' className={`rounded-md py-2 px-3 bg-transparent border mr-4 text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleTableInput} required />
@@ -79,8 +76,6 @@ const Kot = (props) => {
                                     <option value="y">y</option>
                                     <option value="z">z</option>
                                     <option value="a">a</option>
-                                    <option value="b">b</option>
-                                    <option value="c">c</option>
                                 </select>
                             </div>
                         </div>

@@ -18,7 +18,7 @@ const AddedItem = (props) => {
             {Bill === true ? <TableBill closeModal={closeModal} OrderedItem={props.formdata} /> : ''}
             <div className={`AddedItem-Modal w-[96%] relative border border-t-slate-200 shadow-slate-400 shadow-sm m-auto mt-[6rem] rounded-md ${props.mode === 'black' ? 'nav_bg text-white border-t-slate-700 border-slate-700' : 'bg-white'}`}>
                 <div className="Item-added px-4 py-2">
-                    <h1 className='text-[1rem]'>Recent Added Item :</h1>
+                    <h1 className='text-[1rem]'>Active :</h1>
                 </div>
                 <div className="showAddedItem grid grid-cols-10 gap-x-4 gap-y-4 p-4">
                     {/* {

@@ -1,0 +1,65 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif; */
+  font-family: 'Poppins', sans-serif;
+  /* font-family: 'Questrial', sans-serif; */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  /* background: rgb(249, 250, 251); */
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
+
+/* setting the background for the SignUp Page */
+.signup_conatiner::before {
+  position: absolute;
+  content: '';
+  background: url('./components/Images/r2.jpg') no-repeat center center/cover;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.4;
+  z-index: -1;
+  top: 0;
+  left: 0;
+}
+
+/* company detail style of paragraph */
+/* .Ctext,
+.Title {
+  font-family: 'Titillium Web', sans-serif;
+} */
+.nav_bg {
+  background: rgb(26, 28, 35);
+}
+
+.inWhite {
+  background: rgb(249, 250, 251);
+}
+
+.inBlack {
+  background: #121317;
+}
+
+/* Dashboard */
+.record {
+  font-family: 'Baloo 2', cursive;
+}
+
+.cLogo {
+  color-scheme: dark;
+}

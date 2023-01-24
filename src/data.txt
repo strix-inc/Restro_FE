@@ -1,0 +1,5 @@
+navigation bar -------
+1. dashboard [] + sale-history
+2. kot
+3. kot history
+5. menu - [add dish, ]

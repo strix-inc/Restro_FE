@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom'
 
 
 const Navlist = (props) => {
-    const [active, setActive] = useState('/');
+    const [active, setActive] = useState('/dashboard');
 
     const ListItem = [
         { id: 1, name: 'Dashboard', link: '/dashboard', icons: <HiOutlineHome /> },

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import AddedItem from './AddedItem';
 import Item from './Item';
 import axios from 'axios';
@@ -9,6 +9,7 @@ const Kot = (props) => {
     let [itemsInput, setItemInput] = useState([data]);
 
     const [tableNo, setTableNo] = useState('');
+    const [formdata, setFormdata] = useState([]);
 
     const handleInputChange = (event, index) => {
         const val = [...itemsInput];
@@ -28,6 +29,7 @@ const Kot = (props) => {
             table: tableNo,
             items: itemsInput,
         }
+        setFormdata([...formdata, tableNo]);
 
         // sending the post request to the backend !!
         const headers = {
@@ -43,6 +45,10 @@ const Kot = (props) => {
             console.log(error);
         });
 
+
+        // clear all the input fields in kot page after adding the item !!
+        Array.from(document.querySelectorAll('input')).forEach(input => (input.value = ''))
+        setItemInput([{}]);
         setTableNo('');
     }
 
@@ -61,8 +67,9 @@ const Kot = (props) => {
         <>
             {/* <Arrow /> */}
             <div className={`flex flex-col w-[80%] ml-[20%]`}>
-                <form onSubmit={handleFormSubmit}>
-                    <div className={`kot w-[96%] m-auto relative top-[5rem] flex flex-col justify-center rounded-md p-[2rem] z-1 border border-t-slate-200 shadow-slate-400 shadow-sm ${props.mode === 'black' ? 'nav_bg text-white border-slate-700 border-t-slate-700' : 'bg-white'}`}>
+                <form onSubmit={handleFormSubmit} className='relative w-[98%] m-auto top-[4rem]'>
+                    <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>KOT</h1>
+                    <div className={`kot flex flex-col justify-center rounded-md p-[2rem] z-1 border border-t-slate-200 shadow-slate-400 shadow-sm ${props.mode === 'black' ? 'nav_bg text-white border-slate-700 border-t-slate-700' : 'bg-white'}`}>
                         <div className='grid grid-cols-2 mb-2'>
                             <div className="table-number flex flex-col col-span-1">
                                 <label htmlFor="table-no" className='font-medium text-[0.85rem] m-1'>Table NO.</label>
@@ -101,7 +108,7 @@ const Kot = (props) => {
                     </div>
                 </form>
                 <div className="addedItem">
-                    <AddedItem mode={props.mode} />
+                    <AddedItem mode={props.mode} formdata={formdata} />
                 </div>
             </div>
         </>

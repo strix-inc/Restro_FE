@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import Cdetail from './Cdetail'
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Form from './Form'
 import axios from 'axios'
 
 const SignUpForm = () => {
     // Hooks for the form validation
-    let Error = '';
     let [FormValue, setFormValue] = useState({
         restaurant_name: '',
         contact: '',
@@ -57,10 +58,23 @@ const SignUpForm = () => {
             axios.post('https://restrofin.pythonanywhere.com/auth/signup', FormValue)
                 .then((val) => {
                     console.log(val);
-                    window.location = "/login";
+                    if (val.request.status === 200) {
+                        toast.success("SignUp Success", {
+                            position: "top-right",
+                            autoClose: 1000,
+                            hideProgressBar: true,
+                            closeOnClick: true,
+                            pauseOnHover: false,
+                            draggable: true,
+                            progress: undefined,
+                            theme: "dark",
+                        });
+                        setTimeout(() => {
+                            window.location = "/login";
+                        }, 1500);
+                    }
                 })
                 .catch((err) => {
-                    // console.log(err);
                     const error = err.response.data;
                     if (err.response.status === 400) {
                         setIsexist(...IsExist, error);
@@ -82,6 +96,17 @@ const SignUpForm = () => {
                     />
                 </div>
             </div>
+            <ToastContainer position="top-right"
+                autoClose={1000}
+                hideProgressBar
+                newestOnTop
+                closeOnClick
+                rtl={false}
+                pauseOnFocusLoss
+                draggable
+                pauseOnHover={false}
+                theme="dark"
+            />
         </>
     )
 }

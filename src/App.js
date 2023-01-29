@@ -7,7 +7,9 @@ import OrderedKT from "./components/kot/ItemTicket/OrederedKT";
 import { Routes, Route } from 'react-router-dom'
 import Dashboard from './components/dashboard/Dashboard';
 import KotHistory from './components/kot history/KotHistory';
-import HomePage from './components/homepage/HomePage';
+import HomePage from './components/homepage/Index';
+import ItemMenu from './components/menu/ItemMenu';
+import Setting from './components/setting/Setting';
 
 function App() {
   // covert the page in dark mode and as well light mode !!
@@ -37,11 +39,13 @@ function App() {
         <Route exact path='/kot' element={<Kot mode={mode} />} />
         <Route exact path='/KT' element={<OrderedKT />} />
         <Route exact path='/kotHistory' element={<KotHistory mode={mode} />} />
+        <Route exact path='/menu' element={<ItemMenu mode={mode} />} />
+        <Route exact path='/setting' element={<Setting mode={mode} />} />
         <Route exact path='/login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
         <Route exact path='/signUp' element={<SignUpForm />} />
       </Routes>
     </div>
-  );
+  )
 }
 
 export default App;

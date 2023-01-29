@@ -3,3 +3,11 @@ navigation bar -------
 2. kot
 3. kot history
 5. menu - [add dish, ]
+
+
+to host on netlify create a file name -- netlify.toml
+add content on that file --- 
+[[redirects]]
+from = "/*"
+to = "/index.html"
+status = 200

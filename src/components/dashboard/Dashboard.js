@@ -12,11 +12,12 @@ const Dashboard = (props) => {
     return (
         <>
             <div className='w-[80%] ml-[20%]'>
-                <div className="dashboard w-[96%] m-auto mt-[4rem]">
+                <div className="dashboard w-[98%] m-auto mt-[4rem]">
+                    <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>Dashboard</h1>
                     <div className="records grid grid-cols-4 gap-x-4">
                         {
                             DsItem.map(item => {
-                                return <div key={item.id} className={`flex gap-3 my-4 border border-slate-200 rounded-lg px-4 ${props.mode === 'black' ? 'nav_bg border-slate-700 text-white' : 'bg-white'} py-3`}>
+                                return <div key={item.id} className={`flex gap-3 my-2 border border-slate-200 rounded-lg px-4 ${props.mode === 'black' ? 'nav_bg border-slate-700 text-white' : 'bg-white'} py-3`}>
                                     <div className='flex justify-center items-center border rounded-full bg-green-200 h-[2.5rem] w-[2.5rem] my-auto'>
                                         <span className='text-[1.5rem]'>{item.icons}</span>
                                     </div>

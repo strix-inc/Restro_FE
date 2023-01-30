@@ -14,7 +14,7 @@ const SignUpForm = () => {
         confirm_password: '',
     });
     const [FormError, setFormError] = useState({});
-    const [submit, setSubmit] = useState();
+    const [submit, setSubmit] = useState(false);
     const [IsExist, setIsexist] = useState('');
 
     // Handling the form Validation
@@ -54,7 +54,6 @@ const SignUpForm = () => {
     useEffect(() => {
         if (Object.keys(FormError).length === 0 && submit) {
             delete FormValue.confirm_password;
-            console.log(FormValue);
             axios.post('https://restrofin.pythonanywhere.com/auth/signup', FormValue)
                 .then((val) => {
                     console.log(val);

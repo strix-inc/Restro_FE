@@ -94,8 +94,8 @@ const ItemMenu = ({ mode }) => {
                                 <span className={`text-[0.9rem] ${mode === 'black' ? 'text-gray-400' : 'text-gray-500'} font-mono`}>Categories</span>
                             </div><hr />
                             <button className="relative category-list px-2 py-3 cursor-pointer w-full" onClick={() => setData(data, setActive('All'))}>
-                                <div className={`${active === 'All' ? (mode === 'black' ? '' : 'absolute right-0 w-full h-12 top-0 bg-gradient-to-l from-purple-100') : ''}`}></div>
-                                <div className={`${active === 'All' ? 'absolute right-0 w-1 h-12 top-0 bg-purple-500 rounded-l-md' : ''}`}></div>
+                                <div className={`${active === 'All' ? (mode === 'black' ? '' : 'absolute right-0 w-full h-12 top-0 bg-gradient-to-l from-blue-100') : ''}`}></div>
+                                <div className={`${active === 'All' ? 'absolute right-0 w-1 h-12 top-0 bg-blue-500 rounded-l-md' : ''}`}></div>
                                 <span className='font-bold flex flex-start'>All</span>
                             </button><hr />
                             <MenuCategory
@@ -108,6 +108,16 @@ const ItemMenu = ({ mode }) => {
                             <div className='flex gap-2 m-2'>
                                 <input type="text" value={search} placeholder='search item here' className={`border px-3 py-[0.5rem] w-[80%] rounded-md text-[0.9rem] ${mode === 'black' ? 'border-slate-600 bg-transparent text-white' : 'border-slate-300'}`} onChange={(e) => SearchedData(e)} />
                                 <button className='w-[20%] p-2 text-center bg-blue-500 text-[0.9rem] font-bold rounded-md text-white' onClick={AddItemForm}>Add Dish</button>
+                            </div>
+                            <div className='mx-2 grid grid-cols-2 gap-2'>
+                                <div className=' border flex justify-between p-2 rounded-md'>
+                                    <input type="checkbox" className='mx-2 cursor-pointer' />
+                                    <span className='mx-8 flex items-center font-bold text-gray-500'>Veg</span>
+                                </div>
+                                <div className='border flex justify-between p-2 rounded-md'>
+                                    <input type="checkbox" className='mx-2 cursor-pointer' />
+                                    <span className='mx-8 flex items-center font-bold text-gray-500'>Non-veg</span>
+                                </div>
                             </div>
                             <div className={`Item-table relative border ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} m-2 rounded-md h-[520px] overflow-auto scrollbar-hide`}>
                                 <div className={`headings rounded-t-md grid grid-cols-5 ${mode === 'black' ? 'bg-black/60 text-white' : 'bg-blue-100'} py-2`}>

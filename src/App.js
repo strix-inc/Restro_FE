@@ -15,17 +15,21 @@ function App() {
   // covert the page in dark mode and as well light mode !!
   const [mode, setMode] = useState();
   const OnClickMoon = () => {
-    setMode('black');
+    // Add mode to black
+    // setMode('black');
+    console.log('');
   }
   const OnClickSun = () => {
-    setMode('white');
+    // Add mode to white
+    // setMode('white');
+    console.log('');
   }
 
 
   // Checking wether the user is loggedIN or loggedOUT 
   const [IsLoggedIn, setLoggedIn] = useState(false);
   const loggedOut = () => {
-    localStorage.removeItem('access');
+    localStorage.clear();
     setLoggedIn(false);
     window.location = '/login';
   }

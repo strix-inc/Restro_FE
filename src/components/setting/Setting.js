@@ -33,6 +33,9 @@ const Setting = ({ mode }) => {
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
         axios.put('https://restrofin.pythonanywhere.com/auth/restaurant', datas, { headers: headers });
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
 
     useEffect(() => {

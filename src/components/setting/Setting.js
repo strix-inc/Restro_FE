@@ -3,13 +3,15 @@ import axios from 'axios'
 
 const Setting = ({ mode }) => {
     const ID = localStorage.getItem('Restaurant_ID');
+    const Display_name = localStorage.getItem('restaurant_name');
+    const Contact = localStorage.getItem('contact');
     const data = {
         id: ID,
         created_at: "2023-01-13T16:56:17.646976Z",
         modified_at: "2023-01-13T16:56:17.646987Z",
         is_deleted: false,
-        display_name: '',
-        contact: '',
+        display_name: Display_name,
+        contact: Contact,
         address_country: 'India',
         address_state: '',
         address_city: '',
@@ -46,8 +48,9 @@ const Setting = ({ mode }) => {
         axios.get('https://restrofin.pythonanywhere.com/auth/restaurant', {
             headers: headers
         }).then(val => {
-            // console.log(val.data.data);
             localStorage.setItem('Restaurant_ID', val.data.data.id);
+            localStorage.setItem('restaurant_name', val.data.data.display_name);
+            localStorage.setItem('contact', val.data.data.contact);
             setState([val.data.data]);
         }).catch(function (error) {
             console.log(error);

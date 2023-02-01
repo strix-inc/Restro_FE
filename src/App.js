@@ -12,6 +12,7 @@ import ItemMenu from './components/menu/ItemMenu';
 import Setting from './components/setting/Setting';
 
 function App() {
+
   // covert the page in dark mode and as well light mode !!
   const [mode, setMode] = useState();
   const OnClickMoon = () => {

@@ -1,56 +1,34 @@
-import React, { useState } from 'react';
-import AddItem from './AddItemform/AddItem';
+import React, { useEffect, useState } from 'react';
+import AddItem from './AddDish/AddItem';
 import Items from './Items';
 import MenuCategory from './MenuCategory';
+import axios from 'axios';
+import EditDishItem from './EditDish/EditDishItem';
+import DeleteDIshItem from './DeleteDish/DeleteDIshItem';
 
 const ItemMenu = ({ mode }) => {
-    const data = [
-        {
-            id: 1,
-            category: 'Starter',
-            items: [{ name: 'Chicken-Biryani' }, { name: 'Chicken-punjabi' }, { name: 'Chicken-muglai' }, { name: 'Chicken-tandoor' },
-            { name: 'Chawmin' }, { name: 'Chicken-Chilli' }, { name: 'Samosa' }, { name: 'Kachawri' }]
-        },
-        {
-            id: 2,
-            category: 'Main course',
-            items: [{ name: 'p' }, { name: 'q' }, { name: 'r' }, { name: 's' }]
-        },
-        {
-            id: 3,
-            category: 'After main',
-            items: [{ name: 'l' }, { name: 'm' }, { name: 'n' }, { name: '0' }]
-        },
-        {
-            id: 4,
-            category: 'Dinner',
-            items: [{ name: 'Chawal' }, { name: 'roti' }, { name: 'dal-fry' }, { name: 'mixed-veg' }]
-        },
-        {
-            id: 5,
-            category: 'Fast food',
-            items: [{ name: 'Chawmin' }, { name: 'Chicken-Chilli' }, { name: 'Samosa' }, { name: 'Kachawri' }]
-        },
-        {
-            id: 6,
-            category: 'Breakfast',
-            items: [{ name: 'Idli' }, { name: 'Dosa' }, { name: 'Aalu-Paratha' }, { name: 'Puri-Sabji' }]
-        }
-    ]
 
-    const [Data, setData] = useState(data);
-    const [filterItem, setFilterItem] = useState(data);
-    const [NoSearchCategory, setNoSearchCategory] = useState(data);
+    const [Data, setData] = useState([]);
+    const [filterItem, setFilterItem] = useState([]);
+    const [allDishData, setAllDishData] = useState([]);
     const [search, setSearch] = useState("");
-    const [AdditemForm, setAdditemForm] = useState(false);
     const [active, setActive] = useState('All');
+    const [AdditemForm, setAdditemForm] = useState(false);
+    const [EditDishForm, setEditedDishForm] = useState(false);
+    const [DeleteDishForm, setDeletedDishForm] = useState(false);
+    const [SingleDish, setSingleDish] = useState('');
+    const [OneDishID, setOneDishID] = useState('');
+    // const [category, setCategory] = useState([]);
+    // const [category2, setCategory2] = useState([]);
+
+
+    // get all the platforms !!
+    const [platform, setPlatform] = useState([]);
 
     // filter item according to their category !!
     const handleCategoryFilter = (category) => {
         setActive(category);
-
-        const filteredData = filterItem.filter(val => val.category === category)
-            .map(({ items }) => { return { items } });
+        const filteredData = filterItem.filter(val => val.category_name === category)
         setData(filteredData);
     }
 
@@ -60,31 +38,84 @@ const ItemMenu = ({ mode }) => {
 
         if (searchInput.length > 0) {
             const searchInput = event.target.value;
-            const test2 = Data.map((val) => {
-                let items = val.items.filter((item) => (item.name.toLowerCase().includes(searchInput.toLowerCase())));
-                if (!items.length) {
-                    return null;
-                }
-
-                return { ...val, items };
-            }).filter(Boolean);
-
+            const test2 = Data.filter((val) => {
+                return val.name.toLowerCase().includes(searchInput.toLowerCase());
+            });
             setData(test2);
             setFilterItem(test2);
         } else {
-            setData(NoSearchCategory);
-            setFilterItem(NoSearchCategory);
+            setData(allDishData);
+            setFilterItem(allDishData);
         }
         setSearch(searchInput);
     }
 
-    // show add item form modal !!
+    // show additem form modal !!
     const AddItemForm = () => {
         setAdditemForm(true);
     }
+    // show edit form modal !!
+    const EditDish = (ItemID, ItemType, ItemName, ItemCategory) => {
+        const OneDish = {
+            id: ItemID,
+            dish_type: ItemType,
+            name: ItemName,
+            category: ItemCategory,
+        }
+        setSingleDish(OneDish);
+        setEditedDishForm(true);
+    }
+    // shoe delete dish form modal
+    const DeleteDish = (OneDishId) => {
+        setOneDishID(OneDishId);
+        setDeletedDishForm(true);
+    }
+
+    useEffect(() => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+
+        // api for the all dish !! 
+        axios.get('https://restrofin.pythonanywhere.com/kitchen/dish', {
+            headers: headers
+        }).then(val => {
+            setData(val.data.data);
+            setFilterItem(val.data.data);
+            setAllDishData(val.data.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+
+        // api for the platform
+        axios.get('https://restrofin.pythonanywhere.com/kitchen/platform', {
+            headers: headers
+        }).then(val => {
+            setPlatform(val.data.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+
+        // api for all category
+        // axios.get('https://restrofin.pythonanywhere.com/kitchen/category', {
+        //     headers: headers
+        // }).then(val => {
+        //     setCategory(val.data.data);
+        //     setCategory2(val.data.data);
+        // }).catch(function (error) {
+        //     console.log(error);
+        // });
+
+
+    }, []);
+
     return (
         <>
             {AdditemForm === true ? <AddItem setAdditemForm={setAdditemForm} /> : ''}
+            {EditDishForm === true ? <EditDishItem EditDish={EditDish} setEditedDishForm={setEditedDishForm} Dish={SingleDish} /> : ''}
+            {DeleteDishForm === true ? <DeleteDIshItem DeleteDish={DeleteDish} setDeletedDishForm={setDeletedDishForm} OneDishID={OneDishID} /> : ''}
             <div className="w-[80%] ml-[20%]">
                 <div className={`Menus w-[99%] m-auto mt-[4rem] rounded-md`}>
                     <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Dish Menu</h1>
@@ -93,7 +124,7 @@ const ItemMenu = ({ mode }) => {
                             <div className='p-2 mb-4'>
                                 <span className={`text-[0.9rem] ${mode === 'black' ? 'text-gray-400' : 'text-gray-500'} font-mono`}>Categories</span>
                             </div><hr />
-                            <button className="relative category-list px-2 py-3 cursor-pointer w-full" onClick={() => setData(data, setActive('All'))}>
+                            <button className="relative category-list px-2 py-3 cursor-pointer w-full" onClick={() => setData(filterItem, setActive('All'))}>
                                 <div className={`${active === 'All' ? (mode === 'black' ? '' : 'absolute right-0 w-full h-12 top-0 bg-gradient-to-l from-blue-100') : ''}`}></div>
                                 <div className={`${active === 'All' ? 'absolute right-0 w-1 h-12 top-0 bg-blue-500 rounded-l-md' : ''}`}></div>
                                 <span className='font-bold flex flex-start'>All</span>
@@ -119,14 +150,18 @@ const ItemMenu = ({ mode }) => {
                                     <span className='mx-8 flex items-center font-bold text-gray-500'>Non-veg</span>
                                 </div>
                             </div>
-                            <div className={`Item-table relative border ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} m-2 rounded-md h-[520px] overflow-auto scrollbar-hide`}>
-                                <div className={`headings rounded-t-md grid grid-cols-5 ${mode === 'black' ? 'bg-black/60 text-white' : 'bg-blue-100'} py-2`}>
-                                    <span className='col-span-2 ml-2'>Item</span>
-                                    <span className='col-span-1'>Restaurant</span>
-                                    <span className='col-span-1'>Swiggy</span>
-                                    <span className='col-span-1'>Zomato</span>
+                            <div className={`Item-table border ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} m-2 rounded-md h-[490px] overflow-auto`}>
+                                <div className="List-title p-2 scrollbar-hide bg-blue-100 font-bold">
+                                    <span className='col-span-2'>Dish</span>
+                                    {
+                                        platform.map(Platform => {
+                                            return <span key={Platform.id}>{Platform.name}</span>
+                                        })
+                                    }
                                 </div>
                                 <Items
+                                    EditDish={EditDish}
+                                    DeleteDish={DeleteDish}
                                     mode={mode}
                                     Data={Data}
                                 />

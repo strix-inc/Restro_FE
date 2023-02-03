@@ -27,7 +27,7 @@ const Setting = ({ mode }) => {
     const [state, setState] = useState([]);
     const [datas, setDatas] = useState(data);
 
-    const handle = (event) => {
+    const handleEdit = (event) => {
         const { name, value } = event.target;
         setDatas({ ...datas, [name]: value })
     }
@@ -70,27 +70,27 @@ const Setting = ({ mode }) => {
                                 return <form key={index} className={`account-setting grid grid-cols-2 pt-4 px-6 gap-4 rounded-b-md ${mode === 'black' ? 'text-white' : ''}`} onSubmit={submit}>
                                     <div className='flex flex-col'>
                                         <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Restaurant name</label>
-                                        <input type='text' name='display_name' defaultValue={item.display_name === null ? '' : item.display_name} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter restaurant name' onChange={(e) => handle(e)} />
+                                        <input type='text' name='display_name' defaultValue={item.display_name === null ? '' : item.display_name} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter restaurant name' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div className='flex flex-col'>
                                         <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Contact</label>
-                                        <input type='text' name='contact' defaultValue={item.contact === null ? '' : item.contact} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter contact' onChange={(e) => handle(e)} />
+                                        <input type='text' name='contact' defaultValue={item.contact === null ? '' : item.contact} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter contact' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div className='flex flex-col'>
                                         <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Country</label>
-                                        <input type='text' name='address_country' defaultValue={item.address_country === null ? '' : item.address_country} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter country' onChange={(e) => handle(e)} />
+                                        <input type='text' name='address_country' defaultValue={item.address_country === null ? '' : item.address_country} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter country' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div className='flex flex-col'>
                                         <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>State</label>
-                                        <input type='text' name='address_state' defaultValue={item.address_state === null ? '' : item.address_state} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter state' onChange={(e) => handle(e)} />
+                                        <input type='text' name='address_state' defaultValue={item.address_state === null ? '' : item.address_state} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter state' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div className='flex flex-col'>
                                         <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>City</label>
-                                        <input type='text' name='address_city' defaultValue={item.address_city === null ? '' : item.address_city} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter city' onChange={(e) => handle(e)} />
+                                        <input type='text' name='address_city' defaultValue={item.address_city === null ? '' : item.address_city} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter city' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div className='flex flex-col'>
                                         <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Street</label>
-                                        <input type='text' name='address_street' defaultValue={item.address_street === null ? '' : item.address_street} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter street' onChange={(e) => handle(e)} />
+                                        <input type='text' name='address_street' defaultValue={item.address_street === null ? '' : item.address_street} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter street' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div></div>
                                 </form>
@@ -104,15 +104,15 @@ const Setting = ({ mode }) => {
                                     return <form key={item.id} className={`mt-3 grid grid-cols-2 pt-4 px-6 gap-4 rounded-b-md ${mode === 'black' ? 'text-white' : ''}`} onSubmit={submit}>
                                         <div className='flex flex-col'>
                                             <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>UPI ID</label>
-                                            <input type='text' name='upi_id' defaultValue={item.upi_id === null ? '' : item.upi_id} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='123@ybl' onChange={(e) => handle(e)} />
+                                            <input type='text' name='upi_id' defaultValue={item.upi_id === null ? '' : item.upi_id} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='123@ybl' onChange={(e) => handleEdit(e)} />
                                         </div>
                                         <div className='flex flex-col'>
                                             <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>GSTIN</label>
-                                            <input type='text' name='gstin' defaultValue={item.gstin === null ? '' : item.gstin} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='21CAAXXXXXXXXX' onChange={(e) => handle(e)} />
+                                            <input type='text' name='gstin' defaultValue={item.gstin === null ? '' : item.gstin} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='21CAAXXXXXXXXX' onChange={(e) => handleEdit(e)} />
                                         </div>
                                         <div className='flex flex-col'>
                                             <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>FSSAI</label>
-                                            <input type='text' name='fssai_number' defaultValue={item.fssai_number === null ? '' : item.fssai_number} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='1251xxxxxxx' onChange={(e) => handle(e)} />
+                                            <input type='text' name='fssai_number' defaultValue={item.fssai_number === null ? '' : item.fssai_number} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='1251xxxxxxx' onChange={(e) => handleEdit(e)} />
                                         </div>
                                     </form>
                                 })}

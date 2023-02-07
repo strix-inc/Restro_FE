@@ -58,6 +58,9 @@ const AddItem = ({ setAdditemForm }) => {
         }).catch(function (error) {
             console.log(error);
         });
+        setTimeout(() => {
+            window.location.reload();
+        }, 1000);
     }
 
     useEffect(() => {

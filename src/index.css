@@ -1,9 +1,10 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Heebo&display=swap');
 /* font family for all */
 @import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -79,4 +80,13 @@ code {
   grid-auto-flow: column;
   grid-auto-columns: minmax(160px, 1fr);
   overflow-x: auto;
+}
+
+/* google fonts for home page */
+.home {
+  font-family: 'Kelly Slab', cursive;
+}
+
+.home_body {
+  font-family: 'Poppins', sans-serif;
 }

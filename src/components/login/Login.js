@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import CompanyDetail from './CompanyDetail'
+import React, { useEffect, useState } from 'react'
 import LoginForm from './LoginForm'
 import axios from 'axios'
 import LoadingBar from 'react-top-loading-bar'
@@ -9,9 +8,18 @@ const Login = (props) => {
     const [contact, setContact] = useState('');
     const [password, setPassword] = useState('');
     const [matched, setMatched] = useState('');
-    const [progress, setProgress] = useState(0)
+    const [progress, setProgress] = useState(0);
+
+    // set state for the login button disability !!
+    const [isValue, setValue] = useState(true);
+
 
     const handleContact = (value) => {
+        // if (value.length > 0) {
+        //     setValue(false);
+        // } else {
+        //     setValue(true);
+        // }
         setContact(value);
     }
     const handlePassword = (value) => {
@@ -44,6 +52,13 @@ const Login = (props) => {
         setContact('');
         setPassword('');
     }
+    useEffect(() => {
+        if (contact.length > 0 && password.length > 0) {
+            setValue(false);
+        } else {
+            setValue(true);
+        }
+    })
 
     return (
         <>
@@ -62,6 +77,7 @@ const Login = (props) => {
                             HandleLoginForm={HandleLoginForm}
                             handleContact={handleContact}
                             handlePassword={handlePassword}
+                            isValue={isValue}
                         />
                     </div>
                 </div>) : (setTimeout(() => {

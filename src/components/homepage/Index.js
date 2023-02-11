@@ -85,7 +85,7 @@ const HomePage = () => {
                                 <div className='w-[80%] m-auto flex justify-between items-center h-[200px]'>
                                     <div className='flex flex-col text-[white]'>
                                         <span className='flex items-center font-bold text-[1.8rem]'>Run one screen for free</span>
-                                        <span className='text-[1.2rem] font-medium'>See the benefits of Yodeck in action & amaze your customers!</span>
+                                        <span className='text-[1.2rem] font-medium'>See the benefits of Strix in action & amaze your customers!</span>
                                     </div>
                                     <div className=''>
                                         <Link to="/signUp"><span className='bg-white w-[9rem] flex justify-center items-center h-[3rem] rounded-md py-1 px-4 shadow-sm shadow-blue-500 text-blue-500 font-bold transition-all ease-in duration-300
@@ -150,7 +150,7 @@ const HomePage = () => {
                                     </div>
                                     <div className='flex flex-col bg-slate-100 px-6 py-8 rounded-lg hover:tranisition-all hover:-translate-y-1 duration-500'>
                                         <span className='font-bold text-[1.4rem]'>Affordable Price</span>
-                                        <p className='mt-4 text-slate-600 font-medium'>Our extremely affordable pricing model offers great value for money, with feature-rich plans, for all businesses that use electronic menu boards. Also, get free, complete Raspberry Pi Yodeck Player kits with annual plans.</p>
+                                        <p className='mt-4 text-slate-600 font-medium'>Our extremely affordable pricing model offers great value for money, with feature-rich plans, for all businesses that use electronic menu boards. Also, get free, complete Raspberry Pi Strix Player kits with annual plans.</p>
                                     </div>
                                     <div className='flex flex-col bg-slate-100 px-6 py-8 rounded-lg hover:tranisition-all hover:-translate-y-1 duration-500'>
                                         <span className='font-bold text-[1.4rem]'>Upload Any Type of Content</span>
@@ -166,7 +166,7 @@ const HomePage = () => {
                                     </div>
                                     <div className='flex flex-col bg-slate-100 px-6 py-8 rounded-lg hover:tranisition-all hover:-translate-y-1 duration-500'>
                                         <span className='font-bold text-[1.4rem]'>Remote Support</span>
-                                        <p className='mt-4 text-slate-600 font-medium'>Get hassle-free troubleshooting with Yodeck’s free remote-access tech support, for all plans.</p>
+                                        <p className='mt-4 text-slate-600 font-medium'>Get hassle-free troubleshooting with Strix free remote-access tech support, for all plans.</p>
                                     </div>
                                 </div>
                             </div>

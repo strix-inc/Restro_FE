@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Cdetail from './Cdetail'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Form from './Form'
@@ -45,15 +44,21 @@ const SignUpForm = () => {
         if (!value.password) {
             errors.password = 'border-2 border-red-500'
         }
-        if (value.confirm_password !== value.password) {
+        if (!value.confirm_password) {
             errors.confirm_password = 'border-2 border-red-500'
+        } else {
+            if (value.confirm_password !== value.password) {
+                errors.confirm_password = 'border-2 border-red-500'
+            }
         }
+
         return errors;
     }
 
     useEffect(() => {
         if (Object.keys(FormError).length === 0 && submit) {
             delete FormValue.confirm_password;
+            console.log(FormValue);
             axios.post('https://restrofin.pythonanywhere.com/auth/signup', FormValue)
                 .then((val) => {
                     console.log(val);

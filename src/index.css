@@ -29,14 +29,22 @@ code {
     monospace;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* setting the background for the SignUp Page */
 .signup_conatiner::before {
   position: absolute;
   content: '';
-  background: url('./components/Images/r2.jpg') no-repeat center center/cover;
+  /* background: url('./components/Images/r2.jpg') no-repeat center center/cover; */
+  background: url(https://i.imgur.com/73BxBuI.png);
+  background-size: cover;
+  background-position: center;
   width: 100vw;
-  height: 100vh;
-  opacity: 0.4;
+  height: 800px;
   z-index: -1;
   top: 0;
   left: 0;

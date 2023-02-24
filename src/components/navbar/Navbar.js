@@ -1,6 +1,7 @@
 import React from 'react'
 import Nav from './Nav'
 import Navlist from './Navlist'
+import Footer from './Footer'
 
 
 const Navbar = (props) => {
@@ -12,6 +13,7 @@ const Navbar = (props) => {
                 <Navlist mode={props.mode} />
                 <div className='contents'>{props.children}</div>
             </div>
+            <Footer />
         </>
     )
 }

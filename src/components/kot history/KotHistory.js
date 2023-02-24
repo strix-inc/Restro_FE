@@ -8,7 +8,7 @@ const KotHistory = (props) => {
                     <h1 className={`text-[1.5rem] font-bold mx-1 py-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>KOT History</h1>
                     <div className={`mt-2 rounded-md border ${props.mode === 'black' ? 'nav_bg text-white border-slate-600' : 'bg-white border-slate-300'}`}>
                         <div className={`title-heading grid grid-cols-2 font-semibold text-[1rem] p-2 ${props.mode === 'black' ? 'text-gray-300 bg-black/50' : 'text-gray-500 bg-blue-100'}`}>
-                            <span>Time Span</span>
+                            <span>Date & Time</span>
                             <span>Table</span>
                         </div><hr />
                         <div className="kot_history_content grid grid-cols-2 p-1">

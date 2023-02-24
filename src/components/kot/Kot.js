@@ -63,6 +63,22 @@ const Kot = (props) => {
         setItemInput(listItem);
     }
 
+    // // api for getting the kitchen order of each table
+    // const getkotTable = () => {
+    //     const headers = {
+    //         // 'Content-Type': 'application/json',
+    //         'Authorization': `Bearer ${localStorage.getItem('access')}`
+    //     }
+    //     axios.get(`https://restrofin.pythonanywhere.com/finance/invoice?finalized=false`, {
+    //         headers: headers
+    //     }).then(val => {
+    //         console.log(val);
+    //     }).catch(function (error) {
+    //         console.log(error);
+    //     });
+    // }
+
+
     return (
         <>
             {/* <Arrow /> */}
@@ -73,9 +89,9 @@ const Kot = (props) => {
                         <div className='grid grid-cols-2 mb-2'>
                             <div className="table-number flex flex-col col-span-1">
                                 <label htmlFor="table-no" className='font-medium text-[0.85rem] m-1'>Table NO.</label>
-                                <input type="text" name='TableNo' value={tableNo} placeholder='Enter Item Table No.' className={`rounded-md py-2 px-3 bg-transparent border mr-4 text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleTableInput} required />
+                                <input type="text" name='TableNo' value={tableNo} placeholder='Enter Item Table No.' className={`rounded-md py-2 px-3 bg-transparent border w-[80%] text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleTableInput} required />
                             </div>
-                            <div className="plate-type flex flex-col col-span-1">
+                            {/* <div className="plate-type flex flex-col col-span-1">
                                 <label htmlFor="plate" className='font-medium text-[0.85rem] m-1'>Staff</label>
                                 <select name="Staff" className={`rounded-md py-[0.63rem] px-3 bg-transparent border cursor-pointer mr-[3rem] text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`}>
                                     <option value=""></option>
@@ -84,7 +100,7 @@ const Kot = (props) => {
                                     <option value="z">z</option>
                                     <option value="a">a</option>
                                 </select>
-                            </div>
+                            </div> */}
                         </div>
                         {
                             itemsInput.map((datas, index) => {
@@ -104,6 +120,9 @@ const Kot = (props) => {
                             {itemsInput.length - 1 >= 0 && <button type='button' className={`w-[12rem] h-[2.5rem] bg-amber-400 text-black rounded-md text-[1rem] font-medium transition-all ease-in-out duration-500 hover:scale-110`} onClick={AddItemInput}>Add More</button>}
 
                             <button type='submit' className='w-[12rem] h-[2.5rem] rounded-md text-[1rem] font-medium  bg-green-600 text-white transition-all ease-in-out duration-500 hover:scale-110 mr-[3rem]'>Save</button>
+
+                            {/* rough work */}
+                            {/* <button type='button' className='w-[12rem] h-[2.5rem] rounded-md text-[1rem] font-medium  bg-green-600 text-white transition-all ease-in-out duration-500 hover:scale-110 mr-[3rem]' onClick={getkotTable}>Get Kot</button> */}
                         </div>
                     </div>
                 </form>

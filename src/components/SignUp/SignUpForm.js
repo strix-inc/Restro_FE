@@ -89,7 +89,7 @@ const SignUpForm = () => {
 
     return (
         <>
-            <div className="signup_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-10 top-0 left-0">
+            <div className="signup_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-30 top-0 left-0">
                 <div className="SignUpForm absolute top-[15%] w-full m-auto rounded-lg">
                     <Form
                         FormValue={FormValue}  /* get the values from each input */

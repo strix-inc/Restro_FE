@@ -18,6 +18,8 @@ const ItemMenu = ({ mode }) => {
     const [DeleteDishForm, setDeletedDishForm] = useState(false);
     const [SingleDish, setSingleDish] = useState('');
     const [OneDishID, setOneDishID] = useState('');
+    const [vegDish, setVegDish] = useState(false);
+    const [nonVegDish, setNonVegDish] = useState(false);
     // const [category, setCategory] = useState([]);
     // const [category2, setCategory2] = useState([]);
 
@@ -32,8 +34,34 @@ const ItemMenu = ({ mode }) => {
         setData(filteredData);
     }
 
+    // handling checkbox for the dish type [veg, non-veg] !!
+    const handleVegDish = (event) => {
+        setVegDish(vegDish ? false : true);
+        const VegVal = event.target.checked;
+        if (VegVal === true) {
+            setData(filterItem.filter(val => val.dish_type === 'Veg'));
+            setFilterItem(filterItem.filter(val => val.dish_type === 'Veg'));
+        } else {
+            setData(allDishData);
+            setFilterItem(allDishData);
+        }
+    }
+    const handleNonVegDish = (event) => {
+        setNonVegDish(nonVegDish ? false : true);
+        const NonVegVAl = event.target.checked;
+        if (NonVegVAl === true) {
+            setData(filterItem.filter(val => val.dish_type === 'Non-Veg'));
+            setFilterItem(filterItem.filter(val => val.dish_type === 'Non-Veg'));
+        } else {
+            setData(allDishData);
+            setFilterItem(allDishData);
+        }
+    }
+
     // filter menu item from lists !!
     const SearchedData = (event) => {
+        setVegDish(false);
+        setNonVegDish(false);
         const searchInput = event.target.value;
 
         if (searchInput.length > 0) {
@@ -142,12 +170,18 @@ const ItemMenu = ({ mode }) => {
                             </div>
                             <div className='mx-2 grid grid-cols-2 gap-2'>
                                 <div className=' border flex justify-between p-2 rounded-md'>
-                                    <input type="checkbox" className='mx-2 cursor-pointer' />
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" value="veg" className="sr-only peer" onChange={(e) => handleVegDish(e)} checked={vegDish} />
+                                        <div className="w-7 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[6px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                                    </label>
                                     <span className='mx-8 flex items-center font-bold text-gray-500'>Veg</span>
                                 </div>
                                 <div className='border flex justify-between p-2 rounded-md'>
-                                    <input type="checkbox" className='mx-2 cursor-pointer' />
-                                    <span className='mx-8 flex items-center font-bold text-gray-500'>Non-veg</span>
+                                    <label className="relative inline-flex items-center cursor-pointer">
+                                        <input type="checkbox" value="Non_veg" className="sr-only peer" onChange={(e) => handleNonVegDish(e)} checked={nonVegDish} />
+                                        <div className="w-7 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[6px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                    </label>
+                                    <span className='mx-8 flex items-center font-bold text-gray-500'>Non-Veg</span>
                                 </div>
                             </div>
                             <div className={`Item-table border ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} m-2 rounded-md h-[490px] overflow-auto`}>

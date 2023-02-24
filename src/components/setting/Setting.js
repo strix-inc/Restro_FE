@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import { Link } from 'react-router-dom';
+import { BiUserPlus } from 'react-icons/bi'
 
 const Setting = ({ mode }) => {
     const data = () => {
@@ -66,8 +68,15 @@ const Setting = ({ mode }) => {
                     <h1 className={`text-[1.5rem] font-bold mx-6 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Settings</h1><hr />
                     <div className='flex flex-col mt-3'>
                         <div className={`details rounded-md ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'}`}>
+                            <h1 className={`text-[1.2rem] font-medium mx-6 mt-4 underline ${mode === 'black' ? 'text-white' : 'text-black'}`}>Business Details</h1>
+                            <div className="AddStaff absolute top-[9%] right-6">
+                                <Link to={"/addstaff"} className="w-[10rem] h-[2.5rem] flex justify-center items-center bg-blue-500 text-white font-bold text-[0.9rem] rounded-md gap-2">
+                                    <span><BiUserPlus className='text-[1.4rem]' /></span>
+                                    <span>Add Staff</span>
+                                </Link>
+                            </div>
                             {state.map((item, index) => {
-                                return <form key={index} className={`account-setting grid grid-cols-2 pt-4 px-6 gap-4 rounded-b-md ${mode === 'black' ? 'text-white' : ''}`} onSubmit={submit}>
+                                return <form key={index} className={`account-setting grid grid-cols-2 pt-2 px-6 gap-4 rounded-b-md ${mode === 'black' ? 'text-white' : ''}`} onSubmit={submit}>
                                     <div className='flex flex-col'>
                                         <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Restaurant name</label>
                                         <input type='text' name='display_name' defaultValue={item.display_name === null ? '' : item.display_name} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter restaurant name' onChange={(e) => handleEdit(e)} />
@@ -99,9 +108,10 @@ const Setting = ({ mode }) => {
 
                         {/* *********************************** */}
                         <div className={`details rounded-md ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'}`}>
+                            <h1 className={`mt-6 text-[1.2rem] font-medium mx-6 underline ${mode === 'black' ? 'text-white' : 'text-black'}`}>Additional Details</h1>
                             {
                                 state.map(item => {
-                                    return <form key={item.id} className={`mt-3 grid grid-cols-2 pt-4 px-6 gap-4 rounded-b-md ${mode === 'black' ? 'text-white' : ''}`} onSubmit={submit}>
+                                    return <form key={item.id} className={`grid grid-cols-2 pt-2 px-6 gap-4 rounded-b-md ${mode === 'black' ? 'text-white' : ''}`} onSubmit={submit}>
                                         <div className='flex flex-col'>
                                             <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>UPI ID</label>
                                             <input type='text' name='upi_id' defaultValue={item.upi_id === null ? '' : item.upi_id} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='123@ybl' onChange={(e) => handleEdit(e)} />
@@ -117,7 +127,7 @@ const Setting = ({ mode }) => {
                                     </form>
                                 })}
                         </div>
-                        <div className="button mt-[8rem] mx-6">
+                        <div className="button mx-6 mt-16">
                             <button className='w-[6rem] h-[2.5rem] text-white bg-blue-500 hover:bg-blue-600 font-bold border-none rounded-md transition-all ease-in duration-300' onClick={submit}>Submit</button>
                             <button className={`w-[6rem] h-[2.5rem] font-bold border border-slate-400 ${mode === 'black' ? 'bg-transparent text-white hover:bg-gray-200 hover:text-black' : 'bg-gray-100 hover:bg-gray-200'} rounded-md mx-4 transition-all ease-in duration-300`}>Cancel</button>
                         </div>

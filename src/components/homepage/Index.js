@@ -16,7 +16,7 @@ import { RiWhatsappFill } from 'react-icons/ri'
 const HomePage = () => {
     return (
         <>
-            <div className="homepage fixed w-[100%] h-[100vh] bg-white top-0 left-0 overflow-auto z-10">
+            <div className="homepage fixed w-[100%] h-[100vh] bg-white top-0 left-0 overflow-auto z-30">
                 <div className="home_container relative">
                     <div className='fixed w-full shadow-md shadow-blue-100 z-10 bg-white'>
                         <div className="HomeNav w-[60%] m-auto flex justify-between items-center py-5">
@@ -93,7 +93,7 @@ const HomePage = () => {
                                     </div>
                                 </div>
                             </div>
-                            <span className='text-[2.3rem] font-bold flex justify-center pt-[10rem]'>Key Use Cases</span>
+                            <span className='text-[2.3rem] font-bold flex justify-center pt-[10rem]'>Use Cases</span>
                             <div className='w-[80%] m-auto grid grid-cols-2 gap-8'>
                                 <div>
                                     <span className='flex my-10'>

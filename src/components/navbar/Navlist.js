@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { HiOutlineHome } from 'react-icons/hi'
 import { IoTicketOutline } from 'react-icons/io5'
-import { MdOutlineHistoryEdu, MdOutlineSettings } from 'react-icons/md'
+import { MdOutlineSettings } from 'react-icons/md'
+import { GiBlackBook } from 'react-icons/gi'
 import { CgMenuBoxed } from 'react-icons/cg'
 import { Link } from 'react-router-dom'
 
@@ -12,7 +13,7 @@ const Navlist = (props) => {
     const ListItem = [
         { id: 1, name: 'Dashboard', link: '/dashboard', icons: <HiOutlineHome /> },
         { id: 2, name: 'Kot', link: '/kot', icons: <IoTicketOutline /> },
-        { id: 3, name: 'Kot History', link: '/kotHistory', icons: <MdOutlineHistoryEdu /> },
+        { id: 3, name: 'Kot History', link: '/kotHistory', icons: <GiBlackBook /> },
         { id: 5, name: 'Menu', link: '/menu', icons: <CgMenuBoxed /> },
         { id: 6, name: 'Setting', link: '/setting', icons: <MdOutlineSettings /> },
     ];

@@ -10,6 +10,8 @@ import KotHistory from './components/kot history/KotHistory';
 import HomePage from './components/homepage/Index';
 import ItemMenu from './components/menu/ItemMenu';
 import Setting from './components/setting/Setting';
+import GenerateBill from './components/GenerateBill/GenerateBill';
+import AddStaff from './components/setting/AddStaff';
 
 function App() {
 
@@ -18,7 +20,7 @@ function App() {
   const OnClickMoon = () => {
     // Add mode to black
     // setMode('black');
-    console.log('');
+    // console.log('');
   }
   const OnClickSun = () => {
     // Add mode to white
@@ -40,14 +42,16 @@ function App() {
       <Navbar mode={mode} OnClickMoon={OnClickMoon} OnClickSun={OnClickSun} loggedOut={loggedOut} />
       <Routes>
         <Route path='/' element={<HomePage />} />
+        <Route exact path='/signUp' element={<SignUpForm />} />
+        <Route exact path='/login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
         <Route exact path='/dashboard' element={<Dashboard mode={mode} />} />
         <Route exact path='/kot' element={<Kot mode={mode} />} />
+        <Route exact path='/bill' element={<GenerateBill mode={mode} />} />
         <Route exact path='/KT' element={<OrderedKT />} />
         <Route exact path='/kotHistory' element={<KotHistory mode={mode} />} />
         <Route exact path='/menu' element={<ItemMenu mode={mode} />} />
         <Route exact path='/setting' element={<Setting mode={mode} />} />
-        <Route exact path='/login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
-        <Route exact path='/signUp' element={<SignUpForm />} />
+        <Route exact path='/addstaff' element={<AddStaff mode={mode} />} />
       </Routes>
     </div>
   )

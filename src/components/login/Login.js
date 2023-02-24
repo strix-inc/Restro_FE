@@ -68,7 +68,7 @@ const Login = (props) => {
                 onLoaderFinished={() => setProgress(0)}
             />
             {!props.IsLoggedIn ? (
-                <div className="signup_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-10 top-0 left-0">
+                <div className="signup_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-30 top-0 left-0">
                     <div className="SignUpForm absolute top-[20%] w-full flex rounded-lg">
                         <LoginForm
                             contact={contact}

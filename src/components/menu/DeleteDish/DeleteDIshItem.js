@@ -3,7 +3,9 @@ import { RxCross2 } from 'react-icons/rx'
 import axios from 'axios';
 
 
-const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID }) => {
+const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID, GetAllDish, GetAllCategory }) => {
+
+    var dish_API = process.env.REACT_APP_GET_ALL_DISH
 
     const [OneDish, setOneDish] = useState([]);
 
@@ -12,18 +14,20 @@ const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID }) => {
         const DishId = {
             id: OneDishID,
         }
-        // console.log(DishId);
 
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        // console.log(headers);
 
-        axios.delete('https://restrofin.pythonanywhere.com/kitchen/dish', { headers: headers, data: DishId });
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
+        axios.delete(dish_API, { headers: headers, data: DishId })
+            .then(val => {
+                if (val.status === 200) {
+                    GetAllDish();
+                    GetAllCategory();
+                    setDeletedDishForm(false);
+                }
+            })
     }
 
     useEffect(() => {
@@ -31,7 +35,7 @@ const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(`https://restrofin.pythonanywhere.com/kitchen/dish?id=${OneDishID}`, {
+        axios.get(`${dish_API}?id=${OneDishID}`, {
             headers: headers
         }).then(val => {
             setOneDish([val.data.data]);
@@ -52,18 +56,17 @@ const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID }) => {
                             <span className='absolute top-2 right-3 text-[1.5rem] cursor-pointer text-white' onClick={() => setDeletedDishForm(false)}><RxCross2 /></span>
                             {/* </div> */}
                             <div className='flex flex-col'>
-                                <input type="text" name='category_name' placeholder={val.category_name} className='border text-[0.9rem] p-2 rounded-md border-slate-400' />
-                                <input type="text" name='name' placeholder={val.name} className='border text-[0.9rem] p-2 mt-1 rounded-md border-slate-400' />
-                                <input type="text" name='name' placeholder={val.dish_type} className='border text-[0.9rem] p-2 mt-1 rounded-md border-slate-400' />
+                                <input type="text" name='category_name' value={val.category_name} className='border text-[0.9rem] p-2 rounded-md border-slate-400' readOnly />
+                                <input type="text" name='name' value={val.name} className='border text-[0.9rem] p-2 mt-1 rounded-md border-slate-400' readOnly />
+                                <input type="text" name='name' value={val.dish_type} className='border text-[0.9rem] p-2 mt-1 rounded-md border-slate-400' readOnly />
                             </div>
-                            <h1 className='mx-2 text-[0.9rem] text-blue-100 mt-2 font-bold mb-2'>Delete Platorm and Price</h1>
                             {
                                 val.rates.map((rate, index) => {
                                     return <div key={index} className='grid mt-2'>
-                                        <input type="text" placeholder={rate.platform_name} className='p-3 boredr border-slate-400 text-[0.9rem] rounded-md font-semibold text-slate-500' />
+                                        <span className='text-white font-bold mx-1'>{rate.platform_name}</span>
                                         <div className='grid grid-cols-6 gap-1 mt-1'>
-                                            <input type="text" name='full_price' placeholder={rate.full_price} className='border border-slate-400 p-2 text-[0.9rem] rounded-md col-span-3' />
-                                            <input type="text" name='half_price' placeholder={rate.half_price} className='border border-slate-400 p-2 text-[0.9rem] rounded-md col-span-3' />
+                                            <input type="text" name='full_price' value={rate.full_price} className='border border-slate-400 p-2 text-[0.9rem] rounded-md col-span-3' readOnly />
+                                            <input type="text" name='half_price' value={rate.half_price} className='border border-slate-400 p-2 text-[0.9rem] rounded-md col-span-3' readOnly />
                                         </div>
                                     </div>
                                 })

@@ -1,14 +1,8 @@
 import React, { useRef } from 'react'
 import ReactToPrint from 'react-to-print'
+import { BiPrinter } from 'react-icons/bi'
 
-const OrederedKT = () => {
-
-    // Dummy data receiving from Backend 
-    const OrederedItem = [
-        { item: 'Chicken Biryani', plate: 1, quantity: 2 },
-        { item: 'Soft drink', plate: 1, quantity: 2 },
-        { item: 'Ice-Cream', plate: 1, quantity: 1 }
-    ]
+const OrederedKT = ({ OrderTicket, setOrderPage }) => {
 
     // printing the ticket of Item ordered by the customer
     const printTicket = () => {
@@ -17,46 +11,59 @@ const OrederedKT = () => {
     // Creating reference for the printout
     const ComponentRef = useRef();
 
+    const MoveBack = () => {
+        setOrderPage(false);
+    }
+
 
     return (
         <>
-            <div className="login_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-10 top-0 left-0">
+            <div className="login_conatiner mt-[4rem] fixed bg-white w-[100%] h-[100vh] overflow-hidden z-20 top-0 left-0 border-2 border-t-slate-500">
                 <ReactToPrint
-                    trigger={() => <button className='text-[1.5rem] text-center w-[8rem] h-[2.5rem] bg-blue-500 absolute rounded-md right-0 m-4 text-white font-semibold'>Print</button>}
+                    trigger={() => <button type='button' className='flex justify-center items-center text-[1.2rem] gap-2 w-[8rem] h-[2.5rem] bg-blue-500 absolute rounded-md right-0 m-4 text-white font-semibold'><BiPrinter /> Print</button>}
                     content={() => ComponentRef.current}
                 />
-                <div className="Invoice w-[377.95px] m-auto" ref={ComponentRef} target="-blank">
-                    <div className="Ticket-KOT border">
-                        <h1 className='text-center text-[1rem] font-semibold'>Kitchen Order Ticket</h1><hr />
-                        <div className="first-box text-center mt-2 grid grid-cols-2 font-semibold text-[0.8rem]">
-                            <span>Table no: 7</span>
-                            <span>Date : 12/01/2023</span>
-                            <span>Time : 10:41 AM</span>
-                            <span>Staff : chikki-Bow</span>
-                        </div>
-                        <hr />
-                        <div className="Table">
-                            <ul className='grid grid-cols-6 border-2 text-center font-semibold text-[0.9rem]'>
-                                <li className='col-span-1'>Sl No.</li>
-                                <li className='col-span-3'>Item</li>
-                                <li className='col-span-1'>Plate</li>
-                                <li className='col-span-1'>Qty.</li>
-                            </ul>
-                            <ul className=''>
-                                {
-                                    OrederedItem.map((val, index) => {
-                                        return <li className='grid grid-cols-6 border-2 text-center text-[0.8rem]' key={index}>
-                                            <span className='col-span-1'>{index + 1}</span>
-                                            <span className='col-span-3'>{val.item}</span>
-                                            <span className='col-span-1'>{val.plate}</span>
-                                            <span className='col-span-1'>{val.quantity}</span>
-                                        </li>
-                                    })
-                                }
-                            </ul>
-                        </div>
-                        <hr />
-                    </div>
+                <div className="back_button">
+                    <button className="absolute text-[0.9rem] text-center w-[6rem] h-[2rem] bg-blue-500 rounded-md left-4 top-4 text-white font-semibold" onClick={MoveBack}>Back</button>
+                </div>
+                <div className="Invoice w-[377.95px] m-auto mt-4" ref={ComponentRef} target="-blank">
+                    {
+                        OrderTicket.map((val, index) => {
+                            return <div key={index} className="Ticket-KOT">
+                                <h1 className='text-center text-[1rem] text-mono font-bold'>Table Order</h1><hr />
+                                <>
+                                    <div className="first-box text-center my-2 grid grid-cols-2 font-mono font-bold text-[0.8rem]">
+                                        <span>Table no: {val.table}</span>
+                                        <span>Date : {val.date}</span>
+                                        <span>Time : {val.time}</span>
+                                        {/* <span>Staff : chikki-Bow</span> */}
+                                    </div><hr className='border border-black' />
+                                </>
+                                <div className="Table my-1">
+                                    <>
+                                        <ul className='grid grid-cols-6 text-center font-mono font-bold text-[0.9rem]'>
+                                            <li className='col-span-1'>Sl No.</li>
+                                            <li className='col-span-3'>Item</li>
+                                            <li className='col-span-1'>Plate</li>
+                                            <li className='col-span-1'>Qty.</li>
+                                        </ul><hr className='border border-black' />
+                                    </>
+                                    <ul className='my-2'>
+                                        {
+                                            val.items.map((item, index) => {
+                                                return <li key={index} className='grid grid-cols-6 text-center text-[0.8rem] font-mono font-bold'>
+                                                    <span className='col-span-1'>{index + 1}</span>
+                                                    <span className='col-span-3'>{item.Dish_name}</span>
+                                                    <span className='col-span-1'>{item.size}</span>
+                                                    <span className='col-span-1'>{item.quantity}</span>
+                                                </li>
+                                            })
+                                        }
+                                    </ul>
+                                </div>
+                            </div>
+                        })
+                    }
                 </div>
             </div>
         </>

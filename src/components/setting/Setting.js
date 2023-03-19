@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { BiUserPlus } from 'react-icons/bi'
 
 const Setting = ({ mode }) => {
+    var Restauranta_API = process.env.REACT_APP_GET_RESTAURANT
+
     const data = () => {
         setTimeout(() => {
             const Restaurant_Detail = localStorage.getItem('Restaurant_detail');
@@ -38,7 +40,7 @@ const Setting = ({ mode }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.put('https://restrofin.pythonanywhere.com/auth/restaurant', datas, { headers: headers });
+        axios.put(Restauranta_API, datas, { headers: headers });
         setTimeout(() => {
             window.location.reload();
         }, 500);
@@ -49,7 +51,7 @@ const Setting = ({ mode }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get('https://restrofin.pythonanywhere.com/auth/restaurant', {
+        axios.get(Restauranta_API, {
             headers: headers
         }).then(val => {
             localStorage.setItem('Restaurant_detail', JSON.stringify(val.data.data));

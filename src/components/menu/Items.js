@@ -18,7 +18,7 @@ const Items = ({ Data, mode, EditDish, DeleteDish }) => {
                             absolute right-[6rem] top-[-1.35rem] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[10px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                             before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
                             hover:before:opacity-100" data-tip="Edit">
-                                <span className='text-amber-700 cursor-pointer text-[1.1rem]'><TbEdit onClick={() => EditDish(val.id, val.dish_type, val.category_name, val.name)} /></span>
+                                <span className='text-amber-700 cursor-pointer text-[1.1rem]'><TbEdit onClick={() => EditDish(val.id, val.dish_type, val.name, val.category_name)} /></span>
                             </div>
                             <div className="
                             absolute right-[3rem] top-[-1.6rem] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1.2rem] before:top-[12px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full

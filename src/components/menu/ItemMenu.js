@@ -8,6 +8,9 @@ import DeleteDIshItem from './DeleteDish/DeleteDIshItem';
 
 const ItemMenu = ({ mode }) => {
 
+    var All_Dish_API = process.env.REACT_APP_GET_ALL_DISH
+    var All_Platform_API = process.env.REACT_APP_GET_ALL_PLATFORM
+
     const [Data, setData] = useState([]);
     const [filterItem, setFilterItem] = useState([]);
     const [allDishData, setAllDishData] = useState([]);
@@ -20,8 +23,6 @@ const ItemMenu = ({ mode }) => {
     const [OneDishID, setOneDishID] = useState('');
     const [vegDish, setVegDish] = useState(false);
     const [nonVegDish, setNonVegDish] = useState(false);
-    // const [category, setCategory] = useState([]);
-    // const [category2, setCategory2] = useState([]);
 
 
     // get all the platforms !!
@@ -63,14 +64,12 @@ const ItemMenu = ({ mode }) => {
         setVegDish(false);
         setNonVegDish(false);
         const searchInput = event.target.value;
-
         if (searchInput.length > 0) {
-            const searchInput = event.target.value;
-            const test2 = Data.filter((val) => {
+            const result = allDishData.filter((val) => {
                 return val.name.toLowerCase().includes(searchInput.toLowerCase());
             });
-            setData(test2);
-            setFilterItem(test2);
+            setData(result);
+            setFilterItem(result);
         } else {
             setData(allDishData);
             setFilterItem(allDishData);
@@ -87,8 +86,8 @@ const ItemMenu = ({ mode }) => {
         const OneDish = {
             id: ItemID,
             dish_type: ItemType,
-            name: ItemName,
-            category: ItemCategory,
+            dish_category: ItemCategory,
+            dish_name: ItemName,
         }
         setSingleDish(OneDish);
         setEditedDishForm(true);
@@ -99,14 +98,14 @@ const ItemMenu = ({ mode }) => {
         setDeletedDishForm(true);
     }
 
-    useEffect(() => {
+    // api for the all dish !! 
+    const GetAllDish = () => {
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
 
-        // api for the all dish !! 
-        axios.get('https://restrofin.pythonanywhere.com/kitchen/dish', {
+        axios.get(All_Dish_API, {
             headers: headers
         }).then(val => {
             setData(val.data.data);
@@ -115,35 +114,34 @@ const ItemMenu = ({ mode }) => {
         }).catch(function (error) {
             console.log(error);
         });
+    }
 
+    // api for the platform
+    const GetAllCategory = () => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
 
-        // api for the platform
-        axios.get('https://restrofin.pythonanywhere.com/kitchen/platform', {
+        axios.get(All_Platform_API, {
             headers: headers
         }).then(val => {
             setPlatform(val.data.data);
         }).catch(function (error) {
             console.log(error);
         });
+    }
 
-        // api for all category
-        // axios.get('https://restrofin.pythonanywhere.com/kitchen/category', {
-        //     headers: headers
-        // }).then(val => {
-        //     setCategory(val.data.data);
-        //     setCategory2(val.data.data);
-        // }).catch(function (error) {
-        //     console.log(error);
-        // });
-
-
+    useEffect(() => {
+        GetAllDish();
+        GetAllCategory();
     }, []);
 
     return (
         <>
-            {AdditemForm === true ? <AddItem setAdditemForm={setAdditemForm} /> : ''}
-            {EditDishForm === true ? <EditDishItem EditDish={EditDish} setEditedDishForm={setEditedDishForm} Dish={SingleDish} /> : ''}
-            {DeleteDishForm === true ? <DeleteDIshItem DeleteDish={DeleteDish} setDeletedDishForm={setDeletedDishForm} OneDishID={OneDishID} /> : ''}
+            {AdditemForm === true ? <AddItem setAdditemForm={setAdditemForm} GetAllDish={GetAllDish} GetAllCategory={GetAllCategory} /> : ''}
+            {EditDishForm === true ? <EditDishItem EditDish={EditDish} GetAllDish={GetAllDish} GetAllCategory={GetAllCategory} setEditedDishForm={setEditedDishForm} Dish={SingleDish} /> : ''}
+            {DeleteDishForm === true ? <DeleteDIshItem DeleteDish={DeleteDish} GetAllDish={GetAllDish} GetAllCategory={GetAllCategory} setDeletedDishForm={setDeletedDishForm} OneDishID={OneDishID} /> : ''}
             <div className="w-[80%] ml-[20%]">
                 <div className={`Menus w-[99%] m-auto mt-[4rem] rounded-md`}>
                     <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Dish Menu</h1>

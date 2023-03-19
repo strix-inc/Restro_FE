@@ -98,3 +98,23 @@ input::-webkit-inner-spin-button {
 .home_body {
   font-family: 'Poppins', sans-serif;
 }
+
+
+/* kot search item */
+.dataResult::-webkit-scrollbar {
+  display: none;
+}
+
+.dataResult .dataItem {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+p:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+  color: black;
+  border-radius: 4px;
+}

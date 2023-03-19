@@ -5,6 +5,8 @@ import LoadingBar from 'react-top-loading-bar'
 
 
 const Login = (props) => {
+    var api = process.env.REACT_APP_LOGIN_API
+
     const [contact, setContact] = useState('');
     const [password, setPassword] = useState('');
     const [matched, setMatched] = useState('');
@@ -15,11 +17,6 @@ const Login = (props) => {
 
 
     const handleContact = (value) => {
-        // if (value.length > 0) {
-        //     setValue(false);
-        // } else {
-        //     setValue(true);
-        // }
         setContact(value);
     }
     const handlePassword = (value) => {
@@ -35,7 +32,7 @@ const Login = (props) => {
         if (Logindata.username === '' && Logindata.password === '') {
             setMatched('Enter Username & Password');
         } else {
-            axios.post('https://restrofin.pythonanywhere.com/auth/login/token', Logindata)
+            axios.post(api, Logindata)
                 .then((val) => {
                     console.log(val);
                     localStorage.setItem('access', val.data.access);
@@ -45,7 +42,9 @@ const Login = (props) => {
                     }
                 })
                 .catch((err) => {
-                    console.log(err);
+                    if (err.response.status === 401) {
+                        setProgress(100);
+                    }
                     setMatched("Please Enter Correct Phone Number or Password");
                 });
         }

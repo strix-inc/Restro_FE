@@ -5,7 +5,8 @@ import Form from './Form'
 import axios from 'axios'
 
 const SignUpForm = () => {
-    // Hooks for the form validation
+    var api = process.env.REACT_APP_SIGNUP_API
+
     let [FormValue, setFormValue] = useState({
         restaurant_name: '',
         contact: '',
@@ -58,8 +59,7 @@ const SignUpForm = () => {
     useEffect(() => {
         if (Object.keys(FormError).length === 0 && submit) {
             delete FormValue.confirm_password;
-            console.log(FormValue);
-            axios.post('https://restrofin.pythonanywhere.com/auth/signup', FormValue)
+            axios.post(api, FormValue)
                 .then((val) => {
                     console.log(val);
                     if (val.request.status === 200) {

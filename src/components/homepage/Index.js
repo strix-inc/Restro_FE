@@ -122,10 +122,10 @@ const HomePage = () => {
                                         <small className='mt-1 mx-4'><TiTick className='text-blue-500 text-[1.5rem]' /></small>
                                         <p className='text-slate-500'>Save money and the environment by no longer using traditional marketing materials, like flyers and paper menus.</p>
                                     </span>
-                                    <spa className='flex' my-10n>
-                                        <smal className='mt-1 mx-4' l><TiTick className='text-blue-500 text-[1.5rem]' /></smal>
+                                    <span className='flex'>
+                                        <small className='mt-1 mx-4'><TiTick className='text-blue-500 text-[1.5rem]' /></small>
                                         <p className='text-slate-500'>Get an extra revenue stream by hosting third-party ad campaigns and using Proof of Play reporting.</p>
-                                    </spa>
+                                    </span>
                                     <span className='flex my-10'>
                                         <small className='mt-1 mx-4'><TiTick className='text-blue-500 text-[1.5rem]' /></small>
                                         <p className='text-slate-500'>Minimize perceived wait times at checkout with content that tells a story about your brand. Use that time to spur more sales.</p>

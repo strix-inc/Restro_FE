@@ -3,7 +3,9 @@ import { RxCross2 } from 'react-icons/rx'
 import axios from 'axios'
 
 
-const AddItem = ({ setAdditemForm }) => {
+const AddItem = ({ setAdditemForm, GetAllDish, GetAllCategory }) => {
+    var Add_new_dish_API = process.env.REACT_APP_ADD_NEWDISH
+    var Post_new_dish_API = process.env.REACT_APP_GET_ALL_DISH
 
     const [rates, setRates] = useState([
         { half_price: '', full_price: '' },
@@ -11,7 +13,7 @@ const AddItem = ({ setAdditemForm }) => {
 
     const [DishCategory, setDishCategory] = useState('');
     const [DishName, setDishName] = useState('');
-    const [DishType, setDishType] = useState('');
+    const [DishType, setDishType] = useState('veg');
 
     // Take the platform input values from the user !!
     const handlePlatformInput = (event, index) => {
@@ -42,25 +44,25 @@ const AddItem = ({ setAdditemForm }) => {
             category: DishCategory,
             dish_type: DishType,
         }
-        // console.log(CreatedDish);
 
-        // sending the post request to the backend !!
-        // 500 error internal server .. yet to fixed !!
-
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        const createNewDish = () => {
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${localStorage.getItem('access')}`
+            }
+            axios.post(Post_new_dish_API, CreatedDish, {
+                headers: headers
+            }).then(val => {
+                if (val.status === 201) {
+                    GetAllDish();
+                    GetAllCategory();
+                    setAdditemForm(false);
+                }
+            }).catch(function (error) {
+                console.log(error);
+            });
         }
-        axios.post('https://restrofin.pythonanywhere.com/kitchen/dish', CreatedDish, {
-            headers: headers
-        }).then(val => {
-            console.log(val);
-        }).catch(function (error) {
-            console.log(error);
-        });
-        setTimeout(() => {
-            window.location.reload();
-        }, 1000);
+        createNewDish();
     }
 
     useEffect(() => {
@@ -68,7 +70,7 @@ const AddItem = ({ setAdditemForm }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get('https://restrofin.pythonanywhere.com/kitchen/platform', {
+        axios.get(Add_new_dish_API, {
             headers: headers
         }).then(val => {
             setRates(val.data.data);
@@ -90,14 +92,17 @@ const AddItem = ({ setAdditemForm }) => {
                     <div className='flex flex-col'>
                         <input type="text" name='category_name' value={DishCategory} placeholder='Enter Category' className='border text-[0.9rem] p-2 rounded-md border-slate-400' onChange={(event) => setDishCategory(event.target.value)} />
                         <input type="text" name='name' value={DishName} placeholder='Enter Item name' className='border text-[0.9rem] p-2 mt-1 rounded-md border-slate-400' onChange={(event) => setDishName(event.target.value)} />
-                        <input type="text" name='name' value={DishType} placeholder='Enter Dish Type' className='border text-[0.9rem] p-2 mt-1 rounded-md border-slate-400' onChange={(event) => setDishType(event.target.value)} />
+                        <select type="text" name='name' value={DishType} placeholder='Enter Dish Type' className='border text-[0.9rem] p-2 mt-1 rounded-md border-slate-400' onChange={(event) => setDishType(event.target.value)}>
+                            <option value="veg">Veg</option>
+                            <option value="Non-veg">Non-Veg</option>
+                        </select>
                     </div>
                     <h1 className='mx-2 text-[0.9rem] text-blue-100 mt-2 font-bold mb-2'>Add Platorm and Price</h1>
                     <div className={`grid overflow-auto ${rates.length > 3 ? 'h-[320px] scrollbar-hide' : ''}`}>
                         {
                             rates.map((Platform, index) => {
                                 return <div key={index} className='grid mt-2'>
-                                    <input type="text" placeholder={Platform.name} className='p-3 boredr border-slate-400 text-[0.9rem] rounded-md font-semibold text-slate-500' />
+                                    <span className='text-white font-bold mx-1'>{Platform.name}</span>
                                     <div className='grid grid-cols-6 gap-1 mt-1'>
                                         <input type="text" name='full_price' placeholder='Full plate Price' className='border border-slate-400 p-2 text-[0.9rem] rounded-md col-span-3' onChange={(event) => handlePlatformInput(event, index)} />
                                         <input type="text" name='half_price' placeholder='Half plate Price' className='border border-slate-400 p-2 text-[0.9rem] rounded-md col-span-3' onChange={(event) => handlePlatformInput(event, index)} />

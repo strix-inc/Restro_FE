@@ -14,6 +14,7 @@ const ItemMenu = ({ mode }) => {
     const [Data, setData] = useState([]);
     const [filterItem, setFilterItem] = useState([]);
     const [allDishData, setAllDishData] = useState([]);
+    const [AllCategory, setAllCategory] = useState([]);
     const [search, setSearch] = useState("");
     const [active, setActive] = useState('All');
     const [AdditemForm, setAdditemForm] = useState(false);
@@ -132,24 +133,52 @@ const ItemMenu = ({ mode }) => {
         });
     }
 
+    // api to get all category !!
+    const Get_AllCategory = () => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+
+        axios.get('https://restrofin.pythonanywhere.com/kitchen/category', {
+            headers: headers
+        }).then(val => {
+            setAllCategory(val.data.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
+
     useEffect(() => {
         GetAllDish();
         GetAllCategory();
+        Get_AllCategory();
     }, []);
 
     return (
         <>
-            {AdditemForm === true ? <AddItem setAdditemForm={setAdditemForm} GetAllDish={GetAllDish} GetAllCategory={GetAllCategory} /> : ''}
-            {EditDishForm === true ? <EditDishItem EditDish={EditDish} GetAllDish={GetAllDish} GetAllCategory={GetAllCategory} setEditedDishForm={setEditedDishForm} Dish={SingleDish} /> : ''}
+            {AdditemForm === true ? <AddItem
+                setAdditemForm={setAdditemForm}
+                GetAllDish={GetAllDish}
+                GetAllCategory={GetAllCategory}
+                AllCategory={AllCategory} /> : ''}
+
+            {EditDishForm === true ? <EditDishItem
+                EditDish={EditDish}
+                GetAllDish={GetAllDish}
+                GetAllCategory={GetAllCategory}
+                setEditedDishForm={setEditedDishForm}
+                Dish={SingleDish}
+                AllCategory={AllCategory} /> : ''}
             {DeleteDishForm === true ? <DeleteDIshItem DeleteDish={DeleteDish} GetAllDish={GetAllDish} GetAllCategory={GetAllCategory} setDeletedDishForm={setDeletedDishForm} OneDishID={OneDishID} /> : ''}
             <div className="w-[80%] ml-[20%]">
                 <div className={`Menus w-[99%] m-auto mt-[4rem] rounded-md`}>
                     <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Dish Menu</h1>
                     <div className={`grid grid-cols-4 ${mode === 'black' ? 'border-slate-700 nav_bg' : 'bg-white border-slate-300'}`}>
                         <div className={`Item-category relative col-span-1 m-2 border ${mode === 'black' ? 'border-slate-500 text-white' : 'border-slate-300'} h-[595px] overflow-auto scrollbar-hide`}>
-                            <div className='p-2 mb-4'>
-                                <span className={`text-[0.9rem] ${mode === 'black' ? 'text-gray-400' : 'text-gray-500'} font-mono`}>Categories</span>
-                            </div><hr />
+                            <div className='p-2 py-3 mb-1 bg-blue-500 text-center'>
+                                <span className={`text-[1.2rem] tracking-[1px] ${mode === 'black' ? 'text-white' : 'font-bold text-white'}`}>Dish Categories</span>
+                            </div>
                             <button className="relative category-list px-2 py-3 cursor-pointer w-full" onClick={() => setData(filterItem, setActive('All'))}>
                                 <div className={`${active === 'All' ? (mode === 'black' ? '' : 'absolute right-0 w-full h-12 top-0 bg-gradient-to-l from-blue-100') : ''}`}></div>
                                 <div className={`${active === 'All' ? 'absolute right-0 w-1 h-12 top-0 bg-blue-500 rounded-l-md' : ''}`}></div>
@@ -163,34 +192,39 @@ const ItemMenu = ({ mode }) => {
                         </div>
                         <div className={`relative col-span-3 border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} m-2`}>
                             <div className='flex gap-2 m-2'>
-                                <input type="text" value={search} placeholder='search item here' className={`border px-3 py-[0.5rem] w-[80%] rounded-md text-[0.9rem] ${mode === 'black' ? 'border-slate-600 bg-transparent text-white' : 'border-slate-300'}`} onChange={(e) => SearchedData(e)} />
-                                <button className='w-[20%] p-2 text-center bg-blue-500 text-[0.9rem] font-bold rounded-md text-white' onClick={AddItemForm}>Add Dish</button>
+                                <input type="text" value={search} placeholder='search item here' className={`border px-3 py-[0.5rem] w-[80%] rounded-sm text-[0.9rem] ${mode === 'black' ? 'border-slate-600 bg-transparent text-white' : 'border-slate-300'}`} onChange={(e) => SearchedData(e)} />
+                                <button className='w-[20%] p-2 text-center bg-blue-500 text-[0.9rem] font-bold rounded-sm text-white' onClick={AddItemForm}>Add Dish</button>
                             </div>
                             <div className='mx-2 grid grid-cols-2 gap-2'>
-                                <div className=' border flex justify-between p-2 rounded-md'>
+                                <div className={`border ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} flex justify-between p-2 rounded-sm`}>
                                     <label className="relative inline-flex items-center cursor-pointer">
                                         <input type="checkbox" value="veg" className="sr-only peer" onChange={(e) => handleVegDish(e)} checked={vegDish} />
-                                        <div className="w-7 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[6px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-green-600"></div>
+                                        <div className={`w-7 h-4 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-slate-500 after:content-[''] after:absolute after:top-[6px] after:left-[2px] after:border after:rounded-full after:h-3 after:w-3 peer-checked:bg-green-600 ${mode === 'black' ? 'after:bg-black after:border-black/20 bg-slate-400 after:transition-all dark:border-slate-600' : 'after:bg-white after:border-gray-300 bg-gray-200 after:transition-all dark:border-gray-600'}`}></div>
                                     </label>
-                                    <span className='mx-8 flex items-center font-bold text-gray-500'>Veg</span>
+                                    <span className={`mx-8 flex items-center font-bold ${mode === 'black' ? 'text-white' : 'text-slate-500'}`}>Veg</span>
                                 </div>
-                                <div className='border flex justify-between p-2 rounded-md'>
+                                <div className={`border ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} flex justify-between p-2 rounded-sm`}>
                                     <label className="relative inline-flex items-center cursor-pointer">
                                         <input type="checkbox" value="Non_veg" className="sr-only peer" onChange={(e) => handleNonVegDish(e)} checked={nonVegDish} />
-                                        <div className="w-7 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[6px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-red-600"></div>
+                                        <div className={`w-7 h-4 bg-gray-200 peer-focus:outline-none peer-focus:ring-0 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-slate-500 after:content-[''] after:absolute after:top-[6px] after:left-[2px] after:border after:rounded-full after:h-3 after:w-3 after:transition-all dark:border-gray-600 peer-checked:bg-red-600 ${mode === 'black' ? 'after:bg-black after:border-black/20 bg-slate-400' : 'after:bg-white after:border-gray-300 bg-gray-200'}`}></div>
                                     </label>
-                                    <span className='mx-8 flex items-center font-bold text-gray-500'>Non-Veg</span>
+                                    <span className={`mx-8 flex items-center font-bold ${mode === 'black' ? 'text-white' : 'text-slate-500'}`}>Non-Veg</span>
                                 </div>
                             </div>
-                            <div className={`Item-table border ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} m-2 rounded-md h-[490px] overflow-auto`}>
-                                <div className="List-title p-2 scrollbar-hide bg-blue-100 font-bold">
-                                    <span className='col-span-2'>Dish</span>
+                            <div className={`grid grid-cols-5 p-2 scrollbar-hide ${mode === 'black' ? 'bg-blue-500 text-white border-slate-600' : 'bg-blue-200 text-black border-slate-300'} font-bold mt-2 mx-2 border border-b-0`}>
+                                <span className='col-span-2'>Dish</span>
+                                <div className='col-span-3 flex justify-between mx-[12px]'>
                                     {
                                         platform.map(Platform => {
-                                            return <span key={Platform.id}>{Platform.name}</span>
+                                            return <div key={Platform.id} className='flex flex-col'>
+                                                <span>{Platform.name}</span>
+                                                <small className={`text-[0.6rem] ${mode === 'black' ? 'text-black' : 'text-red-500'} leading-[8px] tracking-[1.5px]`}>[ Full / Half ]</small>
+                                            </div>
                                         })
                                     }
                                 </div>
+                            </div>
+                            <div className={`Item-table border border-t-0 ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} mx-2 h-[430px] overflow-auto scrollbar-hide`}>
                                 <Items
                                     EditDish={EditDish}
                                     DeleteDish={DeleteDish}

@@ -66,11 +66,11 @@ const Item = (props) => {
         <>
             <div className="Item-detail grid grid-cols-10 gap-x-4 my-2">
                 <div className="itemName flex flex-col col-span-4">
-                    <label htmlFor="itemName" className='text-[0.85rem] font-medium m-1'>Item Name</label>
+                    <label htmlFor="itemName" className='text-[0.85rem] font-medium m-1'>Dish Name</label>
                     <input type="text" name='name' value={props.rough === true ? wordEntered : ''} placeholder='Item Name' className={`rounded-md py-2 px-3 bg-transparent border text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleFilter} required />
 
                     {suggestion && wordEntered && (
-                        <div className="dataResult absolute mt-[5rem] p-1 rounded-md w-[350px] h-[400px] bg-black/80 text-white overflow-auto scrollbar-hide z-10">
+                        <div className="dataResult absolute mt-[5rem] p-1 rounded-md w-[350px] h-[400px] bg-black text-white overflow-auto scrollbar-hide z-10">
                             {AllDishData.slice(0, 15).map((val) => {
                                 return (
                                     <div key={val.id} className='dataItem font-bold p-1 text-[0.9rem] cursor-pointer hover:bg-gray-200 hover:text-black hover:rounded-md' onClick={() => TakeDish(val.id, val.name)}>{val.name.toUpperCase()} </div>

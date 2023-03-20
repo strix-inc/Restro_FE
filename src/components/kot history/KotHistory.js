@@ -7,14 +7,6 @@ const KotHistory = (props) => {
 
     const [kothistory, setKotHistory] = useState([]);
 
-    var utcDate = "2023-03-12T17:31:48.626640+05:30";
-    var localDate = new Date(utcDate).toLocaleString("en-US", {
-        localeMatcher: "best fit",
-        // timeZoneName: "short"
-    });
-
-    // console.log(localDate);
-
     useEffect(() => {
         const getkothistory = () => {
             const headers = {

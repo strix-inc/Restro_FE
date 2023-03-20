@@ -50,7 +50,7 @@ const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID, GetAllDish,
             <div className='fixed drop-shadow-sm bg-black/50 w-[100%] h-[100vh] overflow-hidden z-10 top-0 left-0'>
                 {
                     OneDish.map(val => {
-                        return <form key={val.id} className='absolute border border-slate-300 rounded-md w-[60%] m-auto p-3 left-[20%] top-[5rem] bg-black/70' onSubmit={SubmitForm}>
+                        return <form key={val.id} className='absolute border border-slate-300 rounded-md w-[50%] m-auto p-3 left-[25%] top-[5rem] bg-black/70' onSubmit={SubmitForm}>
                             {/* <div> */}
                             <h1 className='text-[1.2rem] mb-2 mx-2 font-bold text-slate-300'>Delete Dish</h1>
                             <span className='absolute top-2 right-3 text-[1.5rem] cursor-pointer text-white' onClick={() => setDeletedDishForm(false)}><RxCross2 /></span>

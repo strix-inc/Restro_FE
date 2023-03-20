@@ -9,8 +9,8 @@ const Items = ({ Data, mode, EditDish, DeleteDish }) => {
         <>
             {
                 Data.map((val, index) => {
-                    return <div key={val.id} className={`Item-list List-title scrollbar-hide py-2 ${mode === 'black' ? 'text-green-500' : 'text-black'} ${index % 2 === 0 ? '' : 'bg-gray-200'}`}>
-                        <div className='relative col-span-2 ml-2'>
+                    return <div key={val.id} className={`Item-list grid grid-cols-5 scrollbar-hide p-2 ${mode === 'black' ? 'text-black' : 'text-black'} ${index % 2 === 0 ? 'bg-gray-300' : 'bg-slate-100'}`}>
+                        <div className='relative col-span-2'>
                             <span className='font-bold'>{val.name}</span>
                             <span className='absolute w-4 mt-1 mx-1'>{val.dish_type === 'Non-Veg' ? <img src={Non_Veg} /> : <img src={Veg} />}</span>
                             <div
@@ -27,16 +27,18 @@ const Items = ({ Data, mode, EditDish, DeleteDish }) => {
                                 <span className='text-[1.2rem] cursor-pointer text-red-500'><MdDeleteForever onClick={() => DeleteDish(val.id)} /></span>
                             </div>
                         </div>
-                        {
-                            val.rates.map(item => {
-                                return <span key={item.id} className='col-span-1'>
-                                    <div key={item.id}>
-                                        <small className='text-[0.9rem] font-bold ml-2'>₹ {item.full_price} / </small>
-                                        <small className='text-[0.9rem] font-bold'>{item.half_price}</small>
-                                    </div>
-                                </span>
-                            })
-                        }
+                        <div className='col-span-3 flex justify-between mx-[12px]'>
+                            {
+                                val.rates.map(item => {
+                                    return <span key={item.id}>
+                                        <div className='mx-2'>
+                                            <small className='text-[0.9rem] font-bold'>₹ {item.full_price} / </small>
+                                            <small className='text-[0.9rem] font-bold'>{item.half_price}</small>
+                                        </div>
+                                    </span>
+                                })
+                            }
+                        </div>
                     </div>
                 })
             }

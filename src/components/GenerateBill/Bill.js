@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import GenerateBill from './GenerateBill';
 
-const Bill = () => {
+const Bill = ({ mode }) => {
 
     const [Orders, setOrders] = useState([]);
     const [Alldish, setAllDish] = useState([]);
@@ -80,6 +80,7 @@ const Bill = () => {
     return (
         <div>
             <GenerateBill
+                mode={mode}
                 OrderID={OrderID}
                 Table={Table}
                 All_Orders={Orders}

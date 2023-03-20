@@ -153,24 +153,24 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
                     <h1 className={`text-[1.5rem] tracking-wide font-bold mx-6 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Billing</h1><hr />
                     <form className="Billing-details w-[94%] m-auto mt-6">
                         <div className="grid grid-cols-3 gap-4 my-3">
-                            <input type="text" placeholder='Party name' className='p-2 border rounded-md border-slate-300 text-black outline-none' defaultValue={'Cash'} readOnly />
-                            <input type="text" defaultValue={'0'} placeholder='Contact' className='p-2 border rounded-md border-slate-300 text-black outline-none' readOnly />
-                            <select name="category" id="category" className='p-2 border rounded-md border-slate-300 text-black outline-none' onChange={handlePlatform}>
+                            <input type="text" placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} defaultValue={'Cash'} readOnly />
+                            <input type="text" defaultValue={'0'} placeholder='Contact' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
+                            <select name="category" id="category" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} onChange={handlePlatform}>
                                 <option value="restaurant">Restaurant</option>
                                 <option value="zomato">Zomato</option>
                                 <option value="swiggy">Swiggy</option>
                             </select>
                         </div>
                         <div className="item-list mt-4">
-                            <h1 className='font-bold text-[1.2rem] underline'>List</h1>
-                            <div className="heading grid grid-cols-10 bg-blue-100">
-                                <span className='border border-slate-300 flex justify-center items-center underline py-1 font-semibold'>Sl No.</span>
-                                <span className='col-span-3 border border-slate-300 flex justify-center items-center underline py-1 font-semibold'>Name</span>
-                                <span className='border border-slate-300 flex justify-center items-center underline py-1 font-semibold'>Rate</span>
-                                <span className='border border-slate-300 flex justify-center items-center underline py-1 font-semibold'>Size</span>
-                                <span className='col-span-2 border border-slate-300 flex justify-center items-center underline py-1 font-semibold'>Quantity</span>
-                                <span className='border border-slate-300 flex justify-center items-center underline py-1 font-semibold'>Amount</span>
-                                <span className='border border-slate-300 flex justify-center items-center underline py-1 font-semibold'>Delete</span>
+                            <h1 className={`font-bold text-[1.2rem] underline ${mode === 'black' ? 'text-white ' : 'text-black'}`}>List</h1>
+                            <div className={`heading grid grid-cols-10 ${mode === 'black' ? 'bg-blue-500 text-white' : 'bg-blue-200'}`}>
+                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Sl No.</span>
+                                <span className={`col-span-3 border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Name</span>
+                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Rate</span>
+                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Size</span>
+                                <span className={`col-span-2 border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Quantity</span>
+                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Amount</span>
+                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Delete</span>
                             </div>
 
                             {/* item mapping */}
@@ -178,6 +178,7 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
                                 All_Orders.map((val, idx) => {
                                     total += val.cost * val.quantity
                                     return <ItemList
+                                        mode={mode}
                                         id={val.id}
                                         key={idx}
                                         index={idx}
@@ -196,45 +197,45 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
                         <div className="grid grid-cols-4 gap-4 mt-7">
                             <div className='flex flex-col'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Sub Total</label>
-                                <input type="text" ref={SubTotal_ref} value={total} className='p-2 border rounded-md border-slate-300 text-black outline-none' readOnly />
+                                <input type="text" ref={SubTotal_ref} value={total} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Discount %</label>
-                                <input type="text" className='p-2 border rounded-md border-slate-300 text-black outline-none' onChange={handleDiscount} />
+                                <input type="text" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} onChange={handleDiscount} />
                             </div>
                             <div className='flex flex-col'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Discount Amount</label>
-                                <input type="text" value={total * (discount / 100)} className='p-2 border rounded-md border-slate-300 text-black outline-none' readOnly />
+                                <input type="text" value={total * (discount / 100)} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Net Amount</label>
-                                <input type="text" value={total - (total * (discount / 100))} className='p-2 border rounded-md border-slate-300 text-black outline-none' readOnly />
+                                <input type="text" value={total - (total * (discount / 100))} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-4 gap-4 mt-5">
                             <div className='flex flex-col'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">S.G.S.T @2.5%</label>
-                                <input type="text" ref={SGST_ref} value={total * (2.5 / 100)} placeholder='Party name' className='p-2 border rounded-md border-slate-300 text-black outline-none' readOnly />
+                                <input type="text" ref={SGST_ref} value={(total - (total * (discount / 100))) * (2.5 / 100)} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">C.G.S.T @2.5%</label>
-                                <input type="text" ref={CGST_ref} value={total * (2.5 / 100)} placeholder='Party name' className='p-2 border rounded-md border-slate-300 text-black outline-none' readOnly />
+                                <input type="text" ref={CGST_ref} value={(total - (total * (discount / 100))) * (2.5 / 100)} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col col-span-2'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Grand Total</label>
-                                <input type="text" ref={GRAND_TOTAL_ref} value={Math.round((total - (total * (discount / 100))) + (total * (2.5 / 100)) + (total * (2.5 / 100)))} placeholder='Party name' className='p-2 border rounded-md border-slate-300 text-black outline-none' readOnly />
+                                <input type="text" ref={GRAND_TOTAL_ref} value={Math.round((total - (total * (discount / 100))) + (total * (2.5 / 100)) + (total * (2.5 / 100)))} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
 
                         </div>
                         <div className="grid grid-cols-4 gap-4 mt-5">
                             <div className='flex flex-col col-span-2'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Comments</label>
-                                <textarea name="textarea" id="textarea" cols="10" rows="2" placeholder='Leave a comment here ...' className='p-2 text-[0.9rem] border rounded-md border-slate-300 text-black outline-none'></textarea>
+                                <textarea name="textarea" id="textarea" cols="10" rows="2" placeholder='Leave a comment here ...' className={`p-2 text-[0.9rem] border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`}></textarea>
                             </div>
                             <div className='flex flex-col'>
                                 <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Payment Type</label>
-                                <select name="category" id="category" className='p-2 border rounded-md border-slate-300 text-black outline-none text-[0.8rem] h-[80%]' onChange={handlePaymentMode}>
+                                <select name="category" id="category" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none text-[0.8rem] h-[80%]`} onChange={handlePaymentMode}>
                                     <option value="Cash">CASH</option>
                                     <option value="Upi">UPI</option>
                                     <option value="Card">CARD</option>

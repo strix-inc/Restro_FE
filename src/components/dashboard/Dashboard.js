@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { CgMenuBoxed } from 'react-icons/cg'
 import { IoMdSearch } from 'react-icons/io'
 import { VscFilePdf } from 'react-icons/vsc'
@@ -9,12 +9,28 @@ import axios from 'axios'
 
 const Dashboard = (props) => {
     var api = process.env.REACT_APP_GET_RESTAURANT
+
+    const [AllSaleHistory, setAllSaleHistory] = useState([]);
     const DsItem = [
         { id: 1, name: 'Total clients', records: 2310, icons: <CgMenuBoxed /> },
         { id: 2, name: 'Top sale item', records: 2310, icons: <CgMenuBoxed /> },
         { id: 3, name: 'Lowest sale item', records: 2310, icons: <CgMenuBoxed /> },
         { id: 4, name: 'No. of clients', records: 2310, icons: <CgMenuBoxed /> },
     ]
+
+    const SaleHistory = () => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+        axios.get('https://restrofin.pythonanywhere.com/finance/invoice?finalized=True', {
+            headers: headers
+        }).then(val => {
+            setAllSaleHistory(val.data.data);
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
 
     useEffect(() => {
         const headers = {
@@ -31,7 +47,9 @@ const Dashboard = (props) => {
         }).catch(function (error) {
             console.log(error);
         });
+        SaleHistory();
     }, []);
+
 
     return (
         <>
@@ -56,7 +74,7 @@ const Dashboard = (props) => {
                     <div className="sale-history mt-4">
                         <h1 className={`text-[1.3rem] font-bold mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>Sale History</h1>
                         <div className={`sale_history_table ${props.mode === 'black' ? 'nav_bg border border-slate-700' : 'bg-white'} p-2 rounded-lg mt-1`}>
-                            <div className="past_sale_search grid grid-cols-5 gap-10 mx-2">
+                            <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
                                 <div className='col-span-2 flex items-center gap-2'>
                                     <label className='font-bold'>From</label>
                                     <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} />
@@ -73,7 +91,7 @@ const Dashboard = (props) => {
                                 </div>
                             </div>
 
-                            <div className="past_sale_search grid grid-cols-5 gap-10 mx-2">
+                            <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
                                 <div className='col-span-2 flex justify-between items-center gap-2'>
                                     <label className='font-bold text-[1rem]'>Order type</label>
                                     <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[80%] p-1 my-3`} >
@@ -95,41 +113,48 @@ const Dashboard = (props) => {
                                 </div>
                             </div>
 
-                            <div className={`sale_history_detail rounded-lg border mt-4 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'}`}>
-                                <ul className={`grid grid-cols-8 gap-2 p-2 font-semibold text-[0.8rem] ${props.mode === 'black' ? 'text-gray-300' : 'text-gray-500 bg-blue-100'}`}>
-                                    <li>INVOICE NO.</li>
-                                    <li>DATE</li>
-                                    <li>SUB TOTAL</li>
-                                    <li>DISCOUNT</li>
-                                    <li>C.G.S.T @2.5%</li>
-                                    <li>S.G.S.T @2.5%</li>
-                                    <li>NET AMOUNT</li>
-                                    <li>AMOUNT DUE</li>
-                                </ul><hr />
-                                <ul className={`grid grid-cols-8 relative ${props.mode === 'black' ? 'text-green-400' : 'text-black'} gap-2 p-2 text-[0.9rem]`}>
-                                    <li className='flex gap-4 items-center'>
-                                        <span>1</span>
-                                        <div className="absolute mx-4
-                            top-[-17px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[4px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
-                            before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%]
+                            <div className={`grid grid-cols-10 gap-2 p-2 mt-4 font-semibold text-[0.8rem] ${props.mode === 'black' ? 'text-white bg-blue-500 border-slate-600' : 'text-black bg-blue-200 border border-slate-200 border-b-0'} z-5`}>
+                                <span className='col-span-2'>INVOICE NO.</span>
+                                <span className='flex justify-center items-center col-span-2'>DATE</span>
+                                <span className='flex justify-center items-center'>SUB TOTAL</span>
+                                <span className='flex justify-center items-center'>DISCOUNT</span>
+                                <span className='flex justify-center items-center'>C.G.S.T @2.5%</span>
+                                <span className='flex justify-center items-center'>S.G.S.T @2.5%</span>
+                                <span className='flex justify-center items-center'>NET AMOUNT</span>
+                                <span className='flex justify-center items-center'>AMOUNT DUE</span>
+                            </div>
+                            <div className={`sale_history_detail rounded-sm border border-t-0 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'} overflow-auto scrollbar-hide h-[290px]`}>
+                                {
+                                    AllSaleHistory.map((val, index) => {
+                                        var localDate = new Date(val.created_at).toLocaleString("en-US", {
+                                            localeMatcher: "best fit",
+                                        })
+                                        return <ul key={index} className={`grid grid-cols-10 relative ${props.mode === 'black' ? 'text-black' : 'text-black'} ${index % 2 != 0 ? 'bg-gray-300' : 'bg-slate-100'} gap-2 p-2 text-[0.9rem]`}>
+                                            <li className='flex gap-4 items-center col-span-2'>
+                                                <span className='font-bold'>{index + 1}</span>
+                                                <div className="absolute mx-4
+                            top-[-18px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[14px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
+                            before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%] before:z-20
                             hover:before:opacity-100" data-tip="Edit">
-                                            <span className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit /></span>
-                                        </div>
-                                        <div className="absolute 
-                                        right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[1px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
-                            before:bg-blue-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
-                            hover:before:opacity-100" data-tip="Print">
-                                            <span className='cursor-pointer text-blue-500'><AiFillPrinter /></span>
-                                        </div>
-                                    </li>
-                                    <li>16/02/2023</li>
-                                    <li>$300</li>
-                                    <li>5%</li>
-                                    <li>$20</li>
-                                    <li>$15</li>
-                                    <li>$310</li>
-                                    <li>$300</li>
-                                </ul><hr />
+                                                    <span className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit /></span>
+                                                </div>
+                                                <div className="absolute 
+                                        right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
+                                        before:bg-blue-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
+                                        hover:before:opacity-100" data-tip="Print">
+                                                    <span className='cursor-pointer text-blue-500'><AiFillPrinter /></span>
+                                                </div>
+                                            </li>
+                                            <li className='col-span-2 font-semibold'>{localDate}</li>
+                                            <li className='flex justify-center items-center'>{val.subtotal}</li>
+                                            <li className='flex justify-center items-center'>{val.discount} %</li>
+                                            <li className='flex justify-center items-center'>{val.cgst}</li>
+                                            <li className='flex justify-center items-center'>{val.sgst}</li>
+                                            <li className='flex justify-center items-center'>{((val.subtotal) - (val.subtotal) * (val.discount / 100))}</li>
+                                            <li className='flex justify-center items-center'>0</li>
+                                        </ul>
+                                    })
+                                }
                             </div>
                         </div>
                     </div>

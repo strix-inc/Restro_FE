@@ -24,13 +24,11 @@ function App() {
   const [mode, setMode] = useState('');
   const OnClickMoon = () => {
     // Add mode to black
-    // setMode('black');
-    // console.log('');
+    setMode('black');
   }
   const OnClickSun = () => {
     // Add mode to white
-    // setMode('white');
-    console.log('');
+    setMode('white');
   }
 
 

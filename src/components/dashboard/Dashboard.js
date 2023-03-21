@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react'
-import { CgMenuBoxed } from 'react-icons/cg'
+import { ImUserCheck } from 'react-icons/im'
+import { HiUserGroup } from 'react-icons/hi'
+import { IoFastFood } from 'react-icons/io5'
 import { IoMdSearch } from 'react-icons/io'
 import { VscFilePdf } from 'react-icons/vsc'
 import { MdEdit } from 'react-icons/md'
 import { AiFillPrinter } from 'react-icons/ai'
 import axios from 'axios'
+import { Link } from 'react-router-dom'
 
 
 const Dashboard = (props) => {
@@ -12,11 +15,15 @@ const Dashboard = (props) => {
 
     const [AllSaleHistory, setAllSaleHistory] = useState([]);
     const DsItem = [
-        { id: 1, name: 'Total clients', records: 2310, icons: <CgMenuBoxed /> },
-        { id: 2, name: 'Top sale item', records: 2310, icons: <CgMenuBoxed /> },
-        { id: 3, name: 'Lowest sale item', records: 2310, icons: <CgMenuBoxed /> },
-        { id: 4, name: 'No. of clients', records: 2310, icons: <CgMenuBoxed /> },
+        { id: 1, name: 'Best Customer', records: 2310, icons: <ImUserCheck />, bg: 'bg-green-300' },
+        { id: 2, name: 'Top sale item', records: 2310, icons: <IoFastFood />, bg: 'bg-red-300' },
+        { id: 3, name: 'Lowest sale item', records: 2310, icons: <IoFastFood />, bg: 'bg-blue-300' },
+        { id: 4, name: 'Total Customer', records: 2310, icons: <HiUserGroup />, bg: 'bg-amber-300' },
     ]
+
+    const handleSaleHistory = (id) => {
+        localStorage.setItem("Sale_History_ID", id);
+    }
 
     const SaleHistory = () => {
         const headers = {
@@ -59,12 +66,12 @@ const Dashboard = (props) => {
                     <div className="records grid grid-cols-4 gap-x-4">
                         {
                             DsItem.map(item => {
-                                return <div key={item.id} className={`flex gap-3 my-2 rounded-lg px-4 ${props.mode === 'black' ? 'nav_bg shadow-sm shadow-slate-700 text-white' : 'bg-white shadow-md shadow-slate-300'} py-3`}>
-                                    <div className='flex justify-center items-center border rounded-full bg-green-200 h-[2.5rem] w-[2.5rem] my-auto'>
-                                        <span className='text-[1.5rem]'>{item.icons}</span>
+                                return <div key={item.id} className={`flex gap-3 my-2 rounded-lg px-4 ${props.mode === 'black' ? 'nav_bg border border-slate-500 shadow-lg shadow-slate-700 text-white' : 'bg-white shadow-md shadow-slate-300'} py-3`}>
+                                    <div className={`flex justify-center items-center border rounded-full ${item.bg} h-[2.5rem] w-[2.5rem] my-auto`}>
+                                        <span className='text-[1.3rem] text-black m-2'>{item.icons}</span>
                                     </div>
                                     <div className='flex flex-col justify-center'>
-                                        <span className={`mb-1 text-[0.9rem] font-semibold ${props.mode === 'black' ? 'text-gray-300' : 'text-gray-500'}`}>{item.name}</span>
+                                        <span className={`text-[0.9rem] font-semibold ${props.mode === 'black' ? 'text-gray-300' : 'text-gray-500'}`}>{item.name}</span>
                                         <span className="text-[1rem] font-bold">{item.records}</span>
                                     </div>
                                 </div>
@@ -142,7 +149,7 @@ const Dashboard = (props) => {
                                         right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                                         before:bg-blue-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
                                         hover:before:opacity-100" data-tip="Print">
-                                                    <span className='cursor-pointer text-blue-500'><AiFillPrinter /></span>
+                                                    <Link to='/salehistory' target="_blank" rel="noreferrer" className='cursor-pointer text-blue-500'><AiFillPrinter onClick={() => handleSaleHistory(val.id)} /></Link>
                                                 </div>
                                             </li>
                                             <li className='col-span-2 font-semibold'>{localDate}</li>

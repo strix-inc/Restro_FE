@@ -14,6 +14,7 @@ import AddStaff from './components/setting/AddStaff';
 import Rough from './components/Rough';
 import PrivateRoute from './components/ProtectRoute/PrivateRoute';
 import GeneratedInvoice from './components/GenerateBill/GeneratedInvoice';
+import SaleHistory from './components/dashboard/SaleHistory';
 
 
 
@@ -52,6 +53,11 @@ function App() {
             <Dashboard mode={mode} />
           </PrivateRoute>
         } />
+        <Route exact path='/salehistory' element={
+          <PrivateRoute>
+            <SaleHistory />
+          </PrivateRoute>
+        } />
         <Route exact path='/kot' element={
           <PrivateRoute>
             <Kot mode={mode} />
@@ -64,7 +70,7 @@ function App() {
         } />
         <Route exact path='/invoice' element={
           <PrivateRoute>
-            <GeneratedInvoice mode={mode} />
+            <GeneratedInvoice />
           </PrivateRoute>
         } />
         <Route exact path='/kotHistory' element={

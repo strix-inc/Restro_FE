@@ -29,7 +29,7 @@ const Navlist = (props) => {
     return (
         <>
             <div className={`listItems w-[20%] h-[100%] overflow-auto mt-[3.8rem] fixed ${props.mode === 'black' ? 'nav_bg text-gray-300 z-0' : 'bg-white text-gray-500 z-10'}`}>
-                <ul className='pt-2'>
+                <ul className='pt-3'>
                     {
                         ListItem.map(item => {
                             return <li key={item.id}>

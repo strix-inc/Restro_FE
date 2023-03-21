@@ -14,28 +14,78 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
     const [Payment_mode, setPayment_mode] = useState('Cash');
     const [platform, setPlatform] = useState('restaurant');
     const [Platform_Id, setPlatform_Id] = useState("");
+    const [Quantity_size_ByUser, setQuantity_size_ByUser] = useState('');
+    const [DISH_ID, setDISH_ID] = useState('');
     var total = 0;
+
+    const [ALL_ORDER, setALL_ORDER] = useState([]);
+    const [ALL_DISH, setALL_DISH] = useState([]);
 
     const SubTotal_ref = useRef(null);
     const SGST_ref = useRef(null);
     const CGST_ref = useRef(null);
     const GRAND_TOTAL_ref = useRef(null);
 
+    const ChangeQuantity = () => {
+        for (let i = 0; i < ALL_ORDER.length; i++) {
+            let order = ALL_ORDER[i];
+            if (order.dish === DISH_ID) {
+                order.quantity = Quantity_size_ByUser
+            }
+        }
+    }
+    ChangeQuantity();
 
-    const RateBasedOnplatform = () => {
+    const get = () => {
+        var dishes = [];
+        var dish_map = [];
         for (let i = 0; i < All_Orders.length; i++) {
             let order = All_Orders[i];
-            let Dish_id = order.dish;
-            let rates = dish[Dish_id];
+            dishes.push({
+                "id": order.id,
+                "created_at": order.created_at,
+                "modified_at": order.modified_at,
+                "is_deleted": false,
+                "restaurant": order.restaurant,
+                "kot": order.kot,
+                "invoice": order.invoice,
+                "dish": order.dish,
+                "name": order.dish_name,
+                "cost": 1,
+                "size": order.size,
+                "quantity": order.quantity,
+            })
+        }
+        for (let i = 0; i < dish.length; i++) {
+            var dishs = dish[i];
+            const dish_data = {
+                id: dishs.id,
+                rates: dishs.rates
+            }
+            dish_map.push(dish_data);
+        }
+        setALL_ORDER(dishes);
+        setALL_DISH(dish_map);
+    }
 
-            for (let j = 0; j < rates.length; j++) {
-                let rate = rates[j];
-                if (rate.platform_name.toLowerCase() === platform) {
-                    if (order.size === "Half") {
-                        order.cost = rate.half_price;
-                    }
-                    else {
-                        order.cost = rate.full_price;
+
+    const RateBasedOnplatform = () => {
+        for (let i = 0; i < ALL_ORDER.length; i++) {
+            let order = ALL_ORDER[i];
+            let Dish_id = order.dish;
+            for (let x = 0; x < ALL_DISH.length; x++) {
+                let menu_dish = ALL_DISH[x];
+                if (menu_dish.id === Dish_id) {
+                    for (let j = 0; j < menu_dish.rates.length; j++) {
+                        let rate = menu_dish.rates[j];
+                        if (rate.platform_name.toLowerCase() === platform) {
+                            if (order.size === "Half") {
+                                order.cost = rate.half_price;
+                            }
+                            else {
+                                order.cost = rate.full_price;
+                            }
+                        }
                     }
                 }
             }
@@ -52,7 +102,6 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
         axios.get(All_platform_API, {
             headers: headers
         }).then(val => {
-            // console.log(val);
             let platform_data = val.data.data;
             for (let i = 0; i < platform_data.length; i++) {
                 var Platform = platform_data[i];
@@ -68,7 +117,6 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
 
     const handlePlatform = (event) => {
         setPlatform(event.target.value);
-        Get_AllPlatform();
     }
 
 
@@ -86,45 +134,9 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-
-        var date = new Date();
-        var current_date = date.getDate() + "/" + ((date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : date.getMonth() + 1) + "/" + date.getFullYear();
-        var hr = date.getHours();
-        hr = hr % 12
-        hr = hr ? hr : '12'
-        hr = hr < 10 ? '0' + hr : hr;
-        var mnt = date.getMinutes();
-        mnt = mnt < 10 ? '0' + mnt : mnt;
-        var scnds = date.getSeconds();
-        scnds = scnds < 10 ? '0' + scnds : scnds;
-        var am_pm = hr >= 12 ? 'AM' : 'PM';
-        var current_time = hr + ":" + mnt + ":" + scnds + " " + am_pm
-
-        const data =
-            [{
-                Info: [
-                    {
-                        date: current_date,
-                        time: current_time,
-                        customer: "Cash",
-                        mode: Payment_mode,
-                        table: Table,
-                    }
-                ],
-                rates: All_Orders,
-                total_price: [
-                    {
-                        subTotal: parseInt(SubTotal_ref.current.value),
-                        sgst: parseFloat(SGST_ref.current.value),
-                        cgst: parseFloat(CGST_ref.current.value),
-                        grand_total: parseInt(GRAND_TOTAL_ref.current.value),
-                    }
-                ]
-            }]
-
         const Invoice_Data = {
             id: OrderID,
-            orders: All_Orders,
+            orders: ALL_ORDER,
             subtotal: parseInt(SubTotal_ref.current.value),
             discount: parseInt(discount),
             platform: Platform_Id,
@@ -138,13 +150,12 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
             })
 
 
-        localStorage.setItem('invoice_data', JSON.stringify(data));
-
     }
 
     useEffect(() => {
         Get_AllPlatform();
-    }, [platform])
+        get();
+    }, [platform, All_Orders, dish])
 
     return (
         <>
@@ -175,11 +186,12 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
 
                             {/* item mapping */}
                             {
-                                All_Orders.map((val, idx) => {
+                                ALL_ORDER.map((val, idx) => {
                                     total += val.cost * val.quantity
                                     return <ItemList
                                         mode={mode}
                                         id={val.id}
+                                        dish_id={val.dish}
                                         key={idx}
                                         index={idx}
                                         name={val.name}
@@ -187,6 +199,9 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
                                         quantity={val.quantity}
                                         cost={val.cost}
                                         GeneratedBill={GeneratedBill}
+                                        setQuantity_size_ByUser={setQuantity_size_ByUser}
+                                        setDISH_ID={setDISH_ID}
+                                        ChangeQuantity={ChangeQuantity}
                                     />
                                 })
                             }
@@ -196,45 +211,45 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
 
                         <div className="grid grid-cols-4 gap-4 mt-7">
                             <div className='flex flex-col'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Sub Total</label>
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Sub Total</label>
                                 <input type="text" ref={SubTotal_ref} value={total} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Discount %</label>
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Discount %</label>
                                 <input type="text" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} onChange={handleDiscount} />
                             </div>
                             <div className='flex flex-col'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Discount Amount</label>
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Discount Amount</label>
                                 <input type="text" value={total * (discount / 100)} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Net Amount</label>
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Net Amount</label>
                                 <input type="text" value={total - (total * (discount / 100))} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                         </div>
 
                         <div className="grid grid-cols-4 gap-4 mt-5">
                             <div className='flex flex-col'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">S.G.S.T @2.5%</label>
-                                <input type="text" ref={SGST_ref} value={(total - (total * (discount / 100))) * (2.5 / 100)} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>S.G.S.T @2.5%</label>
+                                <input type="text" ref={SGST_ref} value={Math.round((total - (total * (discount / 100))) * (2.5 / 100))} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">C.G.S.T @2.5%</label>
-                                <input type="text" ref={CGST_ref} value={(total - (total * (discount / 100))) * (2.5 / 100)} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>C.G.S.T @2.5%</label>
+                                <input type="text" ref={CGST_ref} value={Math.round((total - (total * (discount / 100))) * (2.5 / 100))} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col col-span-2'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Grand Total</label>
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Grand Total</label>
                                 <input type="text" ref={GRAND_TOTAL_ref} value={Math.round((total - (total * (discount / 100))) + (total * (2.5 / 100)) + (total * (2.5 / 100)))} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
 
                         </div>
                         <div className="grid grid-cols-4 gap-4 mt-5">
                             <div className='flex flex-col col-span-2'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Comments</label>
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Comments</label>
                                 <textarea name="textarea" id="textarea" cols="10" rows="2" placeholder='Leave a comment here ...' className={`p-2 text-[0.9rem] border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`}></textarea>
                             </div>
                             <div className='flex flex-col'>
-                                <label className="mx-1 text-[0.9rem] text-slate-500 font-semibold">Payment Type</label>
+                                <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Payment Type</label>
                                 <select name="category" id="category" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none text-[0.8rem] h-[80%]`} onChange={handlePaymentMode}>
                                     <option value="Cash">CASH</option>
                                     <option value="Upi">UPI</option>

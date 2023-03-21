@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react';
 import ReactToPrint from 'react-to-print'
 import { BiPrinter } from 'react-icons/bi'
 import IMG from '../Images/paapi.png'
 import axios from 'axios'
 
 
-const GeneratedInvoice = () => {
+const SaleHistory = () => {
 
-    const [Invoices, setInvoices] = useState([]);
+    const [Get_oneSaleHistory, setGet_oneSaleHistory] = useState([]);
 
     // printing the ticket of Item ordered by the customer
     const printTicket = () => {
@@ -16,8 +16,8 @@ const GeneratedInvoice = () => {
     // Creating reference for the printout
     const ComponentRef = useRef();
 
-    const GenerateInvoice = () => {
-        const id = localStorage.getItem('ActiveKotID');
+    const GetSaleHistory = () => {
+        const id = localStorage.getItem('Sale_History_ID');
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
@@ -25,14 +25,14 @@ const GeneratedInvoice = () => {
         axios.get(`https://restrofin.pythonanywhere.com/finance/invoice?id=${id}`, {
             headers: headers
         }).then(val => {
-            setInvoices([val.data.data]);
+            setGet_oneSaleHistory([val.data.data]);
         }).catch((error) => {
             console.log(error);
         });
     }
 
     useEffect(() => {
-        GenerateInvoice();
+        GetSaleHistory();
     }, []);
 
     return (
@@ -44,7 +44,7 @@ const GeneratedInvoice = () => {
                 />
                 <div className="Invoice w-[377.95px] border m-auto mt-4" ref={ComponentRef} target="-blank">
                     {
-                        Invoices.map((val, index) => {
+                        Get_oneSaleHistory.map((val, index) => {
                             var localDate = new Date(val.created_at).toLocaleString("en-US", {
                                 localeMatcher: "best fit",
                             })
@@ -119,4 +119,4 @@ const GeneratedInvoice = () => {
     )
 }
 
-export default GeneratedInvoice
+export default SaleHistory

@@ -50,9 +50,9 @@ const OrederedKT = ({ OrderTicket, setOrderPage }) => {
                                     </>
                                     <ul className='my-2'>
                                         {
-                                            val.items.map((item, index) => {
-                                                return <li key={index} className='grid grid-cols-6 text-center text-[0.8rem] font-mono font-bold'>
-                                                    <span className='col-span-1'>{index + 1}</span>
+                                            val.items.map((item, idx) => {
+                                                return <li key={idx} className='grid grid-cols-6 text-center text-[0.8rem] font-mono font-bold'>
+                                                    <span className='col-span-1'>{idx + 1}</span>
                                                     <span className='col-span-3'>{item.Dish_name}</span>
                                                     <span className='col-span-1'>{item.size}</span>
                                                     <span className='col-span-1'>{item.quantity}</span>

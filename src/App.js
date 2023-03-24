@@ -12,19 +12,16 @@ import Setting from './components/setting/Setting';
 import Bill from './components/GenerateBill/Bill';
 import AddStaff from './components/setting/AddStaff';
 import Rough from './components/Rough';
-import PrivateRoute from './components/ProtectRoute/PrivateRoute';
 import GeneratedInvoice from './components/GenerateBill/GeneratedInvoice';
 import SaleHistory from './components/dashboard/SaleHistory';
 import PrintKotHistory from './components/kot history/PrintKotHistory';
+import PrivateRoute from './components/ProtectRoute/PrivateRoute';
+import ProtectRoute from './components/ProtectRoute/ProtectRoute';
 
 
 
 
 function App() {
-
-  const token = localStorage.getItem('access');
-
-
 
   // covert the page in dark mode and as well light mode !!
   const [mode, setMode] = useState('');
@@ -53,12 +50,16 @@ function App() {
     <div className={`${mode === 'black' ? 'inBlack' : 'inWhite'} w-[100%] h-[100vh] overflow-auto`}>
       <Navbar mode={mode} OnClickMoon={OnClickMoon} OnClickSun={OnClickSun} loggedOut={loggedOut} />
       <Routes>
-        {!token && <Route path='/' element={<HomePage />} />}
+        <Route path='/' element={
+          <ProtectRoute>
+            <HomePage />
+          </ProtectRoute>
+        } />
         <Route exact path='/signUp' element={<SignUpForm />} />
         <Route exact path='/login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
         <Route exact path='/dashboard' element={
           <PrivateRoute>
-            {token && <Dashboard mode={mode} />}
+            <Dashboard mode={mode} />
           </PrivateRoute>
         } />
         <Route exact path='/salehistory' element={

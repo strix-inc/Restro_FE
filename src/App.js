@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Kot from './components/kot/Kot';
 import Login from './components/login/Login';
 import Navbar from './components/navbar/Navbar';
@@ -15,11 +15,16 @@ import Rough from './components/Rough';
 import PrivateRoute from './components/ProtectRoute/PrivateRoute';
 import GeneratedInvoice from './components/GenerateBill/GeneratedInvoice';
 import SaleHistory from './components/dashboard/SaleHistory';
+import PrintKotHistory from './components/kot history/PrintKotHistory';
 
 
 
 
 function App() {
+
+  const token = localStorage.getItem('access');
+
+
 
   // covert the page in dark mode and as well light mode !!
   const [mode, setMode] = useState('');
@@ -31,6 +36,9 @@ function App() {
     // Add mode to white
     setMode('white');
   }
+
+  useEffect(() => {
+  }, [])
 
 
   // Checking wether the user is loggedIN or loggedOUT 
@@ -45,12 +53,12 @@ function App() {
     <div className={`${mode === 'black' ? 'inBlack' : 'inWhite'} w-[100%] h-[100vh] overflow-auto`}>
       <Navbar mode={mode} OnClickMoon={OnClickMoon} OnClickSun={OnClickSun} loggedOut={loggedOut} />
       <Routes>
-        <Route path='/' element={<HomePage />} />
+        {!token && <Route path='/' element={<HomePage />} />}
         <Route exact path='/signUp' element={<SignUpForm />} />
         <Route exact path='/login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
         <Route exact path='/dashboard' element={
           <PrivateRoute>
-            <Dashboard mode={mode} />
+            {token && <Dashboard mode={mode} />}
           </PrivateRoute>
         } />
         <Route exact path='/salehistory' element={
@@ -76,6 +84,11 @@ function App() {
         <Route exact path='/kotHistory' element={
           <PrivateRoute>
             <KotHistory mode={mode} />
+          </PrivateRoute>
+        } />
+        <Route exact path='/kotbill' element={
+          <PrivateRoute>
+            <PrintKotHistory />
           </PrivateRoute>
         } />
         <Route exact path='/menu' element={

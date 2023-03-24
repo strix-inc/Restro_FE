@@ -21,6 +21,10 @@ const Dashboard = (props) => {
         { id: 4, name: 'Total Customer', records: 2310, icons: <HiUserGroup />, bg: 'bg-amber-300' },
     ]
 
+    const handleEditSaleHistory = () => {
+        console.log("edit clicked");
+    }
+
     const handleSaleHistory = (id) => {
         localStorage.setItem("Sale_History_ID", id);
     }
@@ -48,9 +52,6 @@ const Dashboard = (props) => {
             headers: headers
         }).then(val => {
             localStorage.setItem('Restaurant_name', val.data.data.display_name);
-            localStorage.setItem('GSTIN', val.data.data.gstin);
-            localStorage.setItem('phone', val.data.data.contact);
-            localStorage.setItem('state', val.data.data.address_state);
         }).catch(function (error) {
             console.log(error);
         });
@@ -128,7 +129,7 @@ const Dashboard = (props) => {
                                 <span className='flex justify-center items-center'>C.G.S.T @2.5%</span>
                                 <span className='flex justify-center items-center'>S.G.S.T @2.5%</span>
                                 <span className='flex justify-center items-center'>NET AMOUNT</span>
-                                <span className='flex justify-center items-center'>AMOUNT DUE</span>
+                                <span className='flex justify-center items-center'>TOTAL</span>
                             </div>
                             <div className={`sale_history_detail rounded-sm border border-t-0 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'} overflow-auto scrollbar-hide h-[290px]`}>
                                 {
@@ -143,7 +144,7 @@ const Dashboard = (props) => {
                             top-[-18px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[14px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                             before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%] before:z-20
                             hover:before:opacity-100" data-tip="Edit">
-                                                    <span className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit /></span>
+                                                    <span className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={handleEditSaleHistory} /></span>
                                                 </div>
                                                 <div className="absolute 
                                         right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
@@ -158,7 +159,7 @@ const Dashboard = (props) => {
                                             <li className='flex justify-center items-center'>{val.cgst}</li>
                                             <li className='flex justify-center items-center'>{val.sgst}</li>
                                             <li className='flex justify-center items-center'>{((val.subtotal) - (val.subtotal) * (val.discount / 100))}</li>
-                                            <li className='flex justify-center items-center'>0</li>
+                                            <li className='flex justify-center items-center'>{val.total}</li>
                                         </ul>
                                     })
                                 }

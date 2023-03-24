@@ -1,11 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { AiFillPrinter } from 'react-icons/ai';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const KotHistory = (props) => {
     var Order_history_API = process.env.REACT_APP_POST_ORDER
 
     const [kothistory, setKotHistory] = useState([]);
+
+    const handleKotHistoryPrint = (id) => {
+        localStorage.setItem("Kot_History_ID", id);
+    }
 
     useEffect(() => {
         const getkothistory = () => {
@@ -42,10 +47,10 @@ const KotHistory = (props) => {
                                     <span className='text-[0.9rem]'>{localDate}</span>
                                     <div className="grid grid-cols-2">
                                         <span className='mx-4'>{val.table}</span>
-                                        <button className="w-[4rem] h-[2rem] flex flex-col justify-center items-center rounded-md bg-blue-100 border border-blue-500 text-black text-[1.2rem">
+                                        <Link to='/kotbill' target='_blank' className="w-[4rem] h-[2rem] flex flex-col justify-center items-center rounded-md bg-blue-100 border border-blue-500 text-black text-[1.2rem" onClick={() => handleKotHistoryPrint(val.invoice)}>
                                             <span className='cursor-pointer text-blue-500'><AiFillPrinter /></span>
                                             <small className='text-[0.6rem] font-bold tracking-[0.1rem]'>Print</small>
-                                        </button>
+                                        </Link>
                                     </div>
                                 </div>
                             })

@@ -1,13 +1,28 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactToPrint from 'react-to-print'
 import { BiPrinter } from 'react-icons/bi'
-import IMG from '../Images/paapi.png'
 import axios from 'axios'
 
 
 const GeneratedInvoice = () => {
 
     const [Invoices, setInvoices] = useState([]);
+    const [restaurant_detail, setRestaurant_detail] = useState([]);
+
+    const get_restaurant_Detail = () => {
+        const Restaurant_Detail = localStorage.getItem('Restaurant_detail');
+        const res = JSON.parse(Restaurant_Detail);
+        setRestaurant_detail([
+            {
+                street: res.address_street,
+                city: res.address_city,
+                state: res.address_state,
+                phone: res.contact,
+                gstin: res.gstin
+            }
+        ])
+    }
+
 
     // printing the ticket of Item ordered by the customer
     const printTicket = () => {
@@ -33,6 +48,7 @@ const GeneratedInvoice = () => {
 
     useEffect(() => {
         GenerateInvoice();
+        get_restaurant_Detail();
     }, []);
 
     return (
@@ -45,28 +61,39 @@ const GeneratedInvoice = () => {
                 <div className="Invoice w-[377.95px] border m-auto mt-4" ref={ComponentRef} target="-blank">
                     {
                         Invoices.map((val, index) => {
-                            var localDate = new Date(val.created_at).toLocaleString("en-US", {
+                            var localDate = new Date(val.created_at).toLocaleDateString("en-US", {
+                                localeMatcher: "best fit",
+                            });
+                            var localTime = new Date(val.created_at).toLocaleTimeString("en-US", {
                                 localeMatcher: "best fit",
                             })
                             return <div key={index} className="">
-                                <div className="logo flex justify-center items-center mb-4">
-                                    <img src={IMG} alt="Loading.." />
-                                </div>
                                 <>
-                                    <h1 className='text-center text-[1rem] font-mono font-bold'>{localStorage.getItem('Restaurant_name')}</h1>
-                                    <div className='flex flex-col'>
-                                        <span className='text-center text-[0.85rem] font-mono font-bold'>GSTIN: {localStorage.getItem("GSTIN")}</span>
-                                        <span className='text-center text-[0.85rem] font-mono font-bold'>Mob: {localStorage.getItem('phone')}</span>
-                                    </div><hr />
+                                    <h1 className='text-center text-[2rem] tracking-[-1px] font-mono font-bold'>{localStorage.getItem('Restaurant_name')}</h1>
+                                    {
+                                        restaurant_detail.map((val, idx) => {
+
+                                            return <div key={idx}>
+                                                <div className='grid grid-cols-2 text-[0.7rem] ml-10'>
+                                                    <span className='font-mono font-bold'>Street: {val.street}</span>
+                                                    <span className='font-mono font-bold'>City: {val.city}</span>
+                                                    <span className='font-mono font-bold'>State: {val.state}</span>
+                                                    <span className='font-mono font-bold'>GSTIN: {val.gstin}</span>
+                                                    <span className='font-mono font-bold'>Mob: {val.phone}</span>
+                                                    <span className='font-mono font-bold'>HSN / SAC: 996331</span>
+                                                </div><hr />
+                                            </div>
+                                        })
+                                    }
                                 </>
                                 <div>
                                     <div className="first-box mx-10 my-2 grid grid-cols-2 font-mono font-bold text-[0.8rem] leading-4">
                                         <span>Bill No : {val.invoice_number}</span>
-                                        <span>Date : {localDate}</span>
                                         <span>Table no: {val.table}</span>
+                                        <span>Date : {localDate}</span>
+                                        <span>Time : {localTime}</span>
                                         <span>Customer : {val.customer}</span>
                                         <span>Mode : {val.payment_type}</span>
-                                        <span>State : {localStorage.getItem("state")}</span>
                                     </div><hr />
                                 </div>
                                 <div className="Table my-1">
@@ -85,7 +112,7 @@ const GeneratedInvoice = () => {
                                                 <ul>
                                                     <li className='grid grid-cols-6 text-center text-[0.8rem] font-mono font-bold'>
                                                         <span className='col-span-1'>{idx + 1}</span>
-                                                        <span className='col-span-2'>{rate.dish_name}</span>
+                                                        <span className='col-span-2'>{rate.dish_description}</span>
                                                         <span className='col-span-1'>{rate.cost}</span>
                                                         <span className='col-span-1'>{rate.quantity}</span>
                                                         <span className='col-span-1'>{rate.cost * rate.quantity}</span>
@@ -102,13 +129,13 @@ const GeneratedInvoice = () => {
                                         <span>SGST @2.5% : Rs. {val.sgst}</span>
                                         <span>CGST @2.5% : Rs. {val.cgst}</span>
                                         <span>---------------------</span>
-                                        <span>Net Amount : Rs. {val.total}</span>
+                                        <span>Grand Total : Rs. {val.total}</span>
                                     </div>
                                 </div>
                                 <div className="fun_fact flex flex-col text-[0.8rem] font-mono font-bold items-center mt-8">
                                     <span>Thank You for Visiting </span>
                                     <span>Have a Nice Day </span>
-                                    <span className='my-3'>Designed & Developed by : strix.co.in</span>
+                                    <span className='my-3'>Restrofin by : strix.co.in</span>
                                 </div>
                             </div>
                         })

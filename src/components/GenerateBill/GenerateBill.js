@@ -4,7 +4,7 @@ import ItemList from './ItemList';
 import axios from 'axios';
 
 
-const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill }) => {
+const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
     var API = process.env.REACT_APP_INVOICE;
     var All_platform_API = process.env.REACT_APP_GET_ALL_PLATFORM;
 
@@ -231,11 +231,11 @@ const GenerateBill = ({ mode, OrderID, Table, All_Orders, dish, GeneratedBill })
                         <div className="grid grid-cols-4 gap-4 mt-5">
                             <div className='flex flex-col'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>S.G.S.T @2.5%</label>
-                                <input type="text" ref={SGST_ref} value={Math.round((total - (total * (discount / 100))) * (2.5 / 100))} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
+                                <input type="text" ref={SGST_ref} value={(total - (total * (discount / 100))) * (2.5 / 100)} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>C.G.S.T @2.5%</label>
-                                <input type="text" ref={CGST_ref} value={Math.round((total - (total * (discount / 100))) * (2.5 / 100))} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
+                                <input type="text" ref={CGST_ref} value={(total - (total * (discount / 100))) * (2.5 / 100)} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col col-span-2'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Grand Total</label>

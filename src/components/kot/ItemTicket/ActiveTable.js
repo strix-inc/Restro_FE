@@ -61,7 +61,6 @@ const TableOrederedItem = ({ mode, ActiveKot, getkotTable }) => {
                             </div>
                             {
                                 val.orders.map(item => {
-                                    // { console.log(val.table) }
                                     return <div key={item.id} className='grid grid-cols-5 text-[0.8rem] px-2 font-mono pb-2'>
                                         <span className='col-span-2'>{item.dish_name}</span>
                                         <span className='flex justify-center'>{item.quantity}</span>

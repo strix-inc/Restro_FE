@@ -11,7 +11,7 @@ const Items = ({ Data, mode, EditDish, DeleteDish }) => {
                 Data.map((val, index) => {
                     return <div key={val.id} className={`Item-list grid grid-cols-5 scrollbar-hide p-2 ${mode === 'black' ? 'text-black' : 'text-black'} ${index % 2 === 0 ? 'bg-gray-300' : 'bg-slate-100'}`}>
                         <div className='relative col-span-2'>
-                            <span className='font-bold'>{val.name}</span>
+                            <span className='font-bold'>{val.name.toUpperCase()}</span>
                             <span className='absolute w-4 mt-1 mx-1'>{val.dish_type === 'Non-Veg' ? <img src={Non_Veg} /> : <img src={Veg} />}</span>
                             <div
                                 className="
@@ -20,12 +20,12 @@ const Items = ({ Data, mode, EditDish, DeleteDish }) => {
                             hover:before:opacity-100" data-tip="Edit">
                                 <span className='text-amber-700 cursor-pointer text-[1.1rem]'><TbEdit onClick={() => EditDish(val.id, val.dish_type, val.name, val.category_name)} /></span>
                             </div>
-                            <div className="
+                            {/* <div className="
                             absolute right-[3rem] top-[-1.6rem] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1.2rem] before:top-[12px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                             before:bg-red-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
                             hover:before:opacity-100" data-tip="Delete">
                                 <span className='text-[1.2rem] cursor-pointer text-red-500'><MdDeleteForever onClick={() => DeleteDish(val.id)} /></span>
-                            </div>
+                            </div> */}
                         </div>
                         <div className='col-span-3 flex justify-between mx-[12px]'>
                             {

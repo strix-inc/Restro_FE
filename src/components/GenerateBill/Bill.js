@@ -7,7 +7,6 @@ const Bill = ({ mode }) => {
     const [Orders, setOrders] = useState([]);
     const [Alldish, setAllDish] = useState([]);
     const [OrderID, setOrderID] = useState('');
-    const [Table, setTable] = useState(0);
 
     const GeneratedBill = () => {
         const id = localStorage.getItem('ActiveKotID');
@@ -20,7 +19,6 @@ const Bill = ({ mode }) => {
         }).then(val => {
             setOrders(val.data.data.orders);
             setOrderID(val.data.data.id);
-            setTable(val.data.data.table);
             var orders = val.data.data.orders;
             if (orders.length === 0) {
                 window.location = '/kot';
@@ -55,7 +53,6 @@ const Bill = ({ mode }) => {
             <GenerateBill
                 mode={mode}
                 OrderID={OrderID}
-                Table={Table}
                 All_Orders={Orders}
                 dish={Alldish}
                 GeneratedBill={GeneratedBill}

@@ -167,7 +167,7 @@ const Kot = (props) => {
 
     return (
         <>
-            {OrderPage && <OrederedKT OrderTicket={OrderTicket} setOrderPage={setOrderPage} />}
+            {OrderPage && <OrederedKT OrderTicket={OrderTicket} setOrderPage={setOrderPage} ActiveKot={ActiveKot} />}
             {/* <Arrow /> */}
             <div className={`flex flex-col w-[80%] ml-[20%]`}>
                 <form onSubmit={handleFormSubmit} className='relative w-[98%] m-auto top-[4rem]'>

@@ -2,11 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { AiFillPrinter } from 'react-icons/ai';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import Spinner from '../spinner/Spinner';
 
 const KotHistory = (props) => {
     var Order_history_API = process.env.REACT_APP_POST_ORDER
 
     const [kothistory, setKotHistory] = useState([]);
+    const [loading, setLoading] = useState(false);
 
     const handleKotHistoryPrint = (id) => {
         localStorage.setItem("Kot_History_ID", id);
@@ -14,6 +16,7 @@ const KotHistory = (props) => {
 
     useEffect(() => {
         const getkothistory = () => {
+            setLoading(true);
             const headers = {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('access')}`
@@ -22,6 +25,9 @@ const KotHistory = (props) => {
                 headers: headers
             }).then(val => {
                 setKotHistory(val.data.data);
+                if (val.status === 200) {
+                    setLoading(false);
+                }
             }).catch(function (error) {
                 console.log(error);
             });
@@ -38,6 +44,7 @@ const KotHistory = (props) => {
                             <span>Date & Time</span>
                             <span>Table No.</span>
                         </div><hr />
+                        {loading && <span className='flex justify-center item-center my-2'><Spinner /></span>}
                         {
                             kothistory.map((val, index) => {
                                 var localDate = new Date(val.created_at).toLocaleString("en-US", {

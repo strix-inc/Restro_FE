@@ -8,12 +8,14 @@ import { MdEdit } from 'react-icons/md'
 import { AiFillPrinter } from 'react-icons/ai'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
+import Spinner from '../spinner/Spinner'
 
 
 const Dashboard = (props) => {
     var api = process.env.REACT_APP_GET_RESTAURANT
 
     const [AllSaleHistory, setAllSaleHistory] = useState([]);
+    const [loading, setLoading] = useState(false);
     const DsItem = [
         { id: 1, name: 'Best Customer', records: 2310, icons: <ImUserCheck />, bg: 'bg-green-300' },
         { id: 2, name: 'Top sale item', records: 2310, icons: <IoFastFood />, bg: 'bg-red-300' },
@@ -30,6 +32,7 @@ const Dashboard = (props) => {
     }
 
     const SaleHistory = () => {
+        setLoading(true);
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
@@ -38,6 +41,9 @@ const Dashboard = (props) => {
             headers: headers
         }).then(val => {
             setAllSaleHistory(val.data.data);
+            if (val.status === 200) {
+                setLoading(false);
+            }
         }).catch(function (error) {
             console.log(error);
         });
@@ -137,6 +143,7 @@ const Dashboard = (props) => {
                                 <span className='flex justify-center items-center'>TOTAL</span>
                             </div>
                             <div className={`sale_history_detail rounded-sm border border-t-0 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'} overflow-auto scrollbar-hide h-[290px]`}>
+                                {loading && <span className='flex justify-center item-center my-2'><Spinner /></span>}
                                 {
                                     AllSaleHistory.map((val, index) => {
                                         var localDate = new Date(val.created_at).toLocaleString("en-US", {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
 import { BiUserPlus } from 'react-icons/bi'
+import Spinner from '../spinner/Spinner';
 
 const Setting = ({ mode }) => {
     var Restauranta_API = process.env.REACT_APP_GET_RESTAURANT
@@ -30,6 +31,7 @@ const Setting = ({ mode }) => {
 
     const [state, setState] = useState([]);
     const [datas, setDatas] = useState(data);
+    const [loading, setLoading] = useState(false);
 
     const handleEdit = (event) => {
         const { name, value } = event.target;
@@ -47,6 +49,7 @@ const Setting = ({ mode }) => {
     }
 
     useEffect(() => {
+        setLoading(true);
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
@@ -57,6 +60,9 @@ const Setting = ({ mode }) => {
             localStorage.setItem('Restaurant_detail', JSON.stringify(val.data.data));
             localStorage.setItem('Restaurant_name', val.data.data.display_name);
             setState([val.data.data]);
+            if (val.status === 200) {
+                setLoading(false);
+            }
         }).catch(function (error) {
             console.log(error);
         });
@@ -70,7 +76,7 @@ const Setting = ({ mode }) => {
                     <h1 className={`text-[1.5rem] font-bold mx-6 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Settings</h1><hr />
                     <div className='flex flex-col mt-3'>
                         <div className={`details rounded-md ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'}`}>
-                            <h1 className={`text-[1.2rem] font-medium mx-6 mt-4 underline ${mode === 'black' ? 'text-white' : 'text-black'}`}>Business Details</h1>
+                            <h1 className={`text-[1.2rem] flex font-medium mx-6 mt-4 underline ${mode === 'black' ? 'text-white' : 'text-black'}`}>Business Details {loading && <span ><Spinner /></span>}</h1>
                             <div className="AddStaff absolute top-[9%] right-6">
                                 <Link to={"/addstaff"} className="w-[10rem] h-[2.5rem] flex justify-center items-center bg-blue-500 text-white font-bold text-[0.9rem] rounded-md gap-2">
                                     <span><BiUserPlus className='text-[1.4rem]' /></span>
@@ -110,7 +116,7 @@ const Setting = ({ mode }) => {
 
                         {/* *********************************** */}
                         <div className={`details rounded-md ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'}`}>
-                            <h1 className={`mt-6 text-[1.2rem] font-medium mx-6 underline ${mode === 'black' ? 'text-white' : 'text-black'}`}>Additional Details</h1>
+                            <h1 className={`mt-6 text-[1.2rem] flex font-medium mx-6 underline ${mode === 'black' ? 'text-white' : 'text-black'}`}>Additional Details {loading && <span ><Spinner /></span>}</h1>
                             {
                                 state.map(item => {
                                     return <form key={item.id} className={`grid grid-cols-2 pt-2 px-6 gap-4 rounded-b-md ${mode === 'black' ? 'text-white' : ''}`} onSubmit={submit}>

@@ -5,6 +5,7 @@ import MenuCategory from './MenuCategory';
 import axios from 'axios';
 import EditDishItem from './EditDish/EditDishItem';
 import DeleteDIshItem from './DeleteDish/DeleteDIshItem';
+import Spinner from '../spinner/Spinner';
 
 const ItemMenu = ({ mode }) => {
 
@@ -24,6 +25,8 @@ const ItemMenu = ({ mode }) => {
     const [OneDishID, setOneDishID] = useState('');
     const [vegDish, setVegDish] = useState(false);
     const [nonVegDish, setNonVegDish] = useState(false);
+    const [loading, setLoading] = useState(false);
+
 
 
     // get all the platforms !!
@@ -101,6 +104,7 @@ const ItemMenu = ({ mode }) => {
 
     // api for the all dish !! 
     const GetAllDish = () => {
+        setLoading(true);
         const headers = {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
@@ -112,6 +116,9 @@ const ItemMenu = ({ mode }) => {
             setData(val.data.data);
             setFilterItem(val.data.data);
             setAllDishData(val.data.data);
+            if (val.status === 200) {
+                setLoading(false);
+            }
         }).catch(function (error) {
             console.log(error);
         });
@@ -225,6 +232,7 @@ const ItemMenu = ({ mode }) => {
                                 </div>
                             </div>
                             <div className={`Item-table border border-t-0 ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} mx-2 h-[430px] overflow-auto scrollbar-hide`}>
+                                {loading && <span className='flex justify-center item-center my-2'><Spinner /></span>}
                                 <Items
                                     EditDish={EditDish}
                                     DeleteDish={DeleteDish}

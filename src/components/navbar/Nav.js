@@ -18,7 +18,7 @@ const Nav = (props) => {
             <nav className={`w-full fixed z-20`}>
                 <div className="Navbar">
                     <div className={`title ${props.mode === 'black' ? 'nav_bg text-white' : 'bg-white text-black shadow-sm shadow-slate-400'} flex justify-between px-4 py-1`}>
-                        <h1 className={`Rname text-[2rem]  ${props.mode === 'black' ? ' text-white' : 'text-black'}  px-2 font-bold flex justify-center items-center`}>{RestaurantName}</h1>
+                        <h1 className={`Rname text-[1.8rem]  ${props.mode === 'black' ? ' text-white' : 'text-black'}  px-2 font-bold flex justify-center items-center`}>{RestaurantName}</h1>
                         <div className='flex justify-between gap-12'>
                             <span className='flex flex-col justify-center items-center cursor-pointer text-blue-500 mt-4'>
                                 <small className='text-[1.4rem]'>

@@ -21,8 +21,8 @@ const Dashboard = (props) => {
         { id: 4, name: 'Total Customer', records: 2310, icons: <HiUserGroup />, bg: 'bg-amber-300' },
     ]
 
-    const handleEditSaleHistory = () => {
-        console.log("edit clicked");
+    const handleEditSaleHistory = (id) => {
+        localStorage.setItem('ActiveKotID', id);
     }
 
     const handleSaleHistory = (id) => {
@@ -149,7 +149,7 @@ const Dashboard = (props) => {
                             top-[-18px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[14px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                             before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%] before:z-20
                             hover:before:opacity-100" data-tip="Edit">
-                                                    <span className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={handleEditSaleHistory} /></span>
+                                                    <Link to='/bill' target='_blank' rel='nonrefer' className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link>
                                                 </div>
                                                 <div className="absolute 
                                         right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full

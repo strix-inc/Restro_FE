@@ -54,23 +54,25 @@ const SaleHistory = () => {
                             return <div key={index} className="">
                                 <>
                                     <h1 className='text-center text-[2rem] tracking-[-1px] font-mono font-bold'>{localStorage.getItem('Restaurant_name')}</h1>
-                                    <div className='grid grid-cols-2 text-[0.7rem] ml-10'>
-                                        <span className='font-mono font-bold'>Street: {localStorage.getItem('street')}</span>
-                                        <span className='font-mono font-bold'>City: {localStorage.getItem('city')}</span>
-                                        <span className='font-mono font-bold'>State: {localStorage.getItem('state')}</span>
-                                        <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin')}</span>
+                                    <div className='flex text-[0.7rem] justify-center leading-3'>
+                                        <span className='font-mono font-bold'>{localStorage.getItem('street')}</span>
+                                        <span className='font-mono font-bold mx-1'>{localStorage.getItem('city')},</span>
+                                        <span className='font-mono font-bold'>{localStorage.getItem('state')}</span>
+                                    </div>
+                                    <div className='grid text-[0.8rem] text-center'>
                                         <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone')}</span>
-                                        <span className='font-mono font-bold'>HSN / SAC: 996331</span>
+                                        <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin')}</span>
                                     </div><hr />
                                 </>
                                 <div>
-                                    <div className="first-box mx-10 my-2 grid grid-cols-2 font-mono font-bold text-[0.8rem] leading-4">
+                                    <div className="first-box mx-10 my-2 grid grid-cols-2 font-mono font-bold text-[0.7rem] leading-4">
                                         <span>Bill No : {val.invoice_number}</span>
                                         <span>Table no: {val.table}</span>
                                         <span>Date : {localDate}</span>
                                         <span>Time : {localTime}</span>
                                         <span>Customer : {val.customer}</span>
                                         <span>Mode : {val.payment_type}</span>
+                                        <span>HSN / SAC: 996331</span>
                                     </div><hr />
                                 </div>
                                 <div className="Table my-1">

@@ -232,7 +232,7 @@ const ItemMenu = ({ mode }) => {
                                 </div>
                             </div>
                             <div className={`Item-table border border-t-0 ${mode === 'black' ? 'border-slate-600' : 'border-slate-300'} mx-2 h-[430px] overflow-auto scrollbar-hide`}>
-                                {loading && <span className='flex justify-center item-center my-2'><Spinner /></span>}
+                                {loading && <span className='flex justify-center item-center my-2'><Spinner mode={mode} /></span>}
                                 <Items
                                     EditDish={EditDish}
                                     DeleteDish={DeleteDish}

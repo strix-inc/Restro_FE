@@ -143,7 +143,7 @@ const Dashboard = (props) => {
                                 <span className='flex justify-center items-center'>TOTAL</span>
                             </div>
                             <div className={`sale_history_detail rounded-sm border border-t-0 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'} overflow-auto scrollbar-hide h-[290px]`}>
-                                {loading && <span className='flex justify-center item-center my-2'><Spinner /></span>}
+                                {loading && <span className='flex justify-center item-center my-2'><Spinner mode={props.mode} /></span>}
                                 {
                                     AllSaleHistory.map((val, index) => {
                                         var localDate = new Date(val.created_at).toLocaleString("en-US", {

@@ -4,10 +4,13 @@ import axios from 'axios';
 
 const Rough = () => {
 
-
+    var x = 4 + "4";
+    console.log(x)
 
     return (
         <>
+            <div>
+            </div>
             <div className={`flex flex-col w-[80%] ml-[20%]`}>
                 <div className='mt-[4rem] m-2'>
                     <h1>spinner</h1>

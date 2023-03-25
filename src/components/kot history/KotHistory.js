@@ -44,7 +44,7 @@ const KotHistory = (props) => {
                             <span>Date & Time</span>
                             <span>Table No.</span>
                         </div><hr />
-                        {loading && <span className='flex justify-center item-center my-2'><Spinner /></span>}
+                        {loading && <span className='flex justify-center item-center my-2'><Spinner mode={props.mode} /></span>}
                         {
                             kothistory.map((val, index) => {
                                 var localDate = new Date(val.created_at).toLocaleString("en-US", {

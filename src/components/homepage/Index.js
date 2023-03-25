@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Bill from '../Images/Bill.png'
 import zomato from '../Images/zomato.png'
@@ -10,11 +10,19 @@ import B1 from '../Images/b2.png'
 import B2 from '../Images/b3.png'
 import { TiTick } from 'react-icons/ti'
 import { HiPhoneMissedCall } from 'react-icons/hi'
+import { MdConnectWithoutContact } from 'react-icons/md'
+import { FaChrome } from 'react-icons/fa'
 import { RiWhatsappFill } from 'react-icons/ri'
 import IMG from '../Images/R.png'
 
 
 const HomePage = () => {
+
+    const [contactCenter, setcontactCenter] = useState(false);
+
+    const handleContactCenter = () => {
+        setcontactCenter(contactCenter === true ? false : true);
+    }
     return (
         <>
             <div className="homepage fixed w-[100%] h-[100vh] bg-white top-0 left-0 overflow-auto z-30">
@@ -26,15 +34,38 @@ const HomePage = () => {
                             </div>
                             <div className="listItems mx-2 flex gap-8 font-bold text-[1.2rem]">
                                 <Link to="/login" className='mt-3'><span className='text-[1.2rem] cursor-pointer font-bold hover:text-blue-600'>Login</span></Link>
-                                <Link to="/signUp"><span className='bg-blue-500 w-[9rem] flex justify-center items-center h-[3rem] rounded-md py-1 px-4 shadow-sm shadow-blue-500 text-white transition-all ease-in duration-300
+                                <Link to="/signUp"><span className='bg-blue-500 w-[10rem] flex justify-center items-center h-[3rem] rounded-md py-1 px-4 shadow-sm shadow-blue-500 text-white transition-all ease-in duration-300
                                 hover:bg-white hover:text-blue-500 border-2 border-blue-500 hover:border-blue-500 hover:shadow-none cursor-pointer'>Get Started</span></Link>
                             </div>
                         </div>
                     </div>
+                    <div className='fixed right-0 bottom-0 z-30'>
+                        {contactCenter && <div className='w-[10rem] h-[10rem] bg-blue-400/10 backdrop-blur-md rounded-full'>
+                            <span className='absolute right-7 text-[1.7rem] bottom-[7.5rem] text-green-700 leading-[1px]'>
+                                <a href="https://wa.me/+918093552723" target="_blank" rel="noreferrer"><RiWhatsappFill /></a>
+                                <small className='text-[0.5rem] text-black'>Whatsapp</small>
+                            </span>
+                            <span className='absolute right-[6.3rem] bottom-[5.8rem] text-[1.7rem] text-blue-600 leading-[1px]'>
+                                <a href="tel:80935-52723" target="_blank" rel="noreferrer"><HiPhoneMissedCall /></a>
+                                <small className='text-[0.5rem] text-black'>Call Me</small>
+                            </span>
+                            <span className='absolute right-[6.5rem] bottom-[1.7rem] text-[1.7rem] text-red-500 leading-[1px]'>
+                                <a href="https://strix.co.in/" target="_blank" rel="noreferrer"><FaChrome /></a>
+                                <small className='text-[0.5rem] text-black'>Website</small>
+                            </span>
+                        </div>}
+                        <div className='absolute bottom-0 right-0 w-[4rem] h-[4rem] rounded-full bg-black m-4 flex justify-center items-center text-[2rem] text-white cursor-pointer' onClick={handleContactCenter}><MdConnectWithoutContact /></div>
+                    </div>
                     <section>
-                        <div className='home_body h-[500px] flex flex-col justify-center items-center leading-[3rem]'>
-                            <h1 className='text-[3.8rem] mt-[4.7rem] font-bold'>Restaurants, Cafés and Hotels</h1>
-                            <p className='text-[1.5rem]'>Get vibrant Orders from customers, Add and Edit new Items digitally & boost your sales.</p>
+                        <div className='home_body h-[500px] flex flex-col justify-center items-center'>
+                            <div className='wrapper'>
+                                <div className='static-txt'>
+                                    <span className='dynamic-txts'>
+                                        <h1 className='text-[3.8rem] mt-[4.7rem] font-bold'>Restaurants, Cafés and Hotels</h1>
+                                    </span>
+                                </div>
+                            </div>
+                            <h1 className='text-[1.5rem]'>Get vibrant Orders from customers, Add and Edit new Items digitally & boost your sales.</h1>
                         </div>
                     </section>
                     <section>
@@ -177,16 +208,6 @@ const HomePage = () => {
                         <div className='h-[50px] bg-slate-50 home_body'>
                             <div className="absolute bottom-0 w-full flex justify-between items-center h-[70px] bg-blue-500">
                                 <span className='text-white text-[1rem] font-bold mx-6'>Copyright © 2020-2023 STRIX | All rights reserved.</span>
-                                <div className="social-mdeia flex justify-between items-center mx-10">
-                                    <div className='flex mx-4'>
-                                        <span className='flex items-center text-[1.5rem] text-white'><HiPhoneMissedCall /></span>
-                                        <span className='mx-2 mt-1 font-bold text-white'>+918093552723</span>
-                                    </div>
-                                    <div className='flex mx-4'>
-                                        <span className='flex items-center text-white text-[1.5rem]'><RiWhatsappFill /></span>
-                                        <a className='mx-2 mt-1 font-bold text-white hover:text-black' href="https://wa.me/+918093552723" target="_blank" rel="noreferrer">Send message</a>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                     </footer>

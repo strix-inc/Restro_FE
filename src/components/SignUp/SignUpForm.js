@@ -3,6 +3,8 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Form from './Form'
 import axios from 'axios'
+import IMG from '../Images/R.png'
+
 
 const SignUpForm = () => {
     var api = process.env.REACT_APP_SIGNUP_API
@@ -90,6 +92,9 @@ const SignUpForm = () => {
     return (
         <>
             <div className="signup_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-30 top-0 left-0">
+                <div className='m-2'>
+                    <img src={IMG} alt="Loading..." className='home w-[13rem] h-[5rem]' />
+                </div>
                 <div className="SignUpForm absolute top-[15%] w-full m-auto rounded-lg">
                     <Form
                         FormValue={FormValue}  /* get the values from each input */

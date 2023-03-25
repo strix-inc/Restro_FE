@@ -11,6 +11,7 @@ import B2 from '../Images/b3.png'
 import { TiTick } from 'react-icons/ti'
 import { HiPhoneMissedCall } from 'react-icons/hi'
 import { RiWhatsappFill } from 'react-icons/ri'
+import IMG from '../Images/R.png'
 
 
 const HomePage = () => {
@@ -19,9 +20,9 @@ const HomePage = () => {
             <div className="homepage fixed w-[100%] h-[100vh] bg-white top-0 left-0 overflow-auto z-30">
                 <div className="home_container relative">
                     <div className='fixed w-full shadow-md shadow-blue-100 z-10 bg-white'>
-                        <div className="HomeNav w-[60%] m-auto flex justify-between items-center py-5">
+                        <div className="HomeNav w-[60%] m-auto flex justify-between items-center py-3">
                             <div className="logo flex items-center">
-                                <span className='home text-[1.6rem] font-bold'>STRIX</span>
+                                <img src={IMG} alt="Loading..." className='home w-[8rem] h-[3.2rem]' />
                             </div>
                             <div className="listItems mx-2 flex gap-8 font-bold text-[1.2rem]">
                                 <Link to="/login" className='mt-3'><span className='text-[1.2rem] cursor-pointer font-bold hover:text-blue-600'>Login</span></Link>

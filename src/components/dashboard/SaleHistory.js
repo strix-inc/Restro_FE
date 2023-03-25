@@ -7,21 +7,6 @@ import axios from 'axios'
 const SaleHistory = () => {
 
     const [Get_oneSaleHistory, setGet_oneSaleHistory] = useState([]);
-    const [restaurant_detail, setRestaurant_detail] = useState([])
-
-    const get_restaurant_Detail = () => {
-        const Restaurant_Detail = localStorage.getItem('Restaurant_detail');
-        const res = JSON.parse(Restaurant_Detail);
-        setRestaurant_detail([
-            {
-                street: res.address_street,
-                city: res.address_city,
-                state: res.address_state,
-                phone: res.contact,
-                gstin: res.gstin
-            }
-        ])
-    }
 
 
     // printing the ticket of Item ordered by the customer
@@ -48,7 +33,6 @@ const SaleHistory = () => {
 
     useEffect(() => {
         GetSaleHistory();
-        get_restaurant_Detail();
     }, []);
 
     return (
@@ -70,21 +54,14 @@ const SaleHistory = () => {
                             return <div key={index} className="">
                                 <>
                                     <h1 className='text-center text-[2rem] tracking-[-1px] font-mono font-bold'>{localStorage.getItem('Restaurant_name')}</h1>
-                                    {
-                                        restaurant_detail.map((val, idx) => {
-
-                                            return <div key={idx}>
-                                                <div className='grid grid-cols-2 text-[0.7rem] ml-10'>
-                                                    <span className='font-mono font-bold'>Street: {val.street}</span>
-                                                    <span className='font-mono font-bold'>City: {val.city}</span>
-                                                    <span className='font-mono font-bold'>State: {val.state}</span>
-                                                    <span className='font-mono font-bold'>GSTIN: {val.gstin}</span>
-                                                    <span className='font-mono font-bold'>Mob: {val.phone}</span>
-                                                    <span className='font-mono font-bold'>HSN / SAC: 996331</span>
-                                                </div><hr />
-                                            </div>
-                                        })
-                                    }
+                                    <div className='grid grid-cols-2 text-[0.7rem] ml-10'>
+                                        <span className='font-mono font-bold'>Street: {localStorage.getItem('street')}</span>
+                                        <span className='font-mono font-bold'>City: {localStorage.getItem('city')}</span>
+                                        <span className='font-mono font-bold'>State: {localStorage.getItem('state')}</span>
+                                        <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin')}</span>
+                                        <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone')}</span>
+                                        <span className='font-mono font-bold'>HSN / SAC: 996331</span>
+                                    </div><hr />
                                 </>
                                 <div>
                                     <div className="first-box mx-10 my-2 grid grid-cols-2 font-mono font-bold text-[0.8rem] leading-4">

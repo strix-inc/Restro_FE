@@ -52,6 +52,11 @@ const Dashboard = (props) => {
             headers: headers
         }).then(val => {
             localStorage.setItem('Restaurant_name', val.data.data.display_name);
+            localStorage.setItem('street', val.data.data.address_street);
+            localStorage.setItem('phone', val.data.data.contact);
+            localStorage.setItem('gstin', val.data.data.gstin);
+            localStorage.setItem('city', val.data.data.address_city);
+            localStorage.setItem('state', val.data.data.address_state);
         }).catch(function (error) {
             console.log(error);
         });

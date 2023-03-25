@@ -32,7 +32,6 @@ const LoginForm = (props) => {
                         <label htmlFor="Phone" className=' text-black font-semibold mx-2'>Phone Number <span className='text-red-500'>*</span></label>
                         <input type="number" name='username' value={props.contact} placeholder='Phone number' className={`rounded-md py-2 px-3 bg-transparent border ${props.matched === '' ? 'border-slate-400' : 'border-red-600'}`} onChange={handleContactInput} />
                     </div>
-                    {/* <div className='grid grid-cols-2 gap-x-2 my-2'> */}
                     <div className="Password flex flex-col relative mt-4">
                         <label htmlFor="password" className=' text-black font-semibold mx-2'>Password <span className='text-red-500'>*</span></label>
                         <input type={RevealPs ? 'text' : 'password'} name='password' value={props.password} placeholder='Password' className={`rounded-md py-2 px-3 bg-transparent border ${props.matched === '' ? 'border-slate-400' : 'border-red-600'}`} onChange={handlePasswordInput} />

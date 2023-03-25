@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react'
 import LoginForm from './LoginForm'
 import axios from 'axios'
 import LoadingBar from 'react-top-loading-bar'
+import IMG from '../Images/R.png'
+
 
 
 const Login = (props) => {
@@ -68,7 +70,10 @@ const Login = (props) => {
             />
             {!props.IsLoggedIn ? (
                 <div className="signup_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-30 top-0 left-0">
-                    <div className="SignUpForm absolute top-[20%] w-full flex rounded-lg">
+                    <div className='m-2'>
+                        <img src={IMG} alt="Loading..." className='home w-[13rem] h-[5rem]' />
+                    </div>
+                    <div className="LoginForm absolute top-[20%] w-full flex rounded-lg">
                         <LoginForm
                             contact={contact}
                             password={password}

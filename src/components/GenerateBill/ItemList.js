@@ -15,7 +15,7 @@ const ItemList = ({ id, dish_id, name, size, quantity, cost, index, GeneratedBil
         ChangeQuantity();
     }
     const Decrease = (dshID) => {
-        let Qty_size = --quantitySize;
+        let Qty_size = (quantitySize <= 0 ? 1 : --quantitySize);
         setQuantitySize(Qty_size);
         setQuantity_size_ByUser(Qty_size)
         setDISH_ID(dshID)
@@ -63,7 +63,7 @@ const ItemList = ({ id, dish_id, name, size, quantity, cost, index, GeneratedBil
                     <span>{quantitySize <= 0 ? 1 : quantitySize}</span>
                     <button type='button' className={`w-6 h-4 bg-red-500 flex justify-center items-center text-white rounded-sm mx-4 font-bold cursor-pointer text-[1.2rem]`} onClick={() => Decrease(dish_id)}>-</button>
                 </div>
-                <span className={`border ${mode === 'black' ? 'border-slate-500 text-white inBlack' : 'inWhite border-slate-300'} flex justify-center items-center py-1 font-medium`}>{cost * quantitySize}</span>
+                <span className={`border ${mode === 'black' ? 'border-slate-500 text-white inBlack' : 'inWhite border-slate-300'} flex justify-center items-center py-1 font-medium`}>{quantitySize <= 0 ? cost * 1 : cost * quantitySize}</span>
                 <span className={`border ${mode === 'black' ? 'border-slate-500 text-white inBlack' : 'inWhite border-slate-300'} flex justify-center items-center`}><RiDeleteBin2Fill className={`text-red-500 text-[1rem] cursor-pointer`} onClick={() => DeleteDishFromList(id)} /></span>
             </div>
             <ToastContainer position="top-right"

@@ -6,22 +6,90 @@ import { IoMdSearch } from 'react-icons/io'
 import { VscFilePdf } from 'react-icons/vsc'
 import { MdEdit } from 'react-icons/md'
 import { AiFillPrinter } from 'react-icons/ai'
+import { TiWarning } from 'react-icons/ti'
 import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Spinner from '../spinner/Spinner'
+import fileDownload from 'js-file-download'
 
 
 const Dashboard = (props) => {
     var api = process.env.REACT_APP_GET_RESTAURANT
 
     const [AllSaleHistory, setAllSaleHistory] = useState([]);
+    const [Dashbaord_Stats, setDashboard_Stats] = useState([]);
+    const [FromDate, setFromDate] = useState('');
+    const [ToDate, setToDate] = useState('');
+    const [OrderType, setOrderType] = useState('Restaurant');
+    const [PaymentType, setPaymentType] = useState('Cash')
     const [loading, setLoading] = useState(false);
     const DsItem = [
-        { id: 1, name: 'Best Customer', records: 2310, icons: <ImUserCheck />, bg: 'bg-green-300' },
-        { id: 2, name: 'Top sale item', records: 2310, icons: <IoFastFood />, bg: 'bg-red-300' },
-        { id: 3, name: 'Lowest sale item', records: 2310, icons: <IoFastFood />, bg: 'bg-blue-300' },
-        { id: 4, name: 'Total Customer', records: 2310, icons: <HiUserGroup />, bg: 'bg-amber-300' },
+        { id: 1, name: 'Top sale item', records: Dashbaord_Stats.top_sale, icons: <IoFastFood />, bg: 'bg-red-300' },
+        { id: 2, name: 'Lowest sale item', records: Dashbaord_Stats.lowest_sale, icons: <IoFastFood />, bg: 'bg-blue-300' },
+        { id: 3, name: 'Maximum Sale', records: Dashbaord_Stats.max_sale, icons: <ImUserCheck />, bg: 'bg-green-300' },
+        { id: 4, name: 'Average Sale', records: Math.round(Dashbaord_Stats.avg_sale * 10) / 10, icons: <HiUserGroup />, bg: 'bg-amber-300' },
     ]
+
+
+    // states for fetching older data !!
+    const handleFromDate = (event) => {
+        var date = event.target.value;
+        var Date = '';
+        var new_date = date.split("-");
+        for (let i = 0; i < new_date.length; i++) {
+            Date = new_date[2] + "/" + new_date[1] + "/" + new_date[0];
+        }
+        setFromDate(Date);
+    }
+    const handleToDate = (event) => {
+        var date = event.target.value;
+        var Date = '';
+        var new_date = date.split("-");
+        for (let i = 0; i < new_date.length; i++) {
+            Date = new_date[2] + "/" + new_date[1] + "/" + new_date[0];
+        }
+        setToDate(Date);
+    }
+    const handleOrderType = (event) => {
+        setOrderType(event.target.value);
+    }
+    const handlePaymentType = (event) => {
+        setPaymentType(event.target.value);
+    }
+
+    const handleDownload = () => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+        axios.get(`https://restrofin.pythonanywhere.com/finance/invoice?finalized=False&from=${FromDate}&to=${ToDate}&payment=${PaymentType}&platform=${OrderType}`, {
+            headers: headers
+        }, {
+            responseType: 'blob',
+        })
+            .then((val) => {
+                fileDownload(val.data.data, 'test-download.pdf');
+            })
+    }
+
+    const handleSearchSaleHistory = () => {
+        setAllSaleHistory('');
+        setLoading(true);
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+        axios.get(`https://restrofin.pythonanywhere.com/finance/invoice?finalized=False&from=${FromDate}&to=${ToDate}&payment=${PaymentType}&platform=${OrderType}`, {
+            headers: headers
+        }).then(val => {
+            setAllSaleHistory(val.data.data);
+            if (val.status === 200) {
+                setLoading(false);
+            }
+        }).catch(function (error) {
+            console.log(error);
+        });
+    }
 
     const handleEditSaleHistory = (id) => {
         localStorage.setItem('ActiveKotID', id);
@@ -41,6 +109,14 @@ const Dashboard = (props) => {
             headers: headers
         }).then(val => {
             setAllSaleHistory(val.data.data);
+            setDashboard_Stats(
+                {
+                    top_sale: val.data.highest_selling_item.charAt(0) + val.data.highest_selling_item.substring(1).toLowerCase(),
+                    lowest_sale: val.data.lowest_selling_item.charAt(0) + val.data.lowest_selling_item.substring(1).toLowerCase(),
+                    avg_sale: val.data.avg_sale,
+                    max_sale: val.data.max_sale
+                }
+            );
             if (val.status === 200) {
                 setLoading(false);
             }
@@ -70,6 +146,7 @@ const Dashboard = (props) => {
     }, []);
 
 
+
     return (
         <>
             <div className='w-[80%] ml-[20%]'>
@@ -84,7 +161,7 @@ const Dashboard = (props) => {
                                     </div>
                                     <div className='flex flex-col justify-center'>
                                         <span className={`text-[0.9rem] font-semibold ${props.mode === 'black' ? 'text-gray-300' : 'text-gray-500'}`}>{item.name}</span>
-                                        <span className="text-[1rem] font-bold">{item.records}</span>
+                                        <span className="text-[0.7rem] tracking-[0.5px] font-bold">{item.records}</span>
                                     </div>
                                 </div>
                             })
@@ -96,14 +173,14 @@ const Dashboard = (props) => {
                             <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
                                 <div className='col-span-2 flex items-center gap-2'>
                                     <label className='font-bold'>From</label>
-                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} />
+                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} onChange={handleFromDate} />
                                 </div>
                                 <div className='col-span-2 flex items-center gap-2'>
                                     <label className='font-bold'>To</label>
-                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} />
+                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} onChange={handleToDate} />
                                 </div>
                                 <div className='flex items-center'>
-                                    <button className="btn col-span-1 w-[12rem] h-[2.5rem] text-[1rem] bg-blue-500 rounded-md text-white font-semibold border-none hover:bg-blue-600 flex justify-center items-center">
+                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] text-[1rem] bg-blue-500 rounded-md text-white font-semibold border-none hover:bg-blue-600 flex justify-center items-center" onClick={handleDownload}>
                                         <span className='mr-2'><VscFilePdf /></span>
                                         <span>Download report</span>
                                     </button>
@@ -113,22 +190,22 @@ const Dashboard = (props) => {
                             <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
                                 <div className='col-span-2 flex justify-between items-center gap-2'>
                                     <label className='font-bold text-[1rem]'>Order type</label>
-                                    <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[80%] p-1 my-3`} >
-                                        <option value="restaurant">Restaurant</option>
-                                        <option value="zomato">Zomato</option>
-                                        <option value="swiggy">Swiggy</option>
+                                    <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[80%] p-1 my-3`} onChange={handleOrderType} >
+                                        <option value="Restaurant">Restaurant</option>
+                                        <option value="Zomato">Zomato</option>
+                                        <option value="Swiggy">Swiggy</option>
                                     </select>
                                 </div>
                                 <div className='col-span-2 flex items-center gap-2'>
                                     <label className='font-bold text-[0.9rem]'>Payment type</label>
-                                    <select type="date" className={`flex justify-end border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[75%] p-1 my-3`} >
-                                        <option value="cash">Cash</option>
-                                        <option value="upi">UPI</option>
-                                        <option value="card">Card</option>
+                                    <select type="date" className={`flex justify-end border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[75%] p-1 my-3`} onChange={handlePaymentType}>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Upi">UPI</option>
+                                        <option value="Card">Card</option>
                                     </select>
                                 </div>
                                 <div className='flex items-center'>
-                                    <button className="btn col-span-1 w-[12rem] h-[2.5rem] rounded-md text-blue-600 font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all ease-in-out duration-500 flex items-center justify-center"><span className='mr-2'><IoMdSearch className='text-[1.3rem]' /></span>Search</button>
+                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] rounded-md text-blue-600 font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all ease-in-out duration-500 flex items-center justify-center" onClick={handleSearchSaleHistory}><span className='mr-2'><IoMdSearch className='text-[1.3rem]' /></span>Search</button>
                                 </div>
                             </div>
 
@@ -145,7 +222,7 @@ const Dashboard = (props) => {
                             <div className={`sale_history_detail rounded-sm border border-t-0 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'} overflow-auto scrollbar-hide h-[290px]`}>
                                 {loading && <span className='flex justify-center item-center my-2'><Spinner mode={props.mode} /></span>}
                                 {
-                                    AllSaleHistory.map((val, index) => {
+                                    AllSaleHistory.length > 0 ? AllSaleHistory.map((val, index) => {
                                         var localDate = new Date(val.created_at).toLocaleString("en-US", {
                                             localeMatcher: "best fit",
                                         })
@@ -173,7 +250,7 @@ const Dashboard = (props) => {
                                             <li className='flex justify-center items-center'>{((val.subtotal) - (val.subtotal) * (val.discount / 100))}</li>
                                             <li className='flex justify-center items-center'>{val.total}</li>
                                         </ul>
-                                    })
+                                    }) : (loading === false && <span className='flex justify-center text-[0.9rem] items-center pt-3 text-amber-600'><TiWarning className='text-[1.2rem] mx-1 mb-1' /> No Data Found</span>)
                                 }
                             </div>
                         </div>

@@ -45,7 +45,7 @@ const SaleHistory = () => {
                 <div className="Invoice w-[377.95px] border m-auto mt-4" ref={ComponentRef} target="-blank">
                     {
                         Get_oneSaleHistory.map((val, index) => {
-                            var localDate = new Date(val.created_at).toLocaleDateString("en-US", {
+                            var localDate = new Date(val.created_at).toLocaleDateString("en-GB", {
                                 localeMatcher: "best fit",
                             });
                             var localTime = new Date(val.created_at).toLocaleTimeString("en-US", {
@@ -55,13 +55,13 @@ const SaleHistory = () => {
                                 <>
                                     <h1 className='text-center text-[2rem] tracking-[-1px] font-mono font-bold'>{localStorage.getItem('Restaurant_name')}</h1>
                                     <div className='flex text-[0.7rem] justify-center leading-3'>
-                                        <span className='font-mono font-bold'>{localStorage.getItem('street')}</span>
-                                        <span className='font-mono font-bold mx-1'>{localStorage.getItem('city')},</span>
-                                        <span className='font-mono font-bold'>{localStorage.getItem('state')}</span>
+                                        <span className='font-mono font-bold'>{localStorage.getItem('street') === 'null' ? '' : localStorage.getItem('street')}</span>
+                                        <span className='font-mono font-bold mx-1'>{localStorage.getItem('city') === 'null' ? '' : localStorage.getItem('city')}</span>
+                                        <span className='font-mono font-bold'>{localStorage.getItem('state') === 'null' ? '' : localStorage.getItem('state')}</span>
                                     </div>
                                     <div className='grid text-[0.8rem] text-center'>
-                                        <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone')}</span>
-                                        <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin')}</span>
+                                        <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone') ? localStorage.getItem('phone') : ''}</span>
+                                        <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin') === 'null' ? '' : localStorage.getItem('gstin')}</span>
                                     </div><hr />
                                 </>
                                 <div>
@@ -105,6 +105,7 @@ const SaleHistory = () => {
                                     <div className='col-span-1'></div>
                                     <div className='col-span-2 Total_amount mx-8 flex flex-col items-end'>
                                         <span className='my-2'>SubTotal : Rs. {val.subtotal}</span>
+                                        <span>Discount (%) : {val.discount} %</span>
                                         <span>SGST @2.5% : Rs. {val.sgst}</span>
                                         <span>CGST @2.5% : Rs. {val.cgst}</span>
                                         <span>---------------------</span>

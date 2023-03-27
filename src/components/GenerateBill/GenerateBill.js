@@ -30,7 +30,11 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
         for (let i = 0; i < ALL_ORDER.length; i++) {
             let order = ALL_ORDER[i];
             if (order.dish === DISH_ID) {
-                order.quantity = Quantity_size_ByUser
+                if (Quantity_size_ByUser <= 0) {
+                    order.quantity = 1
+                } else {
+                    order.quantity = Quantity_size_ByUser
+                }
             }
         }
     }

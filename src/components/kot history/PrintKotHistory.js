@@ -50,7 +50,7 @@ const PrintKotHistory = ({ OrderTicket }) => {
                 <div className="Invoice w-[377.95px] m-auto mt-4" ref={ComponentRef} target="-blank">
                     {
                         kot_History.map((val, index) => {
-                            var localDate = new Date(val.created_at).toLocaleDateString("en-US", {
+                            var localDate = new Date(val.created_at).toLocaleDateString("en-GB", {
                                 localeMatcher: "best fit",
                             });
                             var localTime = new Date(val.created_at).toLocaleTimeString("en-US", {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { GoAlert } from 'react-icons/go'
 
 const Item = (props) => {
     var API = process.env.REACT_APP_GET_ALL_DISH
@@ -8,7 +9,6 @@ const Item = (props) => {
     const [dishData, setDishData] = useState([]);
     const [wordEntered, setWordEntered] = useState("");
     const [suggestion, setSuggestion] = useState(false);
-
 
     const handleFilter = (event) => {
         props.setRough(true);
@@ -70,12 +70,18 @@ const Item = (props) => {
                     <input type="text" name='name' value={props.rough === true ? wordEntered : ''} placeholder='Item Name' className={`rounded-md py-2 px-3 bg-transparent border text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleFilter} required />
 
                     {suggestion && wordEntered && (
-                        <div className="dataResult absolute mt-[5rem] p-1 rounded-md w-[350px] h-[400px] bg-black text-white overflow-auto scrollbar-hide z-10">
-                            {AllDishData.slice(0, 15).map((val) => {
-                                return (
-                                    <div key={val.id} className='dataItem font-bold p-1 text-[0.9rem] cursor-pointer hover:bg-gray-200 hover:text-black hover:rounded-md' onClick={() => TakeDish(val.id, val.name)}>{val.name.toUpperCase()} </div>
-                                );
-                            })}
+                        <div className={`dataResult absolute mt-[4.5rem] ml-2 rounded-sm w-[350px] h-[400px] bg-white text-blue-800 border shadow-md shadow-black/50 overflow-auto scrollbar-hide z-10`}>
+                            {AllDishData.length > 0 ?
+                                AllDishData.slice(0, 15).map((val) => {
+                                    return (
+                                        <div key={val.id}>
+                                            <span className='dataItem font-bold px-6 py-6 text-[0.9rem] cursor-pointer hover:bg-gray-300 hover:text-black hover:rounded-sm' onClick={() => TakeDish(val.id, val.name)}>
+                                                {val.name.toUpperCase()}
+                                            </span>
+                                            <hr className='border border-slate-300' />
+                                        </div>
+                                    );
+                                }) : <span className='flex ml-6 pt-4 text-[0.8rem] text-black'><GoAlert className='text-[1rem] mx-2 text-red-500' /> No Dish Present , Add Dish <a href="/menu" className='text-red-500 mx-1'>Here</a></span>}
                         </div>
                     )}
 

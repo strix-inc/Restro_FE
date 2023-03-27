@@ -36,7 +36,6 @@ const Login = (props) => {
         } else {
             axios.post(api, Logindata)
                 .then((val) => {
-                    console.log(val);
                     localStorage.setItem('access', val.data.access);
                     if (val.request.status === 200) {
                         setProgress(100);

@@ -47,7 +47,7 @@ function App() {
   }
 
   return (
-    <div className={`${mode === 'black' ? 'inBlack' : 'inWhite'} w-[100%] h-[100vh] overflow-auto`}>
+    <div className={`${mode === 'black' ? 'inBlack' : 'inWhite'} w-[100%] h-[100vh] overflow-auto scrollbar-hide`}>
       <Navbar mode={mode} OnClickMoon={OnClickMoon} OnClickSun={OnClickSun} loggedOut={loggedOut} />
       <Routes>
         <Route path='/' element={

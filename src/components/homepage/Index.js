@@ -25,7 +25,7 @@ const HomePage = () => {
     }
     return (
         <>
-            <div className="homepage fixed w-[100%] h-[100vh] bg-white top-0 left-0 overflow-auto z-30">
+            <div className="homepage fixed w-[100%] h-[100vh] bg-white top-0 left-0 overflow-auto z-30 scrollbar-hide">
                 <div className="home_container relative">
                     <div className='fixed w-full shadow-md shadow-blue-100 z-10 bg-white'>
                         <div className="HomeNav w-[60%] m-auto flex justify-between items-center py-3">
@@ -40,19 +40,21 @@ const HomePage = () => {
                         </div>
                     </div>
                     <div className='fixed right-0 bottom-0 z-30'>
-                        {contactCenter && <div className='w-[10rem] h-[10rem] bg-blue-400/10 backdrop-blur-md rounded-full'>
-                            <span className='absolute right-7 text-[1.7rem] bottom-[7.5rem] text-green-700 leading-[1px]'>
-                                <a href="https://wa.me/+918093552723" target="_blank" rel="noreferrer"><RiWhatsappFill /></a>
-                                <small className='text-[0.5rem] text-black'>Whatsapp</small>
-                            </span>
-                            <span className='absolute right-[6.3rem] bottom-[5.8rem] text-[1.7rem] text-blue-600 leading-[1px]'>
-                                <a href="tel:80935-52723" target="_blank" rel="noreferrer"><HiPhoneMissedCall /></a>
-                                <small className='text-[0.5rem] text-black'>Call Me</small>
-                            </span>
-                            <span className='absolute right-[6.5rem] bottom-[1.7rem] text-[1.7rem] text-red-500 leading-[1px]'>
-                                <a href="https://strix.co.in/" target="_blank" rel="noreferrer"><FaChrome /></a>
-                                <small className='text-[0.5rem] text-black'>Website</small>
-                            </span>
+                        {contactCenter && <div className='w-[10rem] h-[10rem] bg-blue-200 rounded-full'>
+                            <div className='w-[10rem] h-[10rem] bg-blue-400/10 backdrop-blur-md rounded-full'>
+                                <span className='absolute right-7 text-[1.7rem] bottom-[7.5rem] text-green-700 leading-[1px]'>
+                                    <a href="https://wa.me/+918093552723" target="_blank" rel="noreferrer"><RiWhatsappFill /></a>
+                                    <small className='text-[0.5rem] text-black'>Whatsapp</small>
+                                </span>
+                                <span className='absolute right-[6.3rem] bottom-[5.8rem] text-[1.7rem] text-blue-600 leading-[1px]'>
+                                    <a href="tel:80935-52723" target="_blank" rel="noreferrer"><HiPhoneMissedCall /></a>
+                                    <small className='text-[0.5rem] text-black'>Call Me</small>
+                                </span>
+                                <span className='absolute right-[6.5rem] bottom-[1.7rem] text-[1.7rem] text-red-500 leading-[1px]'>
+                                    <a href="https://strix.co.in/" target="_blank" rel="noreferrer"><FaChrome /></a>
+                                    <small className='text-[0.5rem] text-black'>Website</small>
+                                </span>
+                            </div>
                         </div>}
                         <div className='absolute bottom-0 right-0 w-[4rem] h-[4rem] rounded-full bg-black m-4 flex justify-center items-center text-[2rem] text-white cursor-pointer' onClick={handleContactCenter}><MdConnectWithoutContact /></div>
                     </div>

@@ -62,17 +62,17 @@ const SaleHistory = () => {
                                     <div className='grid text-[0.8rem] text-center'>
                                         <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone') ? localStorage.getItem('phone') : ''}</span>
                                         <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin') === 'null' ? '' : localStorage.getItem('gstin')}</span>
+                                        <span className='font-mono font-bold'>HSN / SAC: 996331</span>
                                     </div><hr />
                                 </>
                                 <div>
-                                    <div className="first-box mx-10 my-2 grid grid-cols-2 font-mono font-bold text-[0.7rem] leading-4">
-                                        <span>Bill No : {val.invoice_number}</span>
-                                        <span>Table no: {val.table}</span>
+                                    <div className="first-box ml-8 my-2 grid grid-cols-2 font-mono font-bold text-[0.7rem] leading-4">
+                                        <span>Invoice No : {val.invoice_number_full}</span>
+                                        <span className='ml-2'>Table no: {val.table}</span>
                                         <span>Date : {localDate}</span>
-                                        <span>Time : {localTime}</span>
+                                        <span className='ml-2'>Time : {localTime}</span>
                                         <span>Customer : {val.customer}</span>
-                                        <span>Mode : {val.payment_type}</span>
-                                        <span>HSN / SAC: 996331</span>
+                                        <span className='ml-2'>Mode : {val.payment_type}</span>
                                     </div><hr />
                                 </div>
                                 <div className="Table my-1">

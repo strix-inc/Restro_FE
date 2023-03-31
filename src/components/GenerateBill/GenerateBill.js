@@ -144,6 +144,10 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
             subtotal: parseInt(SubTotal_ref.current.value),
             discount: parseInt(discount),
             platform: Platform_Id,
+            total: parseInt(GRAND_TOTAL_ref.current.value),
+            sgst: parseFloat(SGST_ref.current.value),
+            cgst: parseFloat(CGST_ref.current.value),
+            payment_type: Payment_mode
         }
 
         axios.put(API, Invoice_Data, { headers: headers })

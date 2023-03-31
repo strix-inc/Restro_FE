@@ -3,6 +3,7 @@ import axios from 'axios'
 import { Link } from 'react-router-dom';
 import { BiUserPlus } from 'react-icons/bi'
 import Spinner from '../spinner/Spinner';
+import ToolTip from '../Images/tooltip.png'
 
 const Setting = ({ mode }) => {
     var Restauranta_API = process.env.REACT_APP_GET_RESTAURANT
@@ -131,6 +132,20 @@ const Setting = ({ mode }) => {
                                         <div className='flex flex-col'>
                                             <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>FSSAI</label>
                                             <input type='text' name='fssai_number' defaultValue={item.fssai_number === null ? '' : item.fssai_number} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='1251xxxxxxx' onChange={(e) => handleEdit(e)} />
+                                        </div>
+                                        <div className='flex flex-col'>
+                                            <label className={`relative text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>
+                                                <span>INVOICE PREFIX</span>
+                                                <div
+                                                    className=" 
+                        absolute left-[7rem] top-[-24px] before:content-[attr(data-tip)] before:relative before:px-3 before:py-2 before:left-[1.5rem] before:top-[1rem] before:-translate-x-1/2 before:-translate-y-full
+                        before:bg-gray-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-md before:opacity-0 before:transition-all
+                        hover:before:opacity-100" data-tip={`Set Your Own Prefix  { Ex : INV- , PP- , DD- }`}
+                                                >
+                                                    <img src={ToolTip} alt="" className='w-[0.95rem] h-[0.9rem] mt-[0.30rem] mx-1 cursor-pointer' />
+                                                </div>
+                                            </label>
+                                            <input type='text' name='invoice_prefix' defaultValue={item.invoice_prefix === null ? '' : item.invoice_prefix} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='1251xxxxxxx' onChange={(e) => handleEdit(e)} />
                                         </div>
                                     </form>
                                 })}

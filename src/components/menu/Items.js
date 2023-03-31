@@ -7,7 +7,7 @@ import Veg from '../Images/veg.png'
 const Items = ({ Data, mode, EditDish, DeleteDish }) => {
     return (
         <>
-            {
+            {Data.length > 0 ?
                 Data.map((val, index) => {
                     return <div key={val.id} className={`Item-list grid grid-cols-5 scrollbar-hide p-2 ${mode === 'black' ? 'text-black' : 'text-black'} ${index % 2 === 0 ? 'bg-gray-300' : 'bg-slate-100'}`}>
                         <div className='relative col-span-2'>
@@ -41,7 +41,7 @@ const Items = ({ Data, mode, EditDish, DeleteDish }) => {
                         </div>
                     </div>
                 })
-            }
+                : <span className='flex justify-center items-center py-2 text-slate-500 text-[0.9rem]'> --- No Dish Present , Add Some Dish --- </span>}
         </>
     )
 }

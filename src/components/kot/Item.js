@@ -81,7 +81,7 @@ const Item = (props) => {
                                             <hr className='border border-slate-300' />
                                         </div>
                                     );
-                                }) : <span className='flex ml-6 pt-4 text-[0.8rem] text-black'><GoAlert className='text-[1rem] mx-2 text-red-500' /> No Dish Present , Add Dish <a href="/menu" className='text-red-500 mx-1'>Here</a></span>}
+                                }) : <span className='flex ml-6 pt-4 text-[0.8rem] text-black'><GoAlert className='text-[1rem] mx-2 text-red-500' /> No Dish Present , Add New Dish In Menu</span>}
                         </div>
                     )}
 

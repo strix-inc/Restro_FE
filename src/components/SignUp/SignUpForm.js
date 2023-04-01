@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react'
-import Cdetail from './Cdetail'
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Form from './Form'
 import axios from 'axios'
+import IMG from '../Images/R.png'
+
 
 const SignUpForm = () => {
-    // Hooks for the form validation
+    var api = process.env.REACT_APP_SIGNUP_API
+
     let [FormValue, setFormValue] = useState({
         restaurant_name: '',
         contact: '',
@@ -14,7 +16,7 @@ const SignUpForm = () => {
         confirm_password: '',
     });
     const [FormError, setFormError] = useState({});
-    const [submit, setSubmit] = useState();
+    const [submit, setSubmit] = useState(false);
     const [IsExist, setIsexist] = useState('');
 
     // Handling the form Validation
@@ -45,17 +47,21 @@ const SignUpForm = () => {
         if (!value.password) {
             errors.password = 'border-2 border-red-500'
         }
-        if (value.confirm_password !== value.password) {
+        if (!value.confirm_password) {
             errors.confirm_password = 'border-2 border-red-500'
+        } else {
+            if (value.confirm_password !== value.password) {
+                errors.confirm_password = 'border-2 border-red-500'
+            }
         }
+
         return errors;
     }
 
     useEffect(() => {
         if (Object.keys(FormError).length === 0 && submit) {
             delete FormValue.confirm_password;
-            console.log(FormValue);
-            axios.post('https://restrofin.pythonanywhere.com/auth/signup', FormValue)
+            axios.post(api, FormValue)
                 .then((val) => {
                     console.log(val);
                     if (val.request.status === 200) {
@@ -85,7 +91,10 @@ const SignUpForm = () => {
 
     return (
         <>
-            <div className="signup_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-10 top-0 left-0">
+            <div className="signup_conatiner fixed bg-white w-[100%] h-[100vh] overflow-hidden z-30 top-0 left-0">
+                <div className='m-2'>
+                    <img src={IMG} alt="Loading..." className='home w-[13rem] h-[5rem]' />
+                </div>
                 <div className="SignUpForm absolute top-[15%] w-full m-auto rounded-lg">
                     <Form
                         FormValue={FormValue}  /* get the values from each input */

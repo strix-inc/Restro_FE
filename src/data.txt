@@ -11,3 +11,8 @@ add content on that file ---
 from = "/*"
 to = "/index.html"
 status = 200
+
+
+
+
+api call in signup page !!

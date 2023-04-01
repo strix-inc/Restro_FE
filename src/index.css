@@ -1,6 +1,12 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap'); */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Heebo&display=swap');
+/* font family for all */
 @import url('https://fonts.googleapis.com/css2?family=Questrial&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@300;400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Rye&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Kelly+Slab&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Istok+Web:wght@700&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -13,7 +19,9 @@ body {
   /* font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif; */
+  /* font-family: 'Heebo', sans-serif; */
   font-family: 'Poppins', sans-serif;
+
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   /* background: rgb(249, 250, 251); */
@@ -24,14 +32,22 @@ code {
     monospace;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 /* setting the background for the SignUp Page */
 .signup_conatiner::before {
   position: absolute;
   content: '';
-  background: url('./components/Images/r2.jpg') no-repeat center center/cover;
+  /* background: url('./components/Images/r2.jpg') no-repeat center center/cover; */
+  background: url(https://i.imgur.com/73BxBuI.png);
+  background-size: cover;
+  background-position: center;
   width: 100vw;
-  height: 100vh;
-  opacity: 0.4;
+  height: 800px;
   z-index: -1;
   top: 0;
   left: 0;
@@ -61,4 +77,108 @@ code {
 
 .cLogo {
   color-scheme: dark;
+}
+
+/* Restaurant name */
+.Rname {
+  font-family: 'Istok Web', sans-serif;
+}
+
+.List-title {
+  display: grid;
+  grid-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(160px, 1fr);
+  overflow-x: auto;
+  overflow-y: none;
+}
+
+/* home page */
+
+.wrapper {
+  display: flex;
+}
+
+.wrapper .static-txt {
+  color: #fff;
+  font-size: 60px;
+  font-weight: 400;
+}
+
+.wrapper .dynamic-txts {
+  margin-left: 15px;
+  height: 90px;
+  overflow: hidden;
+}
+
+.dynamic-txts h1 {
+  list-style: none;
+  color: black;
+  position: relative;
+  top: 0;
+  animation: slide 13s steps(1) infinite;
+}
+
+@keyframes slide {
+  100% {
+    top: -360px;
+  }
+}
+
+.dynamic-txts h1 {
+  position: relative;
+  margin: 5px 0;
+  line-height: 70px;
+}
+
+.dynamic-txts h1::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+  border-left: 2px solid #FC6D6D;
+  animation: typing 5s steps(15) infinite;
+}
+
+@keyframes typing {
+
+  40%,
+  60% {
+    left: calc(100%);
+  }
+
+  100% {
+    left: 0;
+  }
+}
+
+.home {
+  font-family: 'Kelly Slab', cursive;
+}
+
+.home_body {
+  font-family: 'Poppins', sans-serif;
+}
+
+
+/* kot search item */
+.dataResult::-webkit-scrollbar {
+  display: none;
+}
+
+.dataResult .dataItem {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+}
+
+p:hover {
+  cursor: pointer;
+  background-color: lightgrey;
+  color: black;
+  border-radius: 4px;
 }

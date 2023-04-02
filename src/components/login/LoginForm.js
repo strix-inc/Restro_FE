@@ -44,7 +44,7 @@ const LoginForm = (props) => {
                 </div>
                 <div className="NotUser flex justify-center items-center mt-2">
                     <p className='text-[1rem] mx-1'>New Member ?</p>
-                    <Link to={'signUp'}><p className='text-[1.1rem] text-blue-500 mx-1 font-bold hover:text-red-600'>Sign up Now</p></Link>
+                    <Link to={'/signUp'}><p className='text-[1.1rem] text-blue-500 mx-1 font-bold hover:text-red-600'>Sign up Now</p></Link>
                 </div>
             </div>
         </>

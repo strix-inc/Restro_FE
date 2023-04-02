@@ -44,7 +44,7 @@ const Form = (props) => {
                 </form>
                 <div className="NotUser flex justify-center items-center mt-4">
                     <p className='text-[1rem] mx-1'>Already have account ?</p>
-                    <Link to={'login'}><p className='text-[1.1rem] text-blue-500 mx-1 font-bold hover:text-red-600'>Login</p></Link>
+                    <Link to={'/login'}><p className='text-[1.1rem] text-blue-500 mx-1 font-bold hover:text-red-600'>Login</p></Link>
                 </div>
             </div>
         </>

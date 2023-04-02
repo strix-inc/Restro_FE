@@ -73,7 +73,7 @@ const TableOrederedItem = ({ mode, ActiveKot, getkotTable }) => {
                             }
 
                             <div className="generateBill">
-                                <Link to="bill">
+                                <Link to="/bill">
                                     <button className='w-full h-[2rem] bg-green-600 text-white font-semibold' onClick={() => generateBill(val.id)}>Generate Bill</button>
                                 </Link>
                             </div>

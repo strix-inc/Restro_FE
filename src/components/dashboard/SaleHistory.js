@@ -132,7 +132,7 @@ const SaleHistory = () => {
                                     </span>
                                 </div>
                                 <div className="QR_code">
-                                    <img src={`data:image/png;base64,${baseImage}`} alt='loading...' />
+                                    <img src={`data:image/svg+xml;base64,${baseImage}`} alt='loading...' />
                                 </div>
                             </div>
                         })

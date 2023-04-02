@@ -5,7 +5,7 @@ const PrivateRoute = ({ children }) => {
     const token = localStorage.getItem('access');
     const [jwt, setJwt] = useState(token);
 
-    return jwt ? children : <Navigate to={'login'} />
+    return jwt ? children : <Navigate to={'/login'} />
 }
 
 export default PrivateRoute

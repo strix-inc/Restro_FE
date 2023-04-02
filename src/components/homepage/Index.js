@@ -33,7 +33,7 @@ const HomePage = () => {
                                 <img src={IMG} alt="Loading..." className='home w-[8rem] h-[3.2rem]' />
                             </div>
                             <div className="listItems mx-2 flex gap-8 font-bold text-[1.2rem]">
-                                <Link to="login" className='mt-3'><span className='text-[1.2rem] cursor-pointer font-bold hover:text-blue-600'>Login</span></Link>
+                                <Link to="/login" className='mt-3'><span className='text-[1.2rem] cursor-pointer font-bold hover:text-blue-600'>Login</span></Link>
                                 <Link to="/signUp"><span className='bg-blue-500 w-[10rem] flex justify-center items-center h-[3rem] rounded-md py-1 px-4 shadow-sm shadow-blue-500 text-white transition-all ease-in duration-300
                                 hover:bg-white hover:text-blue-500 border-2 border-blue-500 hover:border-blue-500 hover:shadow-none cursor-pointer'>Get Started</span></Link>
                             </div>
@@ -76,7 +76,7 @@ const HomePage = () => {
                                 <div className="title mt-[6rem] flex flex-col">
                                     <span className='text-[2.7rem] font-bold'>#1 Digital Billing Software</span>
                                     <span className='text-[1.2rem] my-2'>Use the power of software to delight your customers and cross-sell & upsell your items.</span>
-                                    <Link to="signUp" className='mt-4'><span className='w-[11rem] flex items-center justify-center h-[3.3rem] bg-blue-500 rounded-md py-1 px-4 shadow-sm shadow-blue-500 text-white text-[1.2rem] transition-all ease-in duration-300
+                                    <Link to="/signUp" className='mt-4'><span className='w-[11rem] flex items-center justify-center h-[3.3rem] bg-blue-500 rounded-md py-1 px-4 shadow-sm shadow-blue-500 text-white text-[1.2rem] transition-all ease-in duration-300
                                 hover:bg-slate-100 hover:text-blue-500 border-2 border-blue-500 hover:border-blue-500 hover:shadow-none cursor-pointer'>Get Started</span></Link>
                                     <div className="platform-images flex gap-10 mt-[4rem]">
                                         <img src={zomato} alt="" className='w-18 h-6' />
@@ -122,7 +122,7 @@ const HomePage = () => {
                                         <span className='text-[1.2rem] font-medium'>See the benefits of Strix in action & amaze your customers!</span>
                                     </div>
                                     <div className=''>
-                                        <Link to="signUp"><span className='bg-white w-[9rem] flex justify-center items-center h-[3rem] rounded-md py-1 px-4 shadow-sm shadow-blue-500 text-blue-500 font-bold transition-all ease-in duration-300
+                                        <Link to="/signUp"><span className='bg-white w-[9rem] flex justify-center items-center h-[3rem] rounded-md py-1 px-4 shadow-sm shadow-blue-500 text-blue-500 font-bold transition-all ease-in duration-300
                                         hover:bg-blue-500 hover:text-white border-2 border-white hover:border-white hover:shadow-none cursor-pointer'>Sign Up Now</span></Link>
                                     </div>
                                 </div>

@@ -54,7 +54,7 @@ const KotHistory = (props) => {
                                     <span className='text-[0.9rem]'>{localDate}</span>
                                     <div className="grid grid-cols-2">
                                         <span className='mx-4'>{val.table}</span>
-                                        <Link to='kotbill' target='_blank' className="w-[4rem] h-[2rem] flex flex-col justify-center items-center rounded-md bg-blue-100 border border-blue-500 text-black text-[1.2rem" onClick={() => handleKotHistoryPrint(val.invoice)}>
+                                        <Link to='/kotbill' target='_blank' className="w-[4rem] h-[2rem] flex flex-col justify-center items-center rounded-md bg-blue-100 border border-blue-500 text-black text-[1.2rem" onClick={() => handleKotHistoryPrint(val.invoice)}>
                                             <span className='cursor-pointer text-blue-500'><AiFillPrinter /></span>
                                             <small className='text-[0.6rem] font-bold tracking-[0.1rem]'>Print</small>
                                         </Link>

@@ -25,6 +25,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
     const SGST_ref = useRef(null);
     const CGST_ref = useRef(null);
     const GRAND_TOTAL_ref = useRef(null);
+    const Discount_amount_ref = useRef(null);
 
     const ChangeQuantity = () => {
         for (let i = 0; i < ALL_ORDER.length; i++) {
@@ -142,11 +143,8 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
             id: OrderID,
             orders: ALL_ORDER,
             subtotal: parseInt(SubTotal_ref.current.value),
-            discount: parseInt(discount),
+            discount: parseInt(Discount_amount_ref.current.value),
             platform: Platform_Id,
-            total: parseInt(GRAND_TOTAL_ref.current.value),
-            sgst: parseFloat(SGST_ref.current.value),
-            cgst: parseFloat(CGST_ref.current.value),
             payment_type: Payment_mode
         }
 
@@ -228,7 +226,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
                             </div>
                             <div className='flex flex-col'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Discount Amount</label>
-                                <input type="text" value={Math.round(total * (discount / 100) * 100) / 100} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
+                                <input type="text" ref={Discount_amount_ref} value={Math.round(total * (discount / 100) * 100) / 100} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
                             <div className='flex flex-col'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Net Amount</label>
@@ -247,7 +245,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
                             </div>
                             <div className='flex flex-col col-span-2'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Grand Total</label>
-                                <input type="text" ref={GRAND_TOTAL_ref} value={Math.round((total - (total * (discount / 100))) + Math.round((total - (total * (discount / 100))) * (2.5 / 100)) + Math.round((total - (total * (discount / 100))) * (2.5 / 100)))} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
+                                <input type="text" ref={GRAND_TOTAL_ref} value={Math.round((total - (total * (discount / 100))) + (total - (total * (discount / 100))) * (2.5 / 100) + (total - (total * (discount / 100))) * (2.5 / 100))} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
 
                         </div>

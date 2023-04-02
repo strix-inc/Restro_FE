@@ -1,12 +1,18 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ReactToPrint from 'react-to-print'
 import { BiPrinter } from 'react-icons/bi'
+import IMG from '../Images/image.png'
 import axios from 'axios'
+import { Buffer } from 'buffer';
+window.Buffer = window.Buffer || require("buffer").Buffer;
 
 
 const SaleHistory = () => {
 
     const [Get_oneSaleHistory, setGet_oneSaleHistory] = useState([]);
+    const [baseImage, setBaseImg] = useState('');
+
+    // const decodedImage = atob(baseImage);
 
 
     // printing the ticket of Item ordered by the customer
@@ -26,6 +32,10 @@ const SaleHistory = () => {
             headers: headers
         }).then(val => {
             setGet_oneSaleHistory([val.data.data]);
+            let string = val.data.upi_qr;
+            // const imageUrl = `data:image/svg;base64,${string}`;
+            let base64_to_imgsrc = Buffer.from(string, "base64").toString('base64');
+            setBaseImg(base64_to_imgsrc);
         }).catch((error) => {
             console.log(error);
         });
@@ -34,6 +44,7 @@ const SaleHistory = () => {
     useEffect(() => {
         GetSaleHistory();
     }, []);
+
 
     return (
         <>
@@ -115,7 +126,13 @@ const SaleHistory = () => {
                                 <div className="fun_fact flex flex-col text-[0.8rem] font-mono font-bold items-center mt-8">
                                     <span>Thank You for Visiting </span>
                                     <span>Have a Nice Day </span>
-                                    <span className='my-3'>Restrofin by : strix.co.in</span>
+                                    <span className='my-3 flex items-center'>
+                                        <img src={IMG} className='w-[8rem] h-[3rem] mx-2' />
+                                        <small className='text-[0.9rem]'>: strix.co.in</small>
+                                    </span>
+                                </div>
+                                <div className="QR_code">
+                                    <img src={`data:image/png;base64,${baseImage}`} alt='loading...' />
                                 </div>
                             </div>
                         })

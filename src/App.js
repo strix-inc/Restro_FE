@@ -3,7 +3,7 @@ import Kot from './components/kot/Kot';
 import Login from './components/login/Login';
 import Navbar from './components/navbar/Navbar';
 import SignUpForm from './components/SignUp/SignUpForm';
-import { Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Dashboard from './components/dashboard/Dashboard';
 import KotHistory from './components/kot history/KotHistory';
 import HomePage from './components/homepage/Index';
@@ -48,67 +48,69 @@ function App() {
 
   return (
     <div className={`${mode === 'black' ? 'inBlack' : 'inWhite'} w-[100%] h-[100vh] overflow-auto scrollbar-hide`}>
-      <Navbar mode={mode} OnClickMoon={OnClickMoon} OnClickSun={OnClickSun} loggedOut={loggedOut} />
-      <Routes>
-        <Route path='/' element={
-          <ProtectRoute>
-            <HomePage />
-          </ProtectRoute>
-        } />
-        <Route exact path='/signUp' element={<SignUpForm />} />
-        <Route exact path='/login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
-        <Route exact path='/dashboard' element={
-          <PrivateRoute>
-            <Dashboard mode={mode} />
-          </PrivateRoute>
-        } />
-        <Route exact path='/salehistory' element={
-          <PrivateRoute>
-            <SaleHistory />
-          </PrivateRoute>
-        } />
-        <Route exact path='/kot' element={
-          <PrivateRoute>
-            <Kot mode={mode} />
-          </PrivateRoute>
-        } />
-        <Route exact path='/bill' element={
-          <PrivateRoute>
-            <Bill mode={mode} />
-          </PrivateRoute>
-        } />
-        <Route exact path='/invoice' element={
-          <PrivateRoute>
-            <GeneratedInvoice />
-          </PrivateRoute>
-        } />
-        <Route exact path='/kotHistory' element={
-          <PrivateRoute>
-            <KotHistory mode={mode} />
-          </PrivateRoute>
-        } />
-        <Route exact path='/kotbill' element={
-          <PrivateRoute>
-            <PrintKotHistory />
-          </PrivateRoute>
-        } />
-        <Route exact path='/menu' element={
-          <PrivateRoute>
-            <ItemMenu mode={mode} />
-          </PrivateRoute>
-        } />
-        <Route exact path='/setting' element={
-          <PrivateRoute>
-            <Setting mode={mode} />
-          </PrivateRoute>
-        } />
-        <Route exact path='/addstaff' element={
-          <PrivateRoute>
-            <AddStaff mode={mode} />
-          </PrivateRoute>
-        } />
-        <Route exact path='/rough' element={<Rough />} />
-      </Routes>
+      <BrowserRouter>
+        <Navbar mode={mode} OnClickMoon={OnClickMoon} OnClickSun={OnClickSun} loggedOut={loggedOut} />
+        <Routes>
+          <Route path='/' element={
+            <ProtectRoute>
+              <HomePage />
+            </ProtectRoute>
+          } />
+          <Route path='/signUp' element={<SignUpForm />} />
+          <Route path='/login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
+          <Route path='/dashboard' element={
+            <PrivateRoute>
+              <Dashboard mode={mode} />
+            </PrivateRoute>
+          } />
+          <Route path='/salehistory' element={
+            <PrivateRoute>
+              <SaleHistory />
+            </PrivateRoute>
+          } />
+          <Route path='/kot' element={
+            <PrivateRoute>
+              <Kot mode={mode} />
+            </PrivateRoute>
+          } />
+          <Route path='/bill' element={
+            <PrivateRoute>
+              <Bill mode={mode} />
+            </PrivateRoute>
+          } />
+          <Route path='/invoice' element={
+            <PrivateRoute>
+              <GeneratedInvoice />
+            </PrivateRoute>
+          } />
+          <Route path='/kotHistory' element={
+            <PrivateRoute>
+              <KotHistory mode={mode} />
+            </PrivateRoute>
+          } />
+          <Route path='/kotbill' element={
+            <PrivateRoute>
+              <PrintKotHistory />
+            </PrivateRoute>
+          } />
+          <Route path='/menu' element={
+            <PrivateRoute>
+              <ItemMenu mode={mode} />
+            </PrivateRoute>
+          } />
+          <Route path='/setting' element={
+            <PrivateRoute>
+              <Setting mode={mode} />
+            </PrivateRoute>
+          } />
+          <Route path='/addstaff' element={
+            <PrivateRoute>
+              <AddStaff mode={mode} />
+            </PrivateRoute>
+          } />
+          <Route path='/rough' element={<Rough />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }

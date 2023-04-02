@@ -147,7 +147,7 @@ const ItemMenu = ({ mode }) => {
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
 
-        axios.get('https://rfprod.pythonanywhere.com/kitchen/category', {
+        axios.get('https://restrofin.pythonanywhere.com/kitchen/category', {
             headers: headers
         }).then(val => {
             setAllCategory(val.data.data);

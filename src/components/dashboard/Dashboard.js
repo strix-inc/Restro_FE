@@ -60,7 +60,7 @@ const Dashboard = (props) => {
         setAllSaleHistory('');
         setLoading(true);
 
-        let base_url = "https://rfprod.pythonanywhere.com/finance/invoice?finalized=True";
+        let base_url = "https://restrofin.pythonanywhere.com/finance/invoice?finalized=True";
 
         if (FromDate) {
             base_url += "&from=" + FromDate;
@@ -106,7 +106,7 @@ const Dashboard = (props) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get('https://rfprod.pythonanywhere.com/finance/invoice?finalized=True', {
+        axios.get('https://restrofin.pythonanywhere.com/finance/invoice?finalized=True', {
             headers: headers
         }).then(val => {
             setAllSaleHistory(val.data.data);

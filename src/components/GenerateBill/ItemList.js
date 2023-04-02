@@ -23,7 +23,7 @@ const ItemList = ({ id, dish_id, name, size, quantity, cost, index, GeneratedBil
     }
 
     const DeleteDishFromList = (Dish_id) => {
-        axios.delete('https://rfprod.pythonanywhere.com/finance/order', {
+        axios.delete('https://restrofin.pythonanywhere.com/finance/order', {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access')}`
             },

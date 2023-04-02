@@ -22,7 +22,7 @@ const SaleHistory = () => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(`https://restrofin.pythonanywhere.com/finance/invoice?id=${id}`, {
+        axios.get(`https://rfprod.pythonanywhere.com/finance/invoice?id=${id}`, {
             headers: headers
         }).then(val => {
             setGet_oneSaleHistory([val.data.data]);

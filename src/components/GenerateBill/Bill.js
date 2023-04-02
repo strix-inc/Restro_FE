@@ -14,7 +14,7 @@ const Bill = ({ mode }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(`https://restrofin.pythonanywhere.com/finance/invoice?id=${id}`, {
+        axios.get(`https://rfprod.pythonanywhere.com/finance/invoice?id=${id}`, {
             headers: headers
         }).then(val => {
             setOrders(val.data.data.orders);
@@ -38,7 +38,7 @@ const Bill = ({ mode }) => {
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
 
-        axios.get('https://restrofin.pythonanywhere.com/kitchen/dish', {
+        axios.get('https://rfprod.pythonanywhere.com/kitchen/dish', {
             headers: headers
         }).then(val => {
             setAllDish(val.data.data);

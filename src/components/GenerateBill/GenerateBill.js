@@ -151,7 +151,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
         axios.put(API, Invoice_Data, { headers: headers })
             .then(val => {
                 if (val.status === 201) {
-                    window.location = '/kot';
+                    window.location = 'kot';
                 }
             })
 
@@ -264,7 +264,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
                             </div>
                             {/* button to be added */}
                             <div className="button flex justify-end items-center mt-4 border-none">
-                                <Link to={{ pathname: '/invoice' }} target="_blank" rel="noreferrer" className="w-[80%] h-[2.5rem] bg-green-600 flex justify-center items-center text-white font-semibold hover:scale-105 transition-all ease-in-out duration-300 border-none rounded-md" onClick={handleGenerateInvoice}>Save</Link>
+                                <Link to={{ pathname: 'invoice' }} target="_blank" rel="noreferrer" className="w-[80%] h-[2.5rem] bg-green-600 flex justify-center items-center text-white font-semibold hover:scale-105 transition-all ease-in-out duration-300 border-none rounded-md" onClick={handleGenerateInvoice}>Save</Link>
                             </div>
                         </div>
                     </form>

@@ -21,7 +21,7 @@ const Bill = ({ mode }) => {
             setOrderID(val.data.data.id);
             var orders = val.data.data.orders;
             if (orders.length === 0) {
-                window.location = '/kot';
+                window.location = 'kot';
             }
         }).catch((error) => {
             console.log(error);

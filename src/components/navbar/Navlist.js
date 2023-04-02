@@ -11,11 +11,11 @@ const Navlist = (props) => {
     const [active, setActive] = useState('/dashboard');
 
     const ListItem = [
-        { id: 1, name: 'Dashboard', link: '/dashboard', icons: <HiOutlineHome /> },
-        { id: 2, name: 'Kot', link: '/kot', icons: <IoTicketOutline /> },
-        { id: 3, name: 'Kot History', link: '/kotHistory', icons: <GiBlackBook /> },
-        { id: 5, name: 'Menu', link: '/menu', icons: <CgMenuBoxed /> },
-        { id: 6, name: 'Setting', link: '/setting', icons: <MdOutlineSettings /> },
+        { id: 1, name: 'Dashboard', link: 'dashboard', icons: <HiOutlineHome /> },
+        { id: 2, name: 'Kot', link: 'kot', icons: <IoTicketOutline /> },
+        { id: 3, name: 'Kot History', link: 'kotHistory', icons: <GiBlackBook /> },
+        { id: 5, name: 'Menu', link: 'menu', icons: <CgMenuBoxed /> },
+        { id: 6, name: 'Setting', link: 'setting', icons: <MdOutlineSettings /> },
     ];
 
     useEffect(() => {
@@ -23,7 +23,7 @@ const Navlist = (props) => {
     }, []);
 
     useEffect(() => {
-        localStorage.setItem('active', (active === null ? '/dashboard' : active));
+        localStorage.setItem('active', (active === null ? 'dashboard' : active));
     }, [active]);
 
     return (

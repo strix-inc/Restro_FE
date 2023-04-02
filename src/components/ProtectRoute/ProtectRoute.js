@@ -5,7 +5,7 @@ const ProtectRoute = ({ children }) => {
     const token = localStorage.getItem('access');
     const [jwt, setJwt] = useState(token);
 
-    return !jwt ? children : <Navigate to={'/dashboard'} />
+    return !jwt ? children : <Navigate to={'dashboard'} />
 }
 
 export default ProtectRoute

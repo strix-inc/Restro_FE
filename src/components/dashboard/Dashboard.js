@@ -236,13 +236,13 @@ const Dashboard = (props) => {
                             top-[-18px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[14px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                             before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%] before:z-20
                             hover:before:opacity-100" data-tip="Edit">
-                                                    <Link to='/bill' target='_blank' rel='nonrefer' className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link>
+                                                    <Link to='bill' target='_blank' rel='nonrefer' className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link>
                                                 </div>
                                                 <div className="absolute 
                                         right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                                         before:bg-blue-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
                                         hover:before:opacity-100" data-tip="Print">
-                                                    <Link to='/salehistory' target="_blank" rel="noreferrer" className='cursor-pointer text-blue-500'><AiFillPrinter onClick={() => handleSaleHistory(val.id)} /></Link>
+                                                    <Link to='salehistory' target="_blank" rel="noreferrer" className='cursor-pointer text-blue-500'><AiFillPrinter onClick={() => handleSaleHistory(val.id)} /></Link>
                                                 </div>
                                             </li>
                                             <li className='col-span-2 font-semibold'>{localDate}</li>

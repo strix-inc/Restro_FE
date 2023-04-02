@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react'
 import ReactToPrint from 'react-to-print'
 import { BiPrinter } from 'react-icons/bi'
+import IMG from '../Images/image.png'
 import axios from 'axios'
 
 
@@ -61,7 +62,7 @@ const GeneratedInvoice = () => {
                                     <div className='grid text-[0.8rem] text-center'>
                                         <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone') ? localStorage.getItem('phone') : ''}</span>
                                         <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin') === 'null' ? '' : localStorage.getItem('gstin')}</span>
-                                        <span className='font_mono font-bold'>HSN / SAC: 996331</span>
+                                        <span className='font_mono font-bold'>HSN / SAC : 996331</span>
                                     </div><hr />
                                 </>
                                 <div>
@@ -102,19 +103,22 @@ const GeneratedInvoice = () => {
                                 </div><hr />
                                 <div className='grid grid-cols-3 font-mono font-bold text-[0.75rem] mt-2'>
                                     <div className='col-span-1'></div>
-                                    <div className='col-span-2 Total_amount mx-8 flex flex-col items-end'>
+                                    <div className='col-span-2 Total_amount mx-5 flex flex-col items-end'>
                                         <span className='my-2'>SubTotal : Rs. {val.subtotal}</span>
-                                        <span>Discount (%) : {val.discount} %</span>
+                                        <span>Discount  : Rs. {val.discount}</span>
                                         <span>SGST @2.5% : Rs. {val.sgst}</span>
                                         <span>CGST @2.5% : Rs. {val.cgst}</span>
-                                        <span>---------------------</span>
-                                        <span>Grand Total : Rs. {val.total}</span>
+                                        <span>----------------------------</span>
+                                        <span className='text-[0.9rem]'>Grand Total : Rs. {val.total}</span>
                                     </div>
-                                </div>
+                                </div><hr />
                                 <div className="fun_fact flex flex-col text-[0.8rem] font-mono font-bold items-center mt-8">
                                     <span>Thank You for Visiting </span>
                                     <span>Have a Nice Day </span>
-                                    <span className='my-3'>Restrofin by : strix.co.in</span>
+                                    <span className='my-3 flex items-center'>
+                                        <img src={IMG} className='w-[8rem] h-[3rem] mx-2' />
+                                        <small className='text-[0.9rem]'>: strix.co.in</small>
+                                    </span>
                                 </div>
                             </div>
                         })

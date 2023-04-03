@@ -13,7 +13,7 @@ import Spinner from '../spinner/Spinner'
 
 
 const Dashboard = (props) => {
-    var api = process.env.REACT_APP_GET_RESTAURANT
+    var api = process.env.REACT_APP_BASE_URL
 
     const [AllSaleHistory, setAllSaleHistory] = useState([]);
     const [Dashbaord_Stats, setDashboard_Stats] = useState([]);
@@ -60,7 +60,7 @@ const Dashboard = (props) => {
         setAllSaleHistory('');
         setLoading(true);
 
-        let base_url = "https://restrofin.pythonanywhere.com/finance/invoice?finalized=True";
+        let base_url = `${api}/finance/invoice?finalized=True`;
 
         if (FromDate) {
             base_url += "&from=" + FromDate;
@@ -106,7 +106,7 @@ const Dashboard = (props) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get('https://restrofin.pythonanywhere.com/finance/invoice?finalized=True', {
+        axios.get(`${api}/finance/invoice?finalized=True`, {
             headers: headers
         }).then(val => {
             setAllSaleHistory(val.data.data);
@@ -131,7 +131,7 @@ const Dashboard = (props) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(api, {
+        axios.get(`${api}/auth/restaurant`, {
             headers: headers
         }).then(val => {
             localStorage.setItem('Restaurant_name', val.data.data.display_name);
@@ -140,6 +140,7 @@ const Dashboard = (props) => {
             localStorage.setItem('gstin', val.data.data.gstin);
             localStorage.setItem('city', val.data.data.address_city);
             localStorage.setItem('state', val.data.data.address_state);
+            localStorage.setItem('fssai', val.data.data.fssai);
         }).catch(function (error) {
             console.log(error);
         });
@@ -236,7 +237,7 @@ const Dashboard = (props) => {
                             top-[-18px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[14px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                             before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%] before:z-20
                             hover:before:opacity-100" data-tip="Edit">
-                                                    <Link to='/bill' target='_blank' rel='nonrefer' className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link>
+                                                    <Link to='/bill' className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link>
                                                 </div>
                                                 <div className="absolute 
                                         right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
@@ -247,10 +248,10 @@ const Dashboard = (props) => {
                                             </li>
                                             <li className='col-span-2 font-semibold'>{localDate}</li>
                                             <li className='flex justify-center items-center'>{val.subtotal}</li>
-                                            <li className='flex justify-center items-center'>{val.discount} %</li>
+                                            <li className='flex justify-center items-center'>{val.discount}</li>
                                             <li className='flex justify-center items-center'>{val.cgst}</li>
                                             <li className='flex justify-center items-center'>{val.sgst}</li>
-                                            <li className='flex justify-center items-center'>{((val.subtotal) - (val.subtotal) * (val.discount / 100))}</li>
+                                            <li className='flex justify-center items-center'>{Math.round(((val.subtotal) - (val.subtotal) * (val.discount / 100)) * 100) / 100}</li>
                                             <li className='flex justify-center items-center'>{val.total}</li>
                                         </ul>
                                     }) : (loading === false && <span className='flex justify-center text-[0.9rem] items-center pt-3 text-amber-600'><TiWarning className='text-[1.2rem] mx-1 mb-1' /> No Data Found</span>)

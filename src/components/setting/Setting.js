@@ -6,7 +6,7 @@ import Spinner from '../spinner/Spinner';
 import ToolTip from '../Images/tooltip.png'
 
 const Setting = ({ mode }) => {
-    var Restauranta_API = process.env.REACT_APP_GET_RESTAURANT
+    var api = process.env.REACT_APP_BASE_URL
 
     const data = () => {
         setTimeout(() => {
@@ -43,7 +43,7 @@ const Setting = ({ mode }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.put(Restauranta_API, datas, { headers: headers });
+        axios.put(`${api}/auth/restaurant`, datas, { headers: headers });
         setTimeout(() => {
             window.location.reload();
         }, 500);
@@ -55,7 +55,7 @@ const Setting = ({ mode }) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(Restauranta_API, {
+        axios.get(`${api}/auth/restaurant`, {
             headers: headers
         }).then(val => {
             localStorage.setItem('Restaurant_detail', JSON.stringify(val.data.data));

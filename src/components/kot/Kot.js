@@ -5,10 +5,8 @@ import OrederedKT from './ItemTicket/OrederedKT';
 import axios from 'axios';
 
 const Kot = (props) => {
-    var Post_order_API = process.env.REACT_APP_POST_ORDER
-    var Invoice_API = process.env.REACT_APP_INVOICE
+    var api = process.env.REACT_APP_BASE_URL
 
-    // const data = { quantity: 0, size: 'Full' };
     let [itemsInput, setItemInput] = useState([{ quantity: 0, size: 'Full' }]);
     let [DefinedPlate_size, setDefintedPlate_size] = useState([
         { id: 1, val: "Full", plate_size: "Full" },
@@ -31,14 +29,14 @@ const Kot = (props) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(`${Invoice_API}?finalized=False`, {
+        axios.get(`${api}/finance/invoice?finalized=False`, {
             headers: headers
         }).then(val => {
             const CurrentOrders = val.data.data;
             for (let i = 0; i < CurrentOrders.length; i++) {
                 let current_order = CurrentOrders[i];
                 if (current_order.orders.length === 0) {
-                    axios.delete(Invoice_API, {
+                    axios.delete(`${api}/finance/invoice`, {
                         headers: {
                             Authorization: `Bearer ${localStorage.getItem('access')}`
                         },
@@ -128,7 +126,7 @@ const Kot = (props) => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        await axios.post(Post_order_API, InputData, {
+        await axios.post(`${api}/finance/kot`, InputData, {
             headers: headers
         }).then(val => {
             localStorage.setItem('kotID', val.data.data.id);

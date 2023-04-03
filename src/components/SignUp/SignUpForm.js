@@ -7,7 +7,7 @@ import IMG from '../Images/R.png'
 
 
 const SignUpForm = () => {
-    var api = process.env.REACT_APP_SIGNUP_API
+    var api = process.env.REACT_APP_BASE_URL
 
     let [FormValue, setFormValue] = useState({
         restaurant_name: '',
@@ -61,7 +61,7 @@ const SignUpForm = () => {
     useEffect(() => {
         if (Object.keys(FormError).length === 0 && submit) {
             delete FormValue.confirm_password;
-            axios.post(api, FormValue)
+            axios.post(`${api}/auth/signup`, FormValue)
                 .then((val) => {
                     console.log(val);
                     if (val.request.status === 200) {

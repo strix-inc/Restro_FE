@@ -3,7 +3,7 @@ import { RxCross2 } from 'react-icons/rx'
 import axios from 'axios';
 
 const EditDishItem = ({ setEditedDishForm, Dish, SubmitForm, GetAllDish, GetAllCategory, setAdditemForm, AllCategory }) => {
-    var API = process.env.REACT_APP_GET_ALL_DISH
+    var api = process.env.REACT_APP_BASE_URL
 
     const [EditedCategory, setEditedCategory] = useState(Dish.dish_category);
     const [EditDishName, setEditDishName] = useState(Dish.dish_name);
@@ -39,7 +39,7 @@ const EditDishItem = ({ setEditedDishForm, Dish, SubmitForm, GetAllDish, GetAllC
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(`${API}?id=${Dish.id}`, {
+        axios.get(`${api}/kitchen/dish?id=${Dish.id}`, {
             headers: headers
         }).then(val => {
             setOneDish([val.data.data]);
@@ -62,7 +62,7 @@ const EditDishItem = ({ setEditedDishForm, Dish, SubmitForm, GetAllDish, GetAllC
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.put(API, EditedData, { headers: headers })
+        axios.put(`${api}/kitchen/dish`, EditedData, { headers: headers })
             .then(val => {
                 if (val.status === 200) {
                     GetAllDish();

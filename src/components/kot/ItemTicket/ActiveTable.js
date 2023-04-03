@@ -7,14 +7,14 @@ import axios from 'axios';
 
 
 const TableOrederedItem = ({ mode, ActiveKot, getkotTable }) => {
-    var Orders_API = process.env.REACT_APP_ACTIVE_ORDERS
+    var api = process.env.REACT_APP_BASE_URL
 
     const generateBill = (ActiveTableID) => {
         localStorage.setItem("ActiveKotID", ActiveTableID);
     }
 
     const DeleteDishFromActive = (Dish_ID) => {
-        axios.delete(Orders_API, {
+        axios.delete(`${api}/finance/order`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access')}`
             },

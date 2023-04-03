@@ -5,6 +5,7 @@ import { ToastContainer, toast } from 'react-toastify';
 
 
 const ItemList = ({ id, dish_id, name, size, quantity, cost, index, GeneratedBill, mode, setQuantity_size_ByUser, setDISH_ID, ChangeQuantity }) => {
+    var api = process.env.REACT_APP_BASE_URL
     let [quantitySize, setQuantitySize] = useState(quantity);
 
     const Increase = (dshID) => {
@@ -23,7 +24,7 @@ const ItemList = ({ id, dish_id, name, size, quantity, cost, index, GeneratedBil
     }
 
     const DeleteDishFromList = (Dish_id) => {
-        axios.delete('https://restrofin.pythonanywhere.com/finance/order', {
+        axios.delete(`${api}/finance/order`, {
             headers: {
                 Authorization: `Bearer ${localStorage.getItem('access')}`
             },

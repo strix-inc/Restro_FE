@@ -8,9 +8,7 @@ import DeleteDIshItem from './DeleteDish/DeleteDIshItem';
 import Spinner from '../spinner/Spinner';
 
 const ItemMenu = ({ mode }) => {
-
-    var All_Dish_API = process.env.REACT_APP_GET_ALL_DISH
-    var All_Platform_API = process.env.REACT_APP_GET_ALL_PLATFORM
+    var api = process.env.REACT_APP_BASE_URL
 
     const [Data, setData] = useState([]);
     const [filterItem, setFilterItem] = useState([]);
@@ -110,7 +108,7 @@ const ItemMenu = ({ mode }) => {
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
 
-        axios.get(All_Dish_API, {
+        axios.get(`${api}/kitchen/dish`, {
             headers: headers
         }).then(val => {
             setData(val.data.data);
@@ -131,7 +129,7 @@ const ItemMenu = ({ mode }) => {
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
 
-        axios.get(All_Platform_API, {
+        axios.get(`${api}/kitchen/platform`, {
             headers: headers
         }).then(val => {
             setPlatform(val.data.data);
@@ -147,7 +145,7 @@ const ItemMenu = ({ mode }) => {
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
 
-        axios.get('https://restrofin.pythonanywhere.com/kitchen/category', {
+        axios.get(`${api}/kitchen/category`, {
             headers: headers
         }).then(val => {
             setAllCategory(val.data.data);

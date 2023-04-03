@@ -4,8 +4,7 @@ import axios from 'axios';
 
 
 const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID, GetAllDish, GetAllCategory }) => {
-
-    var dish_API = process.env.REACT_APP_GET_ALL_DISH
+    var api = process.env.REACT_APP_BASE_URL
 
     const [OneDish, setOneDish] = useState([]);
 
@@ -20,7 +19,7 @@ const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID, GetAllDish,
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
 
-        axios.delete(dish_API, { headers: headers, data: DishId })
+        axios.delete(`${api}/kitchen/dish`, { headers: headers, data: DishId })
             .then(val => {
                 if (val.status === 200) {
                     GetAllDish();
@@ -35,7 +34,7 @@ const DeleteDIshItem = ({ setDeletedDishForm, SubmitForm, OneDishID, GetAllDish,
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(`${dish_API}?id=${OneDishID}`, {
+        axios.get(`${api}/kitchen/dish?id=${OneDishID}`, {
             headers: headers
         }).then(val => {
             setOneDish([val.data.data]);

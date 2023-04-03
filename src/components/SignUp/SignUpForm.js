@@ -63,7 +63,6 @@ const SignUpForm = () => {
             delete FormValue.confirm_password;
             axios.post(`${api}/auth/signup`, FormValue)
                 .then((val) => {
-                    console.log(val);
                     if (val.request.status === 200) {
                         toast.success("SignUp Success", {
                             position: "top-right",
@@ -76,7 +75,7 @@ const SignUpForm = () => {
                             theme: "dark",
                         });
                         setTimeout(() => {
-                            window.location = "/login";
+                            window.location = "login";
                         }, 1500);
                     }
                 })

@@ -7,7 +7,6 @@ const PrintKotHistory = ({ OrderTicket }) => {
     var api = process.env.REACT_APP_BASE_URL
 
     const [kot_History, setKot_History] = useState([]);
-    console.log(kot_History);
 
     // printing the ticket of Item ordered by the customer
     const printTicket = () => {

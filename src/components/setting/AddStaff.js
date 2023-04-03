@@ -15,7 +15,7 @@ const AddStaff = () => {
                         <input type="Date" className='mx-2 p-2 border border-slate-300 rounded-md' />
                     </div>
                     <div className="button flex justify-end items-center gap-4 mx-2 mt-6">
-                        <Link to={"/setting"} type='button' className='w-[8rem] h-[2.5rem] border-2 border-red-500 flex justify-center items-center rounded-md text-red-500'>Cancel</Link>
+                        <Link to={"setting"} type='button' className='w-[8rem] h-[2.5rem] border-2 border-red-500 flex justify-center items-center rounded-md text-red-500'>Cancel</Link>
                         <button type='submit' className='w-[8rem] h-[2.5rem] hover:border-2 hover:border-green-600 flex justify-center items-center rounded-md hover:text-green-500 bg-green-600 hover:bg-black/50 text-white'>Save</button>
                     </div>
                 </form>

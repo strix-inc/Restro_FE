@@ -141,6 +141,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
             orders: ALL_ORDER,
             subtotal: parseInt(SubTotal_ref.current.value),
             discount: parseInt(Discount_amount_ref.current.value),
+            delivery_charge: 0,
             platform: Platform_Id,
             payment_type: Payment_mode,
         }

@@ -42,7 +42,7 @@ function App() {
   const loggedOut = () => {
     localStorage.clear();
     setLoggedIn(false);
-    window.location = '/login';
+    window.location = 'login';
   }
 
   return (
@@ -55,58 +55,59 @@ function App() {
               <HomePage />
             </ProtectRoute>
           } />
-          <Route path='/signUp' element={<SignUpForm />} />
-          <Route path='/login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
-          <Route path='/dashboard' element={
+          <Route path='signUp' element={<SignUpForm />} />
+          <Route path='login' element={<Login setLoggedIn={setLoggedIn} IsLoggedIn={IsLoggedIn} />} />
+          <Route path='dashboard' element={
             <PrivateRoute>
               <Dashboard mode={mode} />
             </PrivateRoute>
           } />
-          <Route path='/salehistory' element={
+          <Route path='salehistory' element={
             <PrivateRoute>
               <SaleHistory />
             </PrivateRoute>
           } />
-          <Route path='/kot' element={
+          <Route path='kot' element={
             <PrivateRoute>
               <Kot mode={mode} />
             </PrivateRoute>
           } />
-          <Route path='/bill' element={
+          <Route path='bill' element={
             <PrivateRoute>
               <Bill mode={mode} />
             </PrivateRoute>
           } />
-          <Route path='/invoice' element={
+          <Route path='invoice' element={
             <PrivateRoute>
               <GeneratedInvoice />
             </PrivateRoute>
           } />
-          <Route path='/kotHistory' element={
+          <Route path='kotHistory' element={
             <PrivateRoute>
               <KotHistory mode={mode} />
             </PrivateRoute>
           } />
-          <Route path='/kotbill' element={
+          <Route path='kotbill' element={
             <PrivateRoute>
               <PrintKotHistory />
             </PrivateRoute>
           } />
-          <Route path='/menu' element={
+          <Route path='menu' element={
             <PrivateRoute>
               <ItemMenu mode={mode} />
             </PrivateRoute>
           } />
-          <Route path='/setting' element={
+          <Route path='setting' element={
             <PrivateRoute>
               <Setting mode={mode} />
             </PrivateRoute>
           } />
-          <Route path='/addstaff' element={
+          <Route path='addstaff' element={
             <PrivateRoute>
               <AddStaff mode={mode} />
             </PrivateRoute>
           } />
+          <Route path='rough' element={<Rough />} />
         </Routes>
       </BrowserRouter>
     </div>

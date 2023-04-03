@@ -107,7 +107,6 @@ function App() {
               <AddStaff mode={mode} />
             </PrivateRoute>
           } />
-          <Route path='rough' element={<Rough />} />
         </Routes>
       </BrowserRouter>
     </div>

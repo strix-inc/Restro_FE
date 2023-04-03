@@ -34,7 +34,7 @@ const OrederedKT = ({ OrderTicket, setOrderPage }) => {
                     {
                         OrderTicket.map((val, index) => {
                             return <div key={index} className="Ticket-KOT">
-                                <h1 className='text-center text-[1rem] text-mono font-bold'>Table Order</h1><hr />
+                                <h1 className='text-center text-[1rem] text-mono font-bold'>Kitchen Order Ticket</h1><hr />
                                 <>
                                     <div className="first-box text-center my-2 grid grid-cols-2 font-mono font-bold text-[0.8rem]">
                                         <span>Table no: {val.table}</span>

@@ -5,10 +5,7 @@ import axios from 'axios';
 
 
 const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
-    var API = process.env.REACT_APP_INVOICE;
-    var All_platform_API = process.env.REACT_APP_GET_ALL_PLATFORM;
-
-
+    var api = process.env.REACT_APP_BASE_URL
 
     const [discount, setDiscount] = useState(0);
     const [Payment_mode, setPayment_mode] = useState('Cash');
@@ -104,7 +101,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
 
-        axios.get(All_platform_API, {
+        axios.get(`${api}/kitchen/platform`, {
             headers: headers
         }).then(val => {
             let platform_data = val.data.data;
@@ -146,13 +143,13 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
             discount: parseInt(Discount_amount_ref.current.value),
             delivery_charge: 0,
             platform: Platform_Id,
-            payment_type: Payment_mode
+            payment_type: Payment_mode,
         }
 
-        axios.put(API, Invoice_Data, { headers: headers })
+        axios.put(`${api}/finance/invoice`, Invoice_Data, { headers: headers })
             .then(val => {
                 if (val.status === 201) {
-                    window.location = 'kot';
+                    window.location = '/dashboard';
                 }
             })
 
@@ -223,7 +220,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
                             </div>
                             <div className='flex flex-col'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Discount %</label>
-                                <input type="text" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} onChange={handleDiscount} />
+                                <input type="text" value={discount} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} onChange={handleDiscount} />
                             </div>
                             <div className='flex flex-col'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Discount Amount</label>

@@ -4,7 +4,7 @@ import { BiPrinter } from 'react-icons/bi'
 import axios from 'axios';
 
 const PrintKotHistory = ({ OrderTicket }) => {
-    var Order_history_API = process.env.REACT_APP_POST_ORDER
+    var api = process.env.REACT_APP_BASE_URL
 
     const [kot_History, setKot_History] = useState([]);
 
@@ -22,7 +22,7 @@ const PrintKotHistory = ({ OrderTicket }) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('access')}`
             }
-            axios.get(Order_history_API, {
+            axios.get(`${api}/finance/kot`, {
                 headers: headers
             }).then(val => {
                 var kot = val.data.data;

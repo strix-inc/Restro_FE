@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import Spinner from '../spinner/Spinner';
 
 const KotHistory = (props) => {
-    var Order_history_API = process.env.REACT_APP_POST_ORDER
+    var api = process.env.REACT_APP_BASE_URL
 
     const [kothistory, setKotHistory] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -21,7 +21,7 @@ const KotHistory = (props) => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('access')}`
             }
-            axios.get(Order_history_API, {
+            axios.get(`${api}/finance/kot`, {
                 headers: headers
             }).then(val => {
                 setKotHistory(val.data.data);

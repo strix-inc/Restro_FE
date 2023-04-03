@@ -3,7 +3,7 @@ import axios from 'axios';
 import { GoAlert } from 'react-icons/go'
 
 const Item = (props) => {
-    var API = process.env.REACT_APP_GET_ALL_DISH
+    var api = process.env.REACT_APP_BASE_URL
 
     const [AllDishData, setAllDishData] = useState([]);
     const [dishData, setDishData] = useState([]);
@@ -50,7 +50,7 @@ const Item = (props) => {
         }
 
         const AllDish = () => {
-            axios.get(API, {
+            axios.get(`${api}/kitchen/dish`, {
                 headers: headers
             }).then(val => {
                 setAllDishData(val.data.data);

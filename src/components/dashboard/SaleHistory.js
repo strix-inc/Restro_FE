@@ -8,6 +8,7 @@ window.Buffer = window.Buffer || require("buffer").Buffer;
 
 
 const SaleHistory = () => {
+    var api = process.env.REACT_APP_BASE_URL
 
     const [Get_oneSaleHistory, setGet_oneSaleHistory] = useState([]);
     const [baseImage, setBaseImg] = useState('');
@@ -28,12 +29,11 @@ const SaleHistory = () => {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(`https://rfprod.pythonanywhere.com/finance/invoice?id=${id}`, {
+        axios.get(`${api}/finance/invoice?id=${id}`, {
             headers: headers
         }).then(val => {
             setGet_oneSaleHistory([val.data.data]);
             let string = val.data.upi_qr;
-            // const imageUrl = `data:image/svg;base64,${string}`;
             let base64_to_imgsrc = Buffer.from(string, "base64").toString('base64');
             setBaseImg(base64_to_imgsrc);
         }).catch((error) => {
@@ -65,15 +65,17 @@ const SaleHistory = () => {
                             return <div key={index} className="">
                                 <>
                                     <h1 className='text-center text-[2rem] tracking-[-1px] font-mono font-bold'>{localStorage.getItem('Restaurant_name')}</h1>
-                                    <div className='flex text-[0.7rem] justify-center leading-3'>
-                                        <span className='font-mono font-bold'>{localStorage.getItem('street') === 'null' ? '' : localStorage.getItem('street')}</span>
-                                        <span className='font-mono font-bold mx-1'>{localStorage.getItem('city') === 'null' ? '' : localStorage.getItem('city')}</span>
-                                        <span className='font-mono font-bold'>{localStorage.getItem('state') === 'null' ? '' : localStorage.getItem('state')}</span>
-                                    </div>
-                                    <div className='grid text-[0.8rem] text-center'>
-                                        <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone') ? localStorage.getItem('phone') : ''}</span>
-                                        <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin') === 'null' ? '' : localStorage.getItem('gstin')}</span>
-                                        <span className='font-mono font-bold'>HSN / SAC: 996331</span>
+                                    <div className='mt-3'>
+                                        <div className='flex text-[0.7rem] justify-center leading-3'>
+                                            <span className='font-mono font-bold'>{localStorage.getItem('street') === 'null' ? '' : localStorage.getItem('street')}</span>
+                                            <span className='font-mono font-bold mx-1'>{localStorage.getItem('city') === 'null' ? '' : localStorage.getItem('city')}</span>
+                                            <span className='font-mono font-bold'>{localStorage.getItem('state') === 'null' ? '' : localStorage.getItem('state')}</span>
+                                        </div>
+                                        <div className='grid text-[0.8rem] text-center'>
+                                            <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone') ? localStorage.getItem('phone') : ''}</span>
+                                            <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin') === 'null' ? '' : localStorage.getItem('gstin')}</span>
+                                            <span className='font_mono font-bold'>HSN / SAC : 996331</span>
+                                        </div>
                                     </div><hr />
                                 </>
                                 <div>
@@ -88,8 +90,8 @@ const SaleHistory = () => {
                                 </div>
                                 <div className="Table my-1">
                                     <>
-                                        <ul className='grid grid-cols-6 text-center font-mono font-bold text-[0.8rem] my-1'>
-                                            <li className='col-span-1'>Sl No.</li>
+                                        <ul className='grid grid-cols-6 text-center font-mono font-bold text-[0.8rem] my-1 mx-1'>
+                                            <li className='col-span-1'>Sl</li>
                                             <li className='col-span-2'>Item</li>
                                             <li className='col-span-1'>Rate</li>
                                             <li className='col-span-1'>Qty</li>
@@ -112,15 +114,19 @@ const SaleHistory = () => {
                                         })
                                     }
                                 </div><hr />
-                                <div className='grid grid-cols-3 font-mono font-bold text-[0.75rem] mt-2'>
-                                    <div className='col-span-1'></div>
-                                    <div className='col-span-2 Total_amount mx-8 flex flex-col items-end'>
-                                        <span className='my-2'>SubTotal : Rs. {val.subtotal}</span>
-                                        <span>Discount (%) : {val.discount} %</span>
-                                        <span>SGST @2.5% : Rs. {val.sgst}</span>
-                                        <span>CGST @2.5% : Rs. {val.cgst}</span>
-                                        <span>---------------------</span>
-                                        <span>Grand Total : Rs. {val.total}</span>
+                                <div className='grid grid-cols-3'>
+                                    <div className="QR_code flex items-center m-auto">
+                                        <img src={`data:image/svg+xml;base64,${baseImage}`} alt='loading...' className='w-[90px] h-[90px]' />
+                                    </div>
+                                    <div className='col-span-2 font-mono font-bold text-[0.75rem] mt-2 mx-4'>
+                                        <div className='col-span-2 Total_amount flex flex-col items-end'>
+                                            <span className='my-2'>SubTotal : Rs. {val.subtotal}</span>
+                                            {val.discount === 0 ? '' : <span>Discount : Rs. {val.discount}</span>}
+                                            {val.sgst === 0 ? '' : <span>SGST @2.5% : Rs. {val.sgst}</span>}
+                                            {val.cgst === 0 ? '' : <span>CGST @2.5% : Rs. {val.cgst}</span>}
+                                            <span>---------------------</span>
+                                            <span className='text-[1rem]'>Grand Total : Rs. {val.total}</span>
+                                        </div>
                                     </div>
                                 </div>
                                 <div className="fun_fact flex flex-col text-[0.8rem] font-mono font-bold items-center mt-8">
@@ -131,14 +137,11 @@ const SaleHistory = () => {
                                         <small className='text-[0.9rem]'>: strix.co.in</small>
                                     </span>
                                 </div>
-                                <div className="QR_code">
-                                    <img src={`data:image/svg+xml;base64,${baseImage}`} alt='loading...' />
-                                </div>
-                            </div>
+                            </div >
                         })
                     }
-                </div>
-            </div>
+                </div >
+            </div >
         </>
     )
 }

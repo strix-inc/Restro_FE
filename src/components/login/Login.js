@@ -7,7 +7,7 @@ import IMG from '../Images/R.png'
 
 
 const Login = (props) => {
-    var api = process.env.REACT_APP_LOGIN_API
+    var api = process.env.REACT_APP_BASE_URL
 
     const [contact, setContact] = useState('');
     const [password, setPassword] = useState('');
@@ -34,7 +34,7 @@ const Login = (props) => {
         if (Logindata.username === '' && Logindata.password === '') {
             setMatched('Enter Username & Password');
         } else {
-            axios.post(api, Logindata)
+            axios.post(`${api}/auth/login/token`, Logindata)
                 .then((val) => {
                     localStorage.setItem('access', val.data.access);
                     if (val.request.status === 200) {

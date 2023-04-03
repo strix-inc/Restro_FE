@@ -5,8 +5,7 @@ import ToolTip from '../../Images/tooltip.png'
 
 
 const AddItem = ({ setAdditemForm, GetAllDish, GetAllCategory, AllCategory }) => {
-    var Add_new_dish_API = process.env.REACT_APP_ADD_NEWDISH
-    var Post_new_dish_API = process.env.REACT_APP_GET_ALL_DISH
+    var api = process.env.REACT_APP_BASE_URL
 
     const [rates, setRates] = useState([
         { half_price: '', full_price: '' },
@@ -51,7 +50,7 @@ const AddItem = ({ setAdditemForm, GetAllDish, GetAllCategory, AllCategory }) =>
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${localStorage.getItem('access')}`
             }
-            axios.post(Post_new_dish_API, CreatedDish, {
+            axios.post(`${api}/kitchen/dish`, CreatedDish, {
                 headers: headers
             }).then(val => {
                 if (val.status === 201) {
@@ -71,7 +70,7 @@ const AddItem = ({ setAdditemForm, GetAllDish, GetAllCategory, AllCategory }) =>
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${localStorage.getItem('access')}`
         }
-        axios.get(Add_new_dish_API, {
+        axios.get(`${api}/kitchen/platform`, {
             headers: headers
         }).then(val => {
             setRates(val.data.data);

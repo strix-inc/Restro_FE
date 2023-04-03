@@ -11,7 +11,6 @@ import ItemMenu from './components/menu/ItemMenu';
 import Setting from './components/setting/Setting';
 import Bill from './components/GenerateBill/Bill';
 import AddStaff from './components/setting/AddStaff';
-import Rough from './components/Rough';
 import GeneratedInvoice from './components/GenerateBill/GeneratedInvoice';
 import SaleHistory from './components/dashboard/SaleHistory';
 import PrintKotHistory from './components/kot history/PrintKotHistory';

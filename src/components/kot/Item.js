@@ -67,7 +67,7 @@ const Item = (props) => {
             <div className="Item-detail grid grid-cols-10 gap-x-4 my-2">
                 <div className="itemName flex flex-col col-span-4">
                     <label htmlFor="itemName" className='text-[0.85rem] font-medium m-1'>Dish Name</label>
-                    <input type="text" name='name' value={props.rough === true ? wordEntered : ''} placeholder='Item Name' className={`rounded-md py-2 px-3 bg-transparent border text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleFilter} required />
+                    <input type="text" name='name' autocomplete="off" value={props.rough === true ? wordEntered : ''} placeholder='Item Name' className={`rounded-md py-2 px-3 bg-transparent border text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleFilter} required />
 
                     {suggestion && wordEntered && (
                         <div className={`dataResult absolute mt-[4.5rem] ml-2 rounded-sm w-[350px] h-[400px] bg-white text-blue-800 border shadow-md shadow-black/50 overflow-auto scrollbar-hide z-10`}>

@@ -227,19 +227,19 @@ const Dashboard = (props) => {
                                 {loading && <span className='flex justify-center item-center my-2'><Spinner mode={props.mode} /></span>}
                                 {
                                     AllSaleHistory.length > 0 ? AllSaleHistory.map((val, index) => {
-                                        var localDate = new Date(val.created_at).toLocaleString("en-US", {
+                                        var localDate = new Date(val.created_at).toLocaleString("hi", {
                                             localeMatcher: "best fit",
                                         })
                                         return <ul key={index} className={`grid grid-cols-10 relative ${props.mode === 'black' ? 'text-black' : 'text-black'} ${index % 2 != 0 ? 'bg-gray-300' : 'bg-slate-100'} gap-2 p-2 text-[0.9rem]`}>
                                             <li className='flex gap-4 items-center col-span-2'>
-                                                <span className='font-bold'>{index + 1}</span>
+                                                <span className='font-bold'>{val.invoice_number_full}</span>
                                                 <div className="absolute mx-4
                             top-[-18px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[14px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                             before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%] before:z-20
                             hover:before:opacity-100" data-tip="Edit">
                                                     <Link to='/bill' className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link>
                                                 </div>
-                                                <div className="absolute 
+                                                <div className="absolute
                                         right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                                         before:bg-blue-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
                                         hover:before:opacity-100" data-tip="Print">

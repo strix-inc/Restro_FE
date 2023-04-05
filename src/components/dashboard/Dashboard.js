@@ -23,10 +23,10 @@ const Dashboard = (props) => {
     const [PaymentType, setPaymentType] = useState('All')
     const [loading, setLoading] = useState(false);
     const DsItem = [
-        { id: 1, name: 'Top sale item', records: Dashbaord_Stats.top_sale, icons: <IoFastFood />, bg: 'bg-red-300' },
-        { id: 2, name: 'Lowest sale item', records: Dashbaord_Stats.lowest_sale, icons: <IoFastFood />, bg: 'bg-blue-300' },
-        { id: 3, name: 'Maximum Sale', records: Dashbaord_Stats.max_sale, icons: <VscGraphLine />, bg: 'bg-green-300' },
-        { id: 4, name: 'Average Sale', records: Math.round(Dashbaord_Stats.avg_sale * 10) / 10, icons: <VscGraphLeft />, bg: 'bg-amber-300' },
+        { id: 1, name: 'Highest Selling', records: Dashbaord_Stats.top_sale, icons: <IoFastFood />, bg: 'bg-green-300' },
+        { id: 2, name: 'Lowest Selling Dish', records: Dashbaord_Stats.lowest_sale, icons: <IoFastFood />, bg: 'bg-red-300' },
+        { id: 3, name: 'Maximum Invoice Amount', records: Dashbaord_Stats.max_sale, icons: <VscGraphLine />, bg: 'bg-green-300' },
+        { id: 4, name: 'Average Invoice Amount', records: Math.round(Dashbaord_Stats.avg_sale * 10) / 10, icons: <VscGraphLeft />, bg: 'bg-amber-300' },
     ]
 
 
@@ -214,13 +214,14 @@ const Dashboard = (props) => {
                             </div>
 
                             <div className={`grid grid-cols-10 gap-2 p-2 mt-4 font-semibold text-[0.8rem] ${props.mode === 'black' ? 'text-white bg-blue-500 border-slate-600' : 'text-black bg-blue-200 border border-slate-200 border-b-0'} z-5`}>
-                                <span className='col-span-2'>INVOICE NO.</span>
-                                <span className='flex justify-center items-center col-span-2'>DATE</span>
+                                <span className='col-span-2'>INVOICE</span>
+                                <span className='flex justify-center items-center col-span-2'>DATE - TIME</span>
                                 <span className='flex justify-center items-center'>SUB TOTAL</span>
                                 <span className='flex justify-center items-center'>DISCOUNT</span>
-                                <span className='flex justify-center items-center'>C.G.S.T @2.5%</span>
-                                <span className='flex justify-center items-center'>S.G.S.T @2.5%</span>
+                                <span className='flex justify-center items-center'>C.G.S.T - 2.5%</span>
+                                <span className='flex justify-center items-center'>S.G.S.T - 2.5%</span>
                                 <span className='flex justify-center items-center'>NET AMOUNT</span>
+                                <span className='flex justify-center items-center'>DELIVERY CHARGE</span>
                                 <span className='flex justify-center items-center'>TOTAL</span>
                             </div>
                             <div className={`sale_history_detail rounded-sm border border-t-0 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'} overflow-auto scrollbar-hide h-[290px]`}>
@@ -251,7 +252,8 @@ const Dashboard = (props) => {
                                             <li className='flex justify-center items-center'>{val.discount}</li>
                                             <li className='flex justify-center items-center'>{val.cgst}</li>
                                             <li className='flex justify-center items-center'>{val.sgst}</li>
-                                            <li className='flex justify-center items-center'>{Math.round(((val.subtotal) - (val.subtotal) * (val.discount / 100)) * 100) / 100}</li>
+                                            <li className='flex justify-center items-center'>{val.net_amount}</li>
+                                            <li className='flex justify-center items-center'>{val.delivery_charge}</li>
                                             <li className='flex justify-center items-center'>{val.total}</li>
                                         </ul>
                                     }) : (loading === false && <span className='flex justify-center text-[0.9rem] items-center pt-3 text-amber-600'><TiWarning className='text-[1.2rem] mx-1 mb-1' /> No Data Found</span>)

@@ -100,7 +100,7 @@ const ItemMenu = ({ mode }) => {
         setDeletedDishForm(true);
     }
 
-    // api for the all dish !! 
+    // api for the all dish !!
     const GetAllDish = () => {
         setLoading(true);
         const headers = {
@@ -178,7 +178,7 @@ const ItemMenu = ({ mode }) => {
             {DeleteDishForm === true ? <DeleteDIshItem DeleteDish={DeleteDish} GetAllDish={GetAllDish} GetAllCategory={GetAllCategory} setDeletedDishForm={setDeletedDishForm} OneDishID={OneDishID} /> : ''}
             <div className="w-[80%] ml-[20%]">
                 <div className={`Menus w-[99%] m-auto mt-[4rem] rounded-md`}>
-                    <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Dish Menu</h1>
+                    <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Menu</h1>
                     <div className={`grid grid-cols-4 ${mode === 'black' ? 'border-slate-700 nav_bg' : 'bg-white border-slate-300'}`}>
                         <div className={`Item-category relative col-span-1 m-2 border ${mode === 'black' ? 'border-slate-500 text-white' : 'border-slate-300'} h-[595px] overflow-auto scrollbar-hide`}>
                             <div className='p-2 py-3 mb-1 bg-blue-500 text-center'>

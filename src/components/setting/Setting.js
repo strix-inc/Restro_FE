@@ -95,20 +95,20 @@ const Setting = ({ mode }) => {
                                         <input type='text' name='contact' defaultValue={item.contact === null ? '' : item.contact} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter contact' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div className='flex flex-col'>
-                                        <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Country</label>
-                                        <input type='text' name='address_country' defaultValue={item.address_country === null ? '' : item.address_country} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter country' onChange={(e) => handleEdit(e)} />
-                                    </div>
-                                    <div className='flex flex-col'>
-                                        <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>State</label>
-                                        <input type='text' name='address_state' defaultValue={item.address_state === null ? '' : item.address_state} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter state' onChange={(e) => handleEdit(e)} />
+                                        <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Street</label>
+                                        <input type='text' name='address_street' defaultValue={item.address_street === null ? '' : item.address_street} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter street' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div className='flex flex-col'>
                                         <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>City</label>
                                         <input type='text' name='address_city' defaultValue={item.address_city === null ? '' : item.address_city} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter city' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div className='flex flex-col'>
-                                        <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Street</label>
-                                        <input type='text' name='address_street' defaultValue={item.address_street === null ? '' : item.address_street} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter street' onChange={(e) => handleEdit(e)} />
+                                        <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>State</label>
+                                        <input type='text' name='address_state' defaultValue={item.address_state === null ? '' : item.address_state} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter state' onChange={(e) => handleEdit(e)} />
+                                    </div>
+                                    <div className='flex flex-col'>
+                                        <label className={`text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>Country</label>
+                                        <input type='text' name='address_country' defaultValue={item.address_country === null ? '' : item.address_country} className={`border ${mode === 'black' ? 'bg-transparent border-slate-500' : 'border-slate-300'} p-2 text-[0.9rem] rounded-md`} placeholder='enter country' onChange={(e) => handleEdit(e)} />
                                     </div>
                                     <div></div>
                                 </form>
@@ -137,7 +137,7 @@ const Setting = ({ mode }) => {
                                             <label className={`relative text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>
                                                 <span>INVOICE PREFIX</span>
                                                 <div
-                                                    className=" 
+                                                    className="
                         absolute left-[7rem] top-[-24px] before:content-[attr(data-tip)] before:relative before:px-3 before:py-2 before:left-[1.5rem] before:top-[1rem] before:-translate-x-1/2 before:-translate-y-full
                         before:bg-gray-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-md before:opacity-0 before:transition-all
                         hover:before:opacity-100" data-tip={`Set Your Own Prefix  { Ex : INV- , PP- , DD- }`}

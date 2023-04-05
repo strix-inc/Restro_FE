@@ -23,7 +23,7 @@ const Dashboard = (props) => {
     const [PaymentType, setPaymentType] = useState('All')
     const [loading, setLoading] = useState(false);
     const DsItem = [
-        { id: 1, name: 'Highest Selling', records: Dashbaord_Stats.top_sale, icons: <IoFastFood />, bg: 'bg-green-300' },
+        { id: 1, name: 'Highest Selling Dish', records: Dashbaord_Stats.top_sale, icons: <IoFastFood />, bg: 'bg-green-300' },
         { id: 2, name: 'Lowest Selling Dish', records: Dashbaord_Stats.lowest_sale, icons: <IoFastFood />, bg: 'bg-red-300' },
         { id: 3, name: 'Maximum Invoice Amount', records: Dashbaord_Stats.max_sale, icons: <VscGraphLine />, bg: 'bg-green-300' },
         { id: 4, name: 'Average Invoice Amount', records: Math.round(Dashbaord_Stats.avg_sale * 10) / 10, icons: <VscGraphLeft />, bg: 'bg-amber-300' },

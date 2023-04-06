@@ -22,6 +22,7 @@ const Dashboard = (props) => {
     const [OrderType, setOrderType] = useState('All');
     const [PaymentType, setPaymentType] = useState('All')
     const [loading, setLoading] = useState(false);
+
     const DsItem = [
         { id: 1, name: 'Top sale item', records: Dashbaord_Stats.top_sale, icons: <IoFastFood />, bg: 'bg-red-300' },
         { id: 2, name: 'Lowest sale item', records: Dashbaord_Stats.lowest_sale, icons: <IoFastFood />, bg: 'bg-blue-300' },
@@ -56,11 +57,11 @@ const Dashboard = (props) => {
         setPaymentType(event.target.value);
     }
 
+    var base_url = `${api}/finance/invoice?finalized=True`;
     const handleSearchSaleHistory = () => {
         setAllSaleHistory('');
         setLoading(true);
 
-        let base_url = `${api}/finance/invoice?finalized=True`;
 
         if (FromDate) {
             base_url += "&from=" + FromDate;
@@ -90,6 +91,44 @@ const Dashboard = (props) => {
         }).catch(function (error) {
             console.log(error);
         });
+    }
+
+    const handleDownload = (msg) => {
+        if (FromDate) {
+            base_url += "&from=" + FromDate;
+        }
+        if (ToDate) {
+            base_url += "&to=" + ToDate;
+        }
+        if (OrderType !== "All") {
+            base_url += "&platform=" + OrderType;
+        }
+        if (PaymentType !== "All") {
+            base_url += "&payment=" + PaymentType;
+        }
+        if (msg === 'download') {
+            base_url += "&download=" + true;
+        }
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+
+        axios.get(`${base_url}`, {
+            headers: headers
+        }).then(val => {
+            const blob = new Blob([val.data], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'saleHistory.csv')
+            link.click();
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+        setAllSaleHistory('');
     }
 
     const handleEditSaleHistory = (id) => {
@@ -140,7 +179,7 @@ const Dashboard = (props) => {
             localStorage.setItem('gstin', val.data.data.gstin);
             localStorage.setItem('city', val.data.data.address_city);
             localStorage.setItem('state', val.data.data.address_state);
-            localStorage.setItem('fssai', val.data.data.fssai);
+            localStorage.setItem('fssai', val.data.data.fssai_number);
         }).catch(function (error) {
             console.log(error);
         });
@@ -175,14 +214,14 @@ const Dashboard = (props) => {
                             <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
                                 <div className='col-span-2 flex items-center gap-2'>
                                     <label className='font-bold'>From</label>
-                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} onChange={handleFromDate} />
+                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full p-1 my-3`} onChange={handleFromDate} />
                                 </div>
                                 <div className='col-span-2 flex items-center gap-2'>
                                     <label className='font-bold'>To</label>
-                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} onChange={handleToDate} />
+                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full p-1 my-3`} onChange={handleToDate} />
                                 </div>
                                 <div className='flex items-center'>
-                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] text-[1rem] bg-blue-500 rounded-md text-white font-semibold border-none hover:bg-blue-600 flex justify-center items-center">
+                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] text-[1rem] bg-blue-500 rounded-sm text-white font-semibold border-none hover:bg-blue-600 flex justify-center items-center" onClick={() => handleDownload('download')}>
                                         <span className='mr-2'><VscFilePdf /></span>
                                         <span>Download report</span>
                                     </button>
@@ -190,18 +229,18 @@ const Dashboard = (props) => {
                             </div>
 
                             <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
-                                <div className='col-span-2 flex justify-between items-center gap-2'>
-                                    <label className='font-bold text-[1rem]'>Platform type</label>
-                                    <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[80%] p-1 my-3`} onChange={handleOrderType} >
+                                <div className='col-span-2 flex justify-between items-center gap-1'>
+                                    <label className='font-bold text-[1rem] leading-4'>Platform type</label>
+                                    <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-[80%] p-1 my-3`} onChange={handleOrderType} >
                                         <option value="All">All</option>
                                         <option value="Restaurant">Restaurant</option>
                                         <option value="Zomato">Zomato</option>
                                         <option value="Swiggy">Swiggy</option>
                                     </select>
                                 </div>
-                                <div className='col-span-2 flex items-center gap-2'>
-                                    <label className='font-bold text-[0.9rem]'>Payment type</label>
-                                    <select type="date" className={`flex justify-end border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[75%] p-1 my-3`} onChange={handlePaymentType}>
+                                <div className='col-span-2 flex items-center gap-1'>
+                                    <label className='font-bold text-[0.9rem] leading-4'>Payment type</label>
+                                    <select type="date" className={`flex justify-end border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-[75%] p-1 my-3`} onChange={handlePaymentType}>
                                         <option value="All">All</option>
                                         <option value="Cash">Cash</option>
                                         <option value="Upi">UPI</option>
@@ -209,7 +248,7 @@ const Dashboard = (props) => {
                                     </select>
                                 </div>
                                 <div className='flex items-center'>
-                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] rounded-md text-blue-600 font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all ease-in-out duration-500 flex items-center justify-center" onClick={handleSearchSaleHistory}><span className='mr-2'><IoMdSearch className='text-[1.3rem]' /></span>Search</button>
+                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] rounded-sm text-blue-600 font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all ease-in-out duration-500 flex items-center justify-center" onClick={handleSearchSaleHistory}><span className='mr-2'><IoMdSearch className='text-[1.3rem]' /></span>Search</button>
                                 </div>
                             </div>
 

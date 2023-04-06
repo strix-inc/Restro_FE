@@ -61,13 +61,16 @@ const GeneratedInvoice = () => {
                                     <h1 className='text-center text-[2rem] tracking-[-1px] font-mono font-bold underline'>{localStorage.getItem('Restaurant_name')}</h1>
                                     <div className='mt-3'>
                                         <div className='flex text-[0.7rem] justify-center leading-3'>
-                                            <span className='font-mono font-bold'>{localStorage.getItem('street') === 'null' ? '' : localStorage.getItem('street')}</span>
-                                            <span className='font-mono font-bold mx-1'>{localStorage.getItem('city') === 'null' ? '' : localStorage.getItem('city')}</span>
+                                            <span className='font-mono font-bold'>{localStorage.getItem('street') === 'null' ? '' : localStorage.getItem('street') + ','}</span>
+                                            <span className='font-mono font-bold mx-1'>{localStorage.getItem('city') === 'null' ? '' : localStorage.getItem('city') + ','}</span>
                                             <span className='font-mono font-bold'>{localStorage.getItem('state') === 'null' ? '' : localStorage.getItem('state')}</span>
                                         </div>
                                         <div className='grid text-[0.8rem] text-center'>
                                             <span className='font-mono font-bold'>Mob: {localStorage.getItem('phone') ? localStorage.getItem('phone') : ''}</span>
-                                            <span className='font-mono font-bold'>GSTIN: {localStorage.getItem('gstin') === 'null' ? '' : localStorage.getItem('gstin')}</span>
+                                            <div className='flex justify-center text-[0.7rem] gap-4'>
+                                                <span className='font-mono font-bold'>{localStorage.getItem('gstin') === 'null' ? '' : 'GSTIN:' + localStorage.getItem('gstin')}</span>
+                                                <span className='font-mono font-bold'>{localStorage.getItem('gstin') === 'null' ? '' : 'FSSAI:' + localStorage.getItem('fssai')}</span>
+                                            </div>
                                             <span className='font_mono font-bold'>HSN / SAC : 996331</span>
                                         </div>
                                     </div><hr />
@@ -127,7 +130,7 @@ const GeneratedInvoice = () => {
                                     <span>Thank You for Visiting </span>
                                     <span>Have a Nice Day </span>
                                     <span className='my-3 flex items-center'>
-                                        <img src={IMG} className='w-[8rem] h-[3rem] mx-2' />
+                                        <img src={IMG} className='w-[4rem] h-[1,8rem] mx-2' />
                                         <small className='text-[0.9rem]'>: strix.co.in</small>
                                     </span>
                                 </div>

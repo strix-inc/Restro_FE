@@ -137,7 +137,7 @@ const Setting = ({ mode }) => {
                                             <label className={`relative text-[0.9rem] mx-1 ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'}`}>
                                                 <span>INVOICE PREFIX</span>
                                                 <div
-                                                    className=" 
+                                                    className="
                         absolute left-[7rem] top-[-24px] before:content-[attr(data-tip)] before:relative before:px-3 before:py-2 before:left-[1.5rem] before:top-[1rem] before:-translate-x-1/2 before:-translate-y-full
                         before:bg-gray-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-md before:opacity-0 before:transition-all
                         hover:before:opacity-100" data-tip={`Set Your Own Prefix  { Ex : INV- , PP- , DD- }`}

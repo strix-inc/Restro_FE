@@ -23,14 +23,19 @@ import ProtectRoute from './components/ProtectRoute/ProtectRoute';
 function App() {
 
   // covert the page in dark mode and as well light mode !!
-  const [mode, setMode] = useState('');
+  const bg_mode = localStorage.getItem('modes');
+  const [mode, setMode] = useState(bg_mode);
   const OnClickMoon = () => {
     // Add mode to black
-    setMode('black');
+    localStorage.setItem('modes', 'black');
+    const modes = localStorage.getItem('modes');
+    setMode(modes);
   }
   const OnClickSun = () => {
     // Add mode to white
-    setMode('white');
+    localStorage.setItem('modes', 'white');
+    const modes = localStorage.getItem('modes');
+    setMode(modes);
   }
 
   useEffect(() => {

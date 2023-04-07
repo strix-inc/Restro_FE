@@ -22,11 +22,12 @@ const Dashboard = (props) => {
     const [OrderType, setOrderType] = useState('All');
     const [PaymentType, setPaymentType] = useState('All')
     const [loading, setLoading] = useState(false);
+
     const DsItem = [
-        { id: 1, name: 'Top sale item', records: Dashbaord_Stats.top_sale, icons: <IoFastFood />, bg: 'bg-red-300' },
-        { id: 2, name: 'Lowest sale item', records: Dashbaord_Stats.lowest_sale, icons: <IoFastFood />, bg: 'bg-blue-300' },
-        { id: 3, name: 'Maximum Sale', records: Dashbaord_Stats.max_sale, icons: <VscGraphLine />, bg: 'bg-green-300' },
-        { id: 4, name: 'Average Sale', records: Math.round(Dashbaord_Stats.avg_sale * 10) / 10, icons: <VscGraphLeft />, bg: 'bg-amber-300' },
+        { id: 1, name: 'Highest Selling Dish', records: Dashbaord_Stats.top_sale, icons: <IoFastFood />, bg: 'bg-green-300' },
+        { id: 2, name: 'Lowest Selling Dish', records: Dashbaord_Stats.lowest_sale, icons: <IoFastFood />, bg: 'bg-red-300' },
+        { id: 3, name: 'Maximum Invoice Amount', records: Dashbaord_Stats.max_sale, icons: <VscGraphLine />, bg: 'bg-green-300' },
+        { id: 4, name: 'Average Invoice Amount', records: Math.round(Dashbaord_Stats.avg_sale * 10) / 10, icons: <VscGraphLeft />, bg: 'bg-amber-300' },
     ]
 
 
@@ -56,11 +57,11 @@ const Dashboard = (props) => {
         setPaymentType(event.target.value);
     }
 
+    var base_url = `${api}/finance/invoice?finalized=True`;
     const handleSearchSaleHistory = () => {
         setAllSaleHistory('');
         setLoading(true);
 
-        let base_url = `${api}/finance/invoice?finalized=True`;
 
         if (FromDate) {
             base_url += "&from=" + FromDate;
@@ -90,6 +91,44 @@ const Dashboard = (props) => {
         }).catch(function (error) {
             console.log(error);
         });
+    }
+
+    const handleDownload = (msg) => {
+        if (FromDate) {
+            base_url += "&from=" + FromDate;
+        }
+        if (ToDate) {
+            base_url += "&to=" + ToDate;
+        }
+        if (OrderType !== "All") {
+            base_url += "&platform=" + OrderType;
+        }
+        if (PaymentType !== "All") {
+            base_url += "&payment=" + PaymentType;
+        }
+        if (msg === 'download') {
+            base_url += "&download=" + true;
+        }
+
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+
+        axios.get(`${base_url}`, {
+            headers: headers
+        }).then(val => {
+            const blob = new Blob([val.data], { type: 'text/csv' });
+            const url = window.URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.setAttribute('href', url);
+            link.setAttribute('download', 'saleHistory.csv')
+            link.click();
+
+        }).catch(function (error) {
+            console.log(error);
+        });
+        setAllSaleHistory('');
     }
 
     const handleEditSaleHistory = (id) => {
@@ -140,7 +179,7 @@ const Dashboard = (props) => {
             localStorage.setItem('gstin', val.data.data.gstin);
             localStorage.setItem('city', val.data.data.address_city);
             localStorage.setItem('state', val.data.data.address_state);
-            localStorage.setItem('fssai', val.data.data.fssai);
+            localStorage.setItem('fssai', val.data.data.fssai_number);
         }).catch(function (error) {
             console.log(error);
         });
@@ -175,14 +214,14 @@ const Dashboard = (props) => {
                             <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
                                 <div className='col-span-2 flex items-center gap-2'>
                                     <label className='font-bold'>From</label>
-                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} onChange={handleFromDate} />
+                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full p-1 my-3`} onChange={handleFromDate} />
                                 </div>
                                 <div className='col-span-2 flex items-center gap-2'>
                                     <label className='font-bold'>To</label>
-                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-full p-1 my-3`} onChange={handleToDate} />
+                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full p-1 my-3`} onChange={handleToDate} />
                                 </div>
                                 <div className='flex items-center'>
-                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] text-[1rem] bg-blue-500 rounded-md text-white font-semibold border-none hover:bg-blue-600 flex justify-center items-center">
+                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] text-[1rem] bg-blue-500 rounded-sm text-white font-semibold border-none hover:bg-blue-600 flex justify-center items-center" onClick={() => handleDownload('download')}>
                                         <span className='mr-2'><VscFilePdf /></span>
                                         <span>Download report</span>
                                     </button>
@@ -190,18 +229,18 @@ const Dashboard = (props) => {
                             </div>
 
                             <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
-                                <div className='col-span-2 flex justify-between items-center gap-2'>
-                                    <label className='font-bold text-[1rem]'>Platform type</label>
-                                    <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[80%] p-1 my-3`} onChange={handleOrderType} >
+                                <div className='col-span-2 flex justify-between items-center gap-1'>
+                                    <label className='font-bold text-[1rem] leading-4'>Platform type</label>
+                                    <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-[80%] p-1 my-3`} onChange={handleOrderType} >
                                         <option value="All">All</option>
                                         <option value="Restaurant">Restaurant</option>
                                         <option value="Zomato">Zomato</option>
                                         <option value="Swiggy">Swiggy</option>
                                     </select>
                                 </div>
-                                <div className='col-span-2 flex items-center gap-2'>
-                                    <label className='font-bold text-[0.9rem]'>Payment type</label>
-                                    <select type="date" className={`flex justify-end border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-md w-[75%] p-1 my-3`} onChange={handlePaymentType}>
+                                <div className='col-span-2 flex items-center gap-1'>
+                                    <label className='font-bold text-[0.9rem] leading-4'>Payment type</label>
+                                    <select type="date" className={`flex justify-end border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-[75%] p-1 my-3`} onChange={handlePaymentType}>
                                         <option value="All">All</option>
                                         <option value="Cash">Cash</option>
                                         <option value="Upi">UPI</option>
@@ -209,37 +248,38 @@ const Dashboard = (props) => {
                                     </select>
                                 </div>
                                 <div className='flex items-center'>
-                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] rounded-md text-blue-600 font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all ease-in-out duration-500 flex items-center justify-center" onClick={handleSearchSaleHistory}><span className='mr-2'><IoMdSearch className='text-[1.3rem]' /></span>Search</button>
+                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] rounded-sm text-blue-600 font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all ease-in-out duration-500 flex items-center justify-center" onClick={handleSearchSaleHistory}><span className='mr-2'><IoMdSearch className='text-[1.3rem]' /></span>Search</button>
                                 </div>
                             </div>
 
                             <div className={`grid grid-cols-10 gap-2 p-2 mt-4 font-semibold text-[0.8rem] ${props.mode === 'black' ? 'text-white bg-blue-500 border-slate-600' : 'text-black bg-blue-200 border border-slate-200 border-b-0'} z-5`}>
-                                <span className='col-span-2'>INVOICE NO.</span>
-                                <span className='flex justify-center items-center col-span-2'>DATE</span>
+                                <span className='col-span-2'>INVOICE</span>
+                                <span className='flex justify-center items-center col-span-2'>DATE - TIME</span>
                                 <span className='flex justify-center items-center'>SUB TOTAL</span>
                                 <span className='flex justify-center items-center'>DISCOUNT</span>
-                                <span className='flex justify-center items-center'>C.G.S.T @2.5%</span>
-                                <span className='flex justify-center items-center'>S.G.S.T @2.5%</span>
+                                <span className='flex justify-center items-center'>C.G.S.T - 2.5%</span>
+                                <span className='flex justify-center items-center'>S.G.S.T - 2.5%</span>
                                 <span className='flex justify-center items-center'>NET AMOUNT</span>
+                                <span className='flex justify-center items-center'>DELIVERY CHARGE</span>
                                 <span className='flex justify-center items-center'>TOTAL</span>
                             </div>
                             <div className={`sale_history_detail rounded-sm border border-t-0 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'} overflow-auto scrollbar-hide h-[290px]`}>
                                 {loading && <span className='flex justify-center item-center my-2'><Spinner mode={props.mode} /></span>}
                                 {
                                     AllSaleHistory.length > 0 ? AllSaleHistory.map((val, index) => {
-                                        var localDate = new Date(val.created_at).toLocaleString("en-US", {
+                                        var localDate = new Date(val.created_at).toLocaleString("hi", {
                                             localeMatcher: "best fit",
                                         })
                                         return <ul key={index} className={`grid grid-cols-10 relative ${props.mode === 'black' ? 'text-black' : 'text-black'} ${index % 2 != 0 ? 'bg-gray-300' : 'bg-slate-100'} gap-2 p-2 text-[0.9rem]`}>
                                             <li className='flex gap-4 items-center col-span-2'>
-                                                <span className='font-bold'>{index + 1}</span>
+                                                <span className='font-bold'>{val.invoice_number_full}</span>
                                                 <div className="absolute mx-4
                             top-[-18px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[14px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                             before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%] before:z-20
                             hover:before:opacity-100" data-tip="Edit">
                                                     <Link to='/bill' className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link>
                                                 </div>
-                                                <div className="absolute 
+                                                <div className="absolute
                                         right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
                                         before:bg-blue-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
                                         hover:before:opacity-100" data-tip="Print">
@@ -251,7 +291,8 @@ const Dashboard = (props) => {
                                             <li className='flex justify-center items-center'>{val.discount}</li>
                                             <li className='flex justify-center items-center'>{val.cgst}</li>
                                             <li className='flex justify-center items-center'>{val.sgst}</li>
-                                            <li className='flex justify-center items-center'>{Math.round(((val.subtotal) - (val.subtotal) * (val.discount / 100)) * 100) / 100}</li>
+                                            <li className='flex justify-center items-center'>{val.net_amount}</li>
+                                            <li className='flex justify-center items-center'>{val.delivery_charge}</li>
                                             <li className='flex justify-center items-center'>{val.total}</li>
                                         </ul>
                                     }) : (loading === false && <span className='flex justify-center text-[0.9rem] items-center pt-3 text-amber-600'><TiWarning className='text-[1.2rem] mx-1 mb-1' /> No Data Found</span>)

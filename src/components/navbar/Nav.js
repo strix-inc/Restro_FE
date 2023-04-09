@@ -24,7 +24,7 @@ const Nav = (props) => {
                                 <small className='text-[1.4rem]'>
                                     {props.mode === 'black' ? <HiSun onClick={props.OnClickSun} /> : <HiMoon onClick={props.OnClickMoon} />}
                                 </small>
-                                <small className='text-[0.8rem] font-bold tracking-[1px]'>{props.mode === 'black' ? 'Dark' : 'Light'}</small>
+                                <small className='text-[0.8rem] font-bold tracking-[1px]'>{props.mode === 'black' ? 'Light' : 'Dark'}</small>
                             </span>
                             <div className={`logout flex flex-col justify-center items-center cursor-pointer ${props.mode === 'black' ? 'nav_bg text-red-600' : 'bg-white text-blue-500'} mt-4 font-bold`}>
                                 <span className='text-[1.3rem]'><MdLogout onClick={props.loggedOut} /></span>

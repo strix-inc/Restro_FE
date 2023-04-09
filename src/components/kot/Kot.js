@@ -85,7 +85,7 @@ const Kot = (props) => {
         ])
     }
 
-    // submit the form input 
+    // submit the form input
     const handleFormSubmit = async (event) => {
         event.preventDefault();
 
@@ -173,8 +173,8 @@ const Kot = (props) => {
                     <div className={`kot flex flex-col justify-center rounded-md p-[2rem] z-1 border border-t-slate-200 shadow-slate-400 shadow-sm ${props.mode === 'black' ? 'nav_bg text-white border-slate-700 border-t-slate-700' : 'bg-white'}`}>
                         <div className='grid grid-cols-2 mb-2'>
                             <div className="table-number flex flex-col col-span-1">
-                                <label htmlFor="table-no" className='font-medium text-[0.85rem] m-1'>Table NO.</label>
-                                <input type="text" name='TableNo' value={tableNo} placeholder='Enter Item Table No.' className={`rounded-md py-2 px-3 bg-transparent border w-[80%] text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleTableInput} required />
+                                <label htmlFor="table-no" className='font-medium text-[0.85rem] m-1'>Table</label>
+                                <input type="text" name='TableNo' value={tableNo} className={`rounded-md py-2 px-3 bg-transparent border w-[80%] text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleTableInput} required />
 
                             </div>
                             {/* <div className="plate-type flex flex-col col-span-1">

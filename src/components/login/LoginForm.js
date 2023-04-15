@@ -24,11 +24,11 @@ const LoginForm = (props) => {
 
     return (
         <>
-            <div className='bg-white/70 w-[370px] absolute left-[15%] z-10'>
+            <div className='bg-white/70 md:w-[370px] absolute left-[15%] z-10'>
                 <div className='col-span-1 px-4 py-2'>
                     <h1 className='Title text-[1.6rem] text-center font-bold mb-2 text-blue-500 '>Login</h1><hr className='w-[100px] border border-blue-500 m-auto' />
                     <span className='flex justify-center text-red-600 text-[0.9rem] text-center mt-3'>{props.matched}</span>
-                    <div className="PhoneNumber flex flex-col my-2 relative mt-12">
+                    <div className="PhoneNumber flex flex-col my-2 relative md:mt-12 mt-5">
                         <label htmlFor="Phone" className=' text-black font-semibold mx-2'>Phone Number <span className='text-red-500'>*</span></label>
                         <input type="number" name='username' value={props.contact} placeholder='Phone number' className={`rounded-md py-2 px-3 bg-transparent border ${props.matched === '' ? 'border-slate-400' : 'border-red-600'}`} onChange={handleContactInput} />
                     </div>
@@ -44,7 +44,7 @@ const LoginForm = (props) => {
                 </div>
                 <div className="NotUser flex justify-center items-center mt-2">
                     <p className='text-[1rem] mx-1'>New Member ?</p>
-                    <Link to={'/signUp'}><p className='text-[1.1rem] text-blue-500 mx-1 font-bold hover:text-red-600'>Sign up Now</p></Link>
+                    <Link to={'/signUp'}><p className='text-[0.8rem] md:text-[1.1rem] text-blue-500 mx-1 font-bold hover:text-red-600'>Sign up Now</p></Link>
                 </div>
             </div>
         </>

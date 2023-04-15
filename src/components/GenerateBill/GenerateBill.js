@@ -7,12 +7,14 @@ import axios from 'axios';
 const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
     var api = process.env.REACT_APP_BASE_URL
 
-    const [discount, setDiscount] = useState(0);
+    let [discount, setDiscount] = useState(0);
     const [Payment_mode, setPayment_mode] = useState('Cash');
     const [platform, setPlatform] = useState('restaurant');
     const [Platform_Id, setPlatform_Id] = useState("");
     const [Quantity_size_ByUser, setQuantity_size_ByUser] = useState('');
     const [DISH_ID, setDISH_ID] = useState('');
+    const [GetStaff, setGetStaff] = useState([]);
+    const [SetStaff, setSetStaff] = useState('');
     var total = 0;
 
     const [ALL_ORDER, setALL_ORDER] = useState([]);
@@ -130,6 +132,10 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
         setPayment_mode(event.target.value);
     }
 
+    const handleStaff = (event) => {
+        setSetStaff(event.target.value);
+    }
+
     const handleGenerateInvoice = () => {
 
         const headers = {
@@ -144,6 +150,7 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
             delivery_charge: 0,
             platform: Platform_Id,
             payment_type: Payment_mode,
+            staff: SetStaff
         }
 
         axios.put(`${api}/finance/invoice`, Invoice_Data, { headers: headers })
@@ -156,18 +163,34 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
 
     }
 
+    // api to get all the staff members !!
+    const GetAllStaff = () => {
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${localStorage.getItem('access')}`
+        }
+        axios.get(`${api}/kitchen/staff`, { headers: headers })
+            .then(val => {
+                setGetStaff(val.data.data);
+            }).catch(err => {
+                console.log(err);
+            })
+    }
+
+
     useEffect(() => {
         Get_AllPlatform();
         get();
+        GetAllStaff();
     }, [platform, All_Orders, dish])
 
     return (
         <>
-            <div className='w-[80%] ml-[20%]'>
-                <div className="setting relative w-full m-auto mt-[4rem] ">
-                    <h1 className={`text-[1.5rem] tracking-wide font-bold mx-6 py-2 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Billing</h1><hr />
-                    <form className="Billing-details w-[94%] m-auto mt-6">
-                        <div className="grid grid-cols-3 gap-4 my-3">
+            <div className='lg:w-[80%] lg:ml-[20%]'>
+                <div className="setting relative w-full m-auto mt-[3rem] lg:mt-[4rem] ">
+                    <h1 className={`text-[1.5rem] tracking-wide font-bold mx-3 lg:mx-6 lg:py-2 py-1 ${mode === 'black' ? 'text-white' : 'text-black'}`}>Billing</h1><hr />
+                    <form className="Billing-details w-[96%] lg:w-[94%] m-auto mt-6 mb-4 md:mb-0">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-2 my-3">
                             <input type="text" placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} defaultValue={'Cash'} readOnly />
                             <input type="text" defaultValue={'0'} placeholder='Contact' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             <select name="category" id="category" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} onChange={handlePlatform}>
@@ -175,45 +198,53 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
                                 <option value="zomato">Zomato</option>
                                 <option value="swiggy">Swiggy</option>
                             </select>
+                            <select name="category" id="category" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} onChange={handleStaff}>
+                                <option value="restaurant">Staff</option>
+                                {
+                                    GetStaff.map((val, ind) => {
+                                        return <option key={ind} value={val.id}>{val.name}</option>
+                                    })
+                                }
+                            </select>
                         </div>
                         <div className="item-list mt-4">
                             <h1 className={`font-bold text-[1.2rem] underline ${mode === 'black' ? 'text-white ' : 'text-black'}`}>List</h1>
-                            <div className={`heading grid grid-cols-10 ${mode === 'black' ? 'bg-blue-500 text-white' : 'bg-blue-200'}`}>
-                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Sl No.</span>
-                                <span className={`col-span-3 border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Name</span>
-                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Rate</span>
-                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Size</span>
-                                <span className={`col-span-2 border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Quantity</span>
-                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Amount</span>
-                                <span className={`border ${mode === 'black' ? 'border-slate-500' : 'border-slate-300'} flex justify-center items-center underline py-1 font-semibold`}>Delete</span>
+                            <div className={`table-wrapper scrollbar-hide ${mode === 'black' ? 'text-white' : 'text-black'}`}>
+                                <table>
+                                    <thead>
+                                        <th>Sl No.</th>
+                                        <th className='px-[8rem]'>Name</th>
+                                        <th>Rate</th>
+                                        <th>Size</th>
+                                        <th className='px-[5.8rem]'>Quantity</th>
+                                        <th>Amount</th>
+                                        <th>Delete</th>
+                                    </thead>
+                                    {
+                                        ALL_ORDER.map((val, idx) => {
+                                            total += val.cost * val.quantity
+                                            return <ItemList
+                                                mode={mode}
+                                                id={val.id}
+                                                dish_id={val.dish}
+                                                key={idx}
+                                                index={idx}
+                                                name={val.name}
+                                                size={val.size}
+                                                quantity={val.quantity}
+                                                cost={val.cost}
+                                                GeneratedBill={GeneratedBill}
+                                                setQuantity_size_ByUser={setQuantity_size_ByUser}
+                                                setDISH_ID={setDISH_ID}
+                                                ChangeQuantity={ChangeQuantity}
+                                            />
+                                        })
+                                    }
+                                </table>
                             </div>
-
-                            {/* item mapping */}
-                            {
-                                ALL_ORDER.map((val, idx) => {
-                                    total += val.cost * val.quantity
-                                    return <ItemList
-                                        mode={mode}
-                                        id={val.id}
-                                        dish_id={val.dish}
-                                        key={idx}
-                                        index={idx}
-                                        name={val.name}
-                                        size={val.size}
-                                        quantity={val.quantity}
-                                        cost={val.cost}
-                                        GeneratedBill={GeneratedBill}
-                                        setQuantity_size_ByUser={setQuantity_size_ByUser}
-                                        setDISH_ID={setDISH_ID}
-                                        ChangeQuantity={ChangeQuantity}
-                                    />
-                                })
-                            }
-                            {/* ----------- */}
-
                         </div>
 
-                        <div className="grid grid-cols-4 gap-4 mt-7">
+                        <div className="grid  md:grid-cols-2 lg:grid-cols-4 gap-4 mt-7">
                             <div className='flex flex-col'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Sub Total</label>
                                 <input type="text" ref={SubTotal_ref} value={total} className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
@@ -232,12 +263,12 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
                             </div>
                         </div>
 
-                        <div className="grid grid-cols-4 gap-4 mt-5">
+                        <div className="md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
                             <div className='flex flex-col'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>S.G.S.T @2.5%</label>
                                 <input type="text" ref={SGST_ref} value={Math.round((total - (total * (discount / 100))) * (2.5 / 100) * 100) / 100} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col my-2 md:my-0'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>C.G.S.T @2.5%</label>
                                 <input type="text" ref={CGST_ref} value={Math.round((total - (total * (discount / 100))) * (2.5 / 100) * 100) / 100} placeholder='Party name' className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`} readOnly />
                             </div>
@@ -247,12 +278,12 @@ const GenerateBill = ({ mode, OrderID, All_Orders, dish, GeneratedBill }) => {
                             </div>
 
                         </div>
-                        <div className="grid grid-cols-4 gap-4 mt-5">
+                        <div className="md:grid md:grid-cols-2 lg:grid-cols-4 gap-4 mt-5">
                             <div className='flex flex-col col-span-2'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Comments</label>
                                 <textarea name="textarea" id="textarea" cols="10" rows="2" placeholder='Leave a comment here ...' className={`p-2 text-[0.9rem] border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none`}></textarea>
                             </div>
-                            <div className='flex flex-col'>
+                            <div className='flex flex-col my-3 md:my-0'>
                                 <label className={`mx-1 text-[0.9rem] ${mode === 'black' ? 'text-slate-300' : 'text-slate-500'} font-semibold`}>Payment Type</label>
                                 <select name="category" id="category" className={`p-2 border rounded-md ${mode === 'black' ? 'text-white bg-transparent border-slate-600' : 'text-black'} outline-none text-[0.8rem] h-[80%]`} onChange={handlePaymentMode}>
                                     <option value="Cash">CASH</option>

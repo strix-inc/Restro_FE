@@ -12,19 +12,18 @@ const Form = (props) => {
     const Hidepassword = () => {
         setRevealPs(false);
     }
-
     return (
         <>
-            <div className='bg-white/70 absolute m-auto left-[12%] w-[450px]'>
-                <h1 className='Title text-[1.4rem] text-center mb-2 text-blue-500 mt-2 font-bold'>SignUp Your Detail</h1><hr className='w-[250px] border border-blue-500 m-auto' />
+            <div className='bg-white/70 absolute m-auto md:left-[12%] left-0 w-full md:w-[450px]'>
+                <h1 className='Title text-[1rem] md:text-[1.4rem] text-center md:mb-2 text-blue-500 mt-5 md:mt-2 font-bold'>SignUp Your Detail</h1><hr className='w-[250px] border border-blue-500 m-auto' />
                 <span className='flex justify-center text-red-500 text-[0.8rem]'>{props.error}</span>
                 <form className='col-span-1 px-10' onSubmit={props.SubmitForm}>
-                    <div className="RestaurantName flex flex-col mt-16 relative">
+                    <div className="RestaurantName flex flex-col mt-3 md:mt-16 relative">
                         <label htmlFor="Restaurant" className=' text-black font-semibold mx-2'>Restaurant Name <span className='text-red-500'>*</span></label>
                         <input type="text" name='restaurant_name' value={props.FormValue.restaurant_name} className={`rounded-md py-2 px-3 bg-transparent 
                     ${props.FormError.restaurant_name === "border-2 border-red-500" ? props.FormError.restaurant_name : 'border border-slate-400'}`} onChange={props.handleValidation} />
                     </div>
-                    <div className="PhoneNumber flex flex-col my-3 relative">
+                    <div className="PhoneNumber flex flex-col md:my-3 my-1 relative">
                         <label htmlFor="Phone" className=' text-black font-semibold mx-2'>Phone Number <span className='text-red-500'>*</span></label>
                         <input type="phone" name='contact' value={props.FormValue.contact} className={`rounded-md py-2 px-3 bg-transparent ${props.FormError.contact === "border-2 border-red-500" ? props.FormError.contact : 'border border-slate-400'}`} onChange={props.handleValidation} />
                     </div>

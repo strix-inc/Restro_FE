@@ -9,7 +9,7 @@ const AddedItem = (props) => {
                 <div className="Item-added px-4 py-2">
                     <h1 className='text-[1rem]'>Active Tables</h1>
                 </div>
-                <div className="showAddedItem grid grid-cols-3 gap-x-4 gap-y-4 p-4">
+                <div className="showAddedItem grid md:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-4 px-2 md:p-4 mb-4 md:mb-0">
                     <ActiveTable mode={props.mode} ActiveKot={props.ActiveKot} getkotTable={props.getkotTable} />
                 </div>
             </div>

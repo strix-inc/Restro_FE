@@ -20,6 +20,7 @@ const Kot = (props) => {
     const [DishID, setDishID] = useState('');
     const [rough, setRough] = useState(true);
     const [plate, setPlate] = useState('Full');
+    const [InvoiceID, setInvoiceID] = useState('');
 
     const [Ordered_DishName, setOrdered_DishName] = useState('');
     const [OrderTicket, setOrderTicket] = useState([]);
@@ -129,6 +130,7 @@ const Kot = (props) => {
         await axios.post(`${api}/finance/kot`, InputData, {
             headers: headers
         }).then(val => {
+            setInvoiceID(val.data.data.invoice);
             localStorage.setItem('kotID', val.data.data.id);
             if (val.status === 200) {
                 getkotTable();
@@ -165,28 +167,18 @@ const Kot = (props) => {
 
     return (
         <>
-            {OrderPage && <OrederedKT OrderTicket={OrderTicket} setOrderPage={setOrderPage} ActiveKot={ActiveKot} />}
+            {OrderPage && <OrederedKT OrderTicket={OrderTicket} setOrderPage={setOrderPage} ActiveKot={ActiveKot} InvoiceID={InvoiceID} />}
             {/* <Arrow /> */}
-            <div className={`flex flex-col w-[80%] ml-[20%]`}>
-                <form onSubmit={handleFormSubmit} className='relative w-[98%] m-auto top-[4rem]'>
-                    <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>KOT</h1>
-                    <div className={`kot flex flex-col justify-center rounded-md p-[2rem] z-1 border border-t-slate-200 shadow-slate-400 shadow-sm ${props.mode === 'black' ? 'nav_bg text-white border-slate-700 border-t-slate-700' : 'bg-white'}`}>
-                        <div className='grid grid-cols-2 mb-2'>
-                            <div className="table-number flex flex-col col-span-1">
+            <div className={`md:flex md:flex-col w-full lg:w-[80%] lg:ml-[20%]`}>
+                <form onSubmit={handleFormSubmit} className='relative w-full md:w-[98%] md:m-auto mt-[3rem] md:top-[4rem]'>
+                    <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${props.mode === 'black' ? 'text-white' : 'text-black'} z-0`}>KOT</h1>
+                    <div className={`kot md:flex md:flex-col justify-center rounded-md p-2 mx-2 md:mx-0 md:p-[2rem] z-1 border border-t-slate-200 shadow-slate-400 shadow-sm ${props.mode === 'black' ? 'nav_bg text-white border-slate-700 border-t-slate-700' : 'bg-white'}`}>
+                        <div className='grid md:grid-cols-2 md:mb-2 w-full'>
+                            <div className="table-number flex flex-col col-span-1 w-full">
                                 <label htmlFor="table-no" className='font-medium text-[0.85rem] m-1'>Table</label>
-                                <input type="text" name='TableNo' value={tableNo} className={`rounded-md py-2 px-3 bg-transparent border w-[80%] text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleTableInput} required />
+                                <input type="text" name='TableNo' value={tableNo} className={`rounded-sm py-2 px-3 bg-transparent border w-full md:w-[80%] text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleTableInput} required />
 
                             </div>
-                            {/* <div className="plate-type flex flex-col col-span-1">
-                                <label htmlFor="plate" className='font-medium text-[0.85rem] m-1'>Staff</label>
-                                <select name="Staff" className={`rounded-md py-[0.63rem] px-3 bg-transparent border cursor-pointer mr-[3rem] text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`}>
-                                    <option value=""></option>
-                                    <option value="x">x</option>
-                                    <option value="y">y</option>
-                                    <option value="z">z</option>
-                                    <option value="a">a</option>
-                                </select>
-                            </div> */}
                         </div>
                         {
                             itemsInput.map((datas, index) => {
@@ -206,10 +198,10 @@ const Kot = (props) => {
                                 />)
                             })
                         }
-                        <div className="add-Item-detail-table mt-8 flex justify-between">
-                            {itemsInput.length - 1 >= 0 && <button type='button' className={`w-[12rem] h-[2.5rem] bg-amber-400 text-black rounded-md text-[1rem] font-medium transition-all ease-in-out duration-500 hover:scale-110`} onClick={AddItemInput} >Add More</button>}
+                        <div className="add-Item-detail-table mt-8 flex justify-between gap-4 md:gap-0">
+                            {itemsInput.length - 1 >= 0 && <button type='button' className={`w-[12rem] h-[2.5rem] bg-amber-400 text-black rounded-sm text-[1rem] font-medium transition-all ease-in-out duration-500 hover:scale-110`} onClick={AddItemInput} >Add More</button>}
 
-                            <button type='submit' className='w-[12rem] h-[2.5rem] rounded-md text-[1rem] font-medium  bg-green-600 text-white transition-all ease-in-out duration-500 hover:scale-110 mr-[3rem]'>Save</button>
+                            <button type='submit' className='w-[12rem] h-[2.5rem] rounded-sm text-[1rem] font-medium  bg-green-600 text-white transition-all ease-in-out duration-500 hover:scale-110'>Save</button>
                         </div>
                     </div>
                 </form>

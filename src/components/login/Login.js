@@ -72,7 +72,7 @@ const Login = (props) => {
                     <div className='m-2'>
                         <img src={IMG} alt="Loading..." className='home w-[13rem] h-[5rem]' />
                     </div>
-                    <div className="LoginForm absolute top-[20%] w-full flex rounded-lg">
+                    <div className="LoginForm md:absolute top-[20%] w-full flex rounded-lg">
                         <LoginForm
                             contact={contact}
                             password={password}

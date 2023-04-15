@@ -64,13 +64,13 @@ const Item = (props) => {
 
     return (
         <>
-            <div className="Item-detail grid grid-cols-10 gap-x-4 my-2">
-                <div className="itemName flex flex-col col-span-4">
-                    <label htmlFor="itemName" className='text-[0.85rem] font-medium m-1'>Dish</label>
-                    <input type="text" name='name' autocomplete="off" value={props.rough === true ? wordEntered : ''} className={`rounded-md py-2 px-3 bg-transparent border text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleFilter} required />
+            <div className="Item-detail md:grid md:grid-cols-10 md:gap-x-4 my-2">
+                <div className="itemName flex flex-col md:col-span-4 w-full">
+                    <label htmlFor="itemName" className='text-[0.85rem] font-medium md:m-1'>Dish</label>
+                    <input type="text" name='name' autoComplete="off" value={props.rough === true ? wordEntered : ''} className={`rounded-sm py-2 px-3 bg-transparent border text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={handleFilter} required />
 
                     {suggestion && wordEntered && (
-                        <div className={`dataResult absolute mt-[4.5rem] ml-2 rounded-sm w-[350px] h-[400px] bg-white text-blue-800 border shadow-md shadow-black/50 overflow-auto scrollbar-hide z-10`}>
+                        <div className={`dataResult md:absolute md:mt-[4.5rem] md:ml-2 rounded-sm w-full h-[200px] md:w-[350px] md:h-[400px] bg-white text-blue-800 border shadow-md shadow-black/50 overflow-auto scrollbar-hide z-10`}>
                             {AllDishData.length > 0 ?
                                 AllDishData.slice(0, 15).map((val) => {
                                     return (
@@ -87,13 +87,13 @@ const Item = (props) => {
 
 
                 </div>
-                <div className="item-quantity flex flex-col col-span-3 z-5">
-                    <label htmlFor="quantity" className='text-[0.85rem] font-medium m-1'>Quantity</label>
-                    <input type="text" name='quantity' className={`rounded-md py-2 px-3 bg-transparent border text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={event => handleInputChange(event, props.Index)} required />
+                <div className="item-quantity flex flex-col col-span-3 my-2 z-5 md:my-0">
+                    <label htmlFor="quantity" className='text-[0.85rem] font-medium md:m-1'>Quantity</label>
+                    <input type="text" name='quantity' className={`rounded-sm py-2 px-3 bg-transparent border text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={event => handleInputChange(event, props.Index)} required />
                 </div>
                 <div className="plate-type flex flex-col col-span-2 z-5">
-                    <label htmlFor="plate" className='text-[0.85rem] font-medium m-1'>Plate</label>
-                    <select name="size" defaultValue={props.plate} className={`rounded-md py-2 px-3 bg-transparent border cursor-pointer text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={event => handleInputChange(event, props.Index)}>
+                    <label htmlFor="plate" className='text-[0.85rem] font-medium md:m-1'>Plate</label>
+                    <select name="size" defaultValue={props.plate} className={`rounded-sm py-2 px-3 bg-transparent border cursor-pointer text-[0.9rem] ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-300'}`} onChange={event => handleInputChange(event, props.Index)}>
                         {
                             props.DefinedPlate_size.map(plate => {
                                 return <option key={plate.id} value={plate.val}>{plate.plate_size}</option>
@@ -101,9 +101,9 @@ const Item = (props) => {
                         }
                     </select>
                 </div>
-                <div className="button flex justify-center flex-col col-span-1 z-5">
+                <div className="button flex justify-center flex-col col-span-1 z-5 mt-2 md:mt-0">
                     {props.itemsInput.length > 1 && <label htmlFor="button" className='text-[0.85rem] font-medium'>Delete</label>}
-                    {props.itemsInput.length > 1 && <button type='button' className={`w-[4rem] h-[2rem] bg-red-600 text-white rounded-md text-[1rem] transition-all ease-in-out duration-500 hover:scale-110 font-bold`} onClick={RemoveItemInput}>x</button>}
+                    {props.itemsInput.length > 1 && <button type='button' className={`w-[4rem] h-[2rem] bg-red-600 text-white rounded-sm text-[1rem] transition-all ease-in-out duration-500 hover:scale-110 font-bold`} onClick={RemoveItemInput}>x</button>}
                 </div>
             </div>
         </>

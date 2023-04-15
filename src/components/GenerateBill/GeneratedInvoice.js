@@ -71,7 +71,6 @@ const GeneratedInvoice = () => {
                                                 <span className='font-mono font-bold'>{localStorage.getItem('gstin') === 'null' ? '' : 'GSTIN:' + localStorage.getItem('gstin')}</span>
                                                 <span className='font-mono font-bold'>{localStorage.getItem('gstin') === 'null' ? '' : 'FSSAI:' + localStorage.getItem('fssai')}</span>
                                             </div>
-                                            <span className='font_mono font-bold'>HSN / SAC : 996331</span>
                                         </div>
                                     </div><hr />
                                 </>
@@ -83,6 +82,8 @@ const GeneratedInvoice = () => {
                                         <span className='ml-2'>Time : {localTime}</span>
                                         <span>Customer : {val.customer}</span>
                                         <span className='ml-2'>Mode : {val.payment_type}</span>
+                                        <span>Staff : {val.staff_name}</span>
+                                        <span className='font_mono font-bold ml-2'>HSN / SAC : 996331</span>
                                     </div><hr />
                                 </div>
                                 <div className="Table my-1">

@@ -59,7 +59,6 @@ const Dashboard = (props) => {
 
     var base_url = `${api}/finance/invoice?finalized=True`;
     const handleSearchSaleHistory = () => {
-        setAllSaleHistory('');
         setLoading(true);
 
 
@@ -190,13 +189,13 @@ const Dashboard = (props) => {
 
     return (
         <>
-            <div className='w-[80%] ml-[20%]'>
-                <div className="dashboard w-[98%] m-auto mt-[4rem]">
+            <div className='lg:w-[80%] lg:ml-[20%]'>
+                <div className="dashboard lg:w-[98%] lg:m-auto mt-[3rem] lg:mt-[4rem]">
                     <h1 className={`text-[1.5rem] font-bold mx-2 py-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>Dashboard</h1>
-                    <div className="records grid grid-cols-4 gap-x-4">
+                    <div className="records grid md:grid-cols-2 lg:grid-cols-4 md:gap-x-4 mx-2 lg:mx-0">
                         {
                             DsItem.map(item => {
-                                return <div key={item.id} className={`flex gap-3 my-2 rounded-lg px-4 ${props.mode === 'black' ? 'nav_bg border border-slate-500 shadow-lg shadow-slate-700 text-white' : 'bg-white shadow-md shadow-slate-300'} py-3`}>
+                                return <div key={item.id} className={`flex gap-3 md:my-2 my-1 rounded-lg px-4 ${props.mode === 'black' ? 'nav_bg border border-slate-500 shadow-lg shadow-slate-700 text-white' : 'bg-white shadow-md shadow-slate-300'} py-3`}>
                                     <div className={`flex justify-center items-center border rounded-full ${item.bg} h-[2.5rem] w-[2.5rem] my-auto`}>
                                         <span className='text-[1.3rem] text-black m-2'>{item.icons}</span>
                                     </div>
@@ -208,96 +207,95 @@ const Dashboard = (props) => {
                             })
                         }
                     </div>
-                    <div className="sale-history mt-4">
+                    <div className="sale-history mt-4 mx-2 lg:mx-0">
                         <h1 className={`text-[1.3rem] font-bold mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>Sale History</h1>
-                        <div className={`sale_history_table ${props.mode === 'black' ? 'nav_bg border border-slate-700' : 'bg-white'} p-2 rounded-lg mt-1`}>
-                            <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
-                                <div className='col-span-2 flex items-center gap-2'>
-                                    <label className='font-bold'>From</label>
-                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full p-1 my-3`} onChange={handleFromDate} />
+                        <div className={`sale_history_table ${props.mode === 'black' ? 'nav_bg border border-slate-700' : 'bg-white'} lg:px-2 pb-6 rounded-lg mt-1 `}>
+                            <div className='grid lg:grid-cols-5 w-full'>
+                                <div className='col-span-4'>
+                                    <div className={`past_sale_search grid lg:grid-cols-2 gap-2 lg:lg:gap-0 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
+                                        <div className='lg:flex items-center gap-2 pt-4 md:pt-0'>
+                                            <label className='font-bold'>From</label>
+                                            <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full p-1 lg:my-3`} onChange={handleFromDate} />
+                                        </div>
+                                        <div className='lg:flex items-center gap-2 lg:mx-4'>
+                                            <label className='font-bold'>To</label>
+                                            <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full p-1 lg:my-2`} onChange={handleToDate} />
+                                        </div>
+                                        <div className='lg:flex items-center gap-1'>
+                                            <label className='font-bold text-[1rem] leading-4'>Platform type</label>
+                                            <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full lg:w-[80%] p-1 lg:my-3`} onChange={handleOrderType} >
+                                                <option value="All">All</option>
+                                                <option value="Restaurant">Restaurant</option>
+                                                <option value="Zomato">Zomato</option>
+                                                <option value="Swiggy">Swiggy</option>
+                                            </select>
+                                        </div>
+                                        <div className='lg:flex items-center gap-1 lg:mx-4'>
+                                            <label className='font-bold text-[0.9rem] leading-4'>Payment type</label>
+                                            <select type="date" className={`flex justify-end border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full lg:w-[75%] p-1 lg:my-3`} onChange={handlePaymentType}>
+                                                <option value="All">All</option>
+                                                <option value="Cash">Cash</option>
+                                                <option value="Upi">UPI</option>
+                                                <option value="Card">Card</option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className='col-span-2 flex items-center gap-2'>
-                                    <label className='font-bold'>To</label>
-                                    <input type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-full p-1 my-3`} onChange={handleToDate} />
-                                </div>
-                                <div className='flex items-center'>
-                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] text-[1rem] bg-blue-500 rounded-sm text-white font-semibold border-none hover:bg-blue-600 flex justify-center items-center" onClick={() => handleDownload('download')}>
-                                        <span className='mr-2'><VscFilePdf /></span>
-                                        <span>Download report</span>
-                                    </button>
+                                <div className='col-span-1'>
+                                    <div className={`past_sale_search grid  lg:grid gap-4 lg:lg:gap-y-4 mx-2 mt-5 md:mt-3 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
+                                        <div className='lg:flex items-center w-full'>
+                                            <button type='button' className="btn col-span-1 w-full lg:w-[12rem] h-[2.5rem] rounded-sm text-white bg-blue-500 font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all ease-in-out duration-500 flex items-center justify-center" onClick={handleSearchSaleHistory}><span className='mr-2'><IoMdSearch className='text-[1.3rem]' /></span>Search</button>
+                                        </div>
+                                        <div className='flex items-center w-full'>
+                                            <button type='button' className="btn col-span-1 w-full lg:w-[12rem] h-[2.5rem] text-[1rem] rounded-sm text-blue-500 border-2 border-blue-500 font-semibold flex justify-center items-center" onClick={() => handleDownload('download')}>
+                                                <span className='mr-2'><VscFilePdf /></span>
+                                                <span>Download report</span>
+                                            </button>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-
-                            <div className={`past_sale_search grid grid-cols-5 gap-10 mx-2 ${props.mode === 'black' ? 'text-white' : 'text-black'}`}>
-                                <div className='col-span-2 flex justify-between items-center gap-1'>
-                                    <label className='font-bold text-[1rem] leading-4'>Platform type</label>
-                                    <select type="date" className={`border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-[80%] p-1 my-3`} onChange={handleOrderType} >
-                                        <option value="All">All</option>
-                                        <option value="Restaurant">Restaurant</option>
-                                        <option value="Zomato">Zomato</option>
-                                        <option value="Swiggy">Swiggy</option>
-                                    </select>
-                                </div>
-                                <div className='col-span-2 flex items-center gap-1'>
-                                    <label className='font-bold text-[0.9rem] leading-4'>Payment type</label>
-                                    <select type="date" className={`flex justify-end border border-slate-400 ${props.mode === 'black' ? 'bg-transparent focus:outline-none text-white cLogo' : 'bg-white'} rounded-sm w-[75%] p-1 my-3`} onChange={handlePaymentType}>
-                                        <option value="All">All</option>
-                                        <option value="Cash">Cash</option>
-                                        <option value="Upi">UPI</option>
-                                        <option value="Card">Card</option>
-                                    </select>
-                                </div>
-                                <div className='flex items-center'>
-                                    <button type='button' className="btn col-span-1 w-[12rem] h-[2.5rem] rounded-sm text-blue-600 font-semibold border-2 border-blue-600 hover:bg-blue-600 hover:text-white transition-all ease-in-out duration-500 flex items-center justify-center" onClick={handleSearchSaleHistory}><span className='mr-2'><IoMdSearch className='text-[1.3rem]' /></span>Search</button>
-                                </div>
+                            <div className={`table-wrapper scrollbar-hide mt-[1rem] ${AllSaleHistory.length > 0 ? 'h-[200px] md:h-[400px]' : ''} relative`}>
+                                <table className={`${props.mode === 'black' ? ' border-slate-600' : 'border-slate-300'} border`}>
+                                    <thead>
+                                        <th>INVOICE</th>
+                                        <th>DATE - TIME</th>
+                                        <th>SUB TOTAL</th>
+                                        <th>DISCOUNT</th>
+                                        <th>C.G.S.T - 2.5%</th>
+                                        <th>S.G.S.T - 2.5%</th>
+                                        <th>NET AMOUNT</th>
+                                        <th>DELIVERY CHARGE</th>
+                                        <th>TOTAL</th>
+                                        <th>EDIT</th>
+                                        <th>PRINT</th>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            AllSaleHistory.map((val, index) => {
+                                                var localDate = new Date(val.created_at).toLocaleString("hi", {
+                                                    localeMatcher: "best fit",
+                                                })
+                                                return <tr key={index} className={`${index % 2 != 0 ? 'bg-gray-300' : 'bg-slate-100'}`}>
+                                                    <td>{val.invoice_number_full}</td>
+                                                    <td>{localDate}</td>
+                                                    <td>{val.subtotal}</td>
+                                                    <td>{val.discount}</td>
+                                                    <td>{val.cgst}</td>
+                                                    <td>{val.sgst}</td>
+                                                    <td>{val.net_amount}</td>
+                                                    <td>{val.delivery_charge}</td>
+                                                    <td>{val.total}</td>
+                                                    <td><Link to='/bill' className='cursor-pointer text-amber-600 text-[1.1rem] flex justify-center'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link></td>
+                                                    <td><Link to='/salehistory' target="_blank" rel="noreferrer" className='cursor-pointer text-blue-500 text-[1rem] flex justify-center'><AiFillPrinter onClick={() => handleSaleHistory(val.id)} /></Link></td>
+                                                </tr>
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
                             </div>
-
-                            <div className={`grid grid-cols-10 gap-2 p-2 mt-4 font-semibold text-[0.8rem] ${props.mode === 'black' ? 'text-white bg-blue-500 border-slate-600' : 'text-black bg-blue-200 border border-slate-200 border-b-0'} z-5`}>
-                                <span className='col-span-2'>INVOICE</span>
-                                <span className='flex justify-center items-center col-span-2'>DATE - TIME</span>
-                                <span className='flex justify-center items-center'>SUB TOTAL</span>
-                                <span className='flex justify-center items-center'>DISCOUNT</span>
-                                <span className='flex justify-center items-center'>C.G.S.T - 2.5%</span>
-                                <span className='flex justify-center items-center'>S.G.S.T - 2.5%</span>
-                                <span className='flex justify-center items-center'>NET AMOUNT</span>
-                                <span className='flex justify-center items-center'>DELIVERY CHARGE</span>
-                                <span className='flex justify-center items-center'>TOTAL</span>
-                            </div>
-                            <div className={`sale_history_detail rounded-sm border border-t-0 ${props.mode === 'black' ? 'border-slate-600' : 'border-slate-200'} overflow-auto scrollbar-hide h-[290px]`}>
-                                {loading && <span className='flex justify-center item-center my-2'><Spinner mode={props.mode} /></span>}
-                                {
-                                    AllSaleHistory.length > 0 ? AllSaleHistory.map((val, index) => {
-                                        var localDate = new Date(val.created_at).toLocaleString("hi", {
-                                            localeMatcher: "best fit",
-                                        })
-                                        return <ul key={index} className={`grid grid-cols-10 relative ${props.mode === 'black' ? 'text-black' : 'text-black'} ${index % 2 != 0 ? 'bg-gray-300' : 'bg-slate-100'} gap-2 p-2 text-[0.9rem]`}>
-                                            <li className='flex gap-4 items-center col-span-2'>
-                                                <span className='font-bold'>{val.invoice_number_full}</span>
-                                                <div className="absolute mx-4
-                            top-[-18px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[-2.2rem] before:top-[14px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
-                            before:bg-amber-500 before:text-black before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all right-[92%] before:z-20
-                            hover:before:opacity-100" data-tip="Edit">
-                                                    <Link to='/bill' className='cursor-pointer text-amber-600 text-[1.1rem]'><MdEdit onClick={() => handleEditSaleHistory(val.id)} /></Link>
-                                                </div>
-                                                <div className="absolute
-                                        right-[89%] top-[-10px] before:content-[attr(data-tip)] before:relative before:px-2 before:py-0 before:left-[1rem] before:top-[8px] before:w-max before:max-w-xs before:-translate-x-1/2 before:-translate-y-full
-                                        before:bg-blue-500 before:text-white before:font-bold before:text-[0.7rem] before:rounded-sm before:opacity-0 before:transition-all
-                                        hover:before:opacity-100" data-tip="Print">
-                                                    <Link to='/salehistory' target="_blank" rel="noreferrer" className='cursor-pointer text-blue-500'><AiFillPrinter onClick={() => handleSaleHistory(val.id)} /></Link>
-                                                </div>
-                                            </li>
-                                            <li className='col-span-2 font-semibold'>{localDate}</li>
-                                            <li className='flex justify-center items-center'>{val.subtotal}</li>
-                                            <li className='flex justify-center items-center'>{val.discount}</li>
-                                            <li className='flex justify-center items-center'>{val.cgst}</li>
-                                            <li className='flex justify-center items-center'>{val.sgst}</li>
-                                            <li className='flex justify-center items-center'>{val.net_amount}</li>
-                                            <li className='flex justify-center items-center'>{val.delivery_charge}</li>
-                                            <li className='flex justify-center items-center'>{val.total}</li>
-                                        </ul>
-                                    }) : (loading === false && <span className='flex justify-center text-[0.9rem] items-center pt-3 text-amber-600'><TiWarning className='text-[1.2rem] mx-1 mb-1' /> No Data Found</span>)
-                                }
-                            </div>
+                            {loading && <span className='flex justify-center items-center py-2'><Spinner mode={props.mode} /></span>}
+                            {AllSaleHistory.length <= 0 && loading === false && <span className='flex justify-center items-center py-2 gap-1 text-amber-600'><TiWarning />No Data Found</span>}
                         </div>
                     </div>
                 </div>

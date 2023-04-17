@@ -10,7 +10,6 @@ import HomePage from './components/homepage/Index';
 import ItemMenu from './components/menu/ItemMenu';
 import Setting from './components/setting/Setting';
 import Bill from './components/GenerateBill/Bill';
-import AddStaff from './components/setting/AddStaff';
 import GeneratedInvoice from './components/GenerateBill/GeneratedInvoice';
 import SaleHistory from './components/dashboard/SaleHistory';
 import PrintKotHistory from './components/kot history/PrintKotHistory';
@@ -105,11 +104,6 @@ function App() {
           <Route path='setting' element={
             <PrivateRoute>
               <Setting mode={mode} />
-            </PrivateRoute>
-          } />
-          <Route path='addstaff' element={
-            <PrivateRoute>
-              <AddStaff mode={mode} />
             </PrivateRoute>
           } />
         </Routes>

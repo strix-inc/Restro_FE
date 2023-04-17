@@ -2,23 +2,10 @@ import React from 'react'
 
 
 const MenuCategory = ({ Data, handleCategoryFilter, active, mode }) => {
-    const UniqueCategory = [];
-
-    const CategoryUnique = Data.filter(element => {
-        const isDuplicate = UniqueCategory.includes(element.category_name);
-
-        if (!isDuplicate) {
-            UniqueCategory.push(element.category_name);
-
-            return true;
-        }
-
-        return false;
-    });
     return (
         <>
             {
-                CategoryUnique.map((val) => {
+                Data.map((val) => {
                     return <div key={val.id}>
                         <button className="relative category-list px-2 py-3 cursor-pointer w-full" onClick={() => handleCategoryFilter(val.category_name)}>
                             <div>

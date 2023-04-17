@@ -1,8 +1,9 @@
 import React, { useRef } from 'react'
 import ReactToPrint from 'react-to-print'
 import { BiPrinter } from 'react-icons/bi'
+import { Link } from 'react-router-dom'
 
-const OrederedKT = ({ OrderTicket, setOrderPage }) => {
+const OrederedKT = ({ OrderTicket, setOrderPage, InvoiceID }) => {
 
     // printing the ticket of Item ordered by the customer
     const printTicket = () => {
@@ -15,20 +16,20 @@ const OrederedKT = ({ OrderTicket, setOrderPage }) => {
         setOrderPage(false);
     }
 
+    const generateBill = () => {
+        localStorage.setItem("ActiveKotID", InvoiceID);
+    }
+
     return (
         <>
             <div className="login_conatiner mt-[4rem] fixed bg-white w-[100%] h-[100vh] overflow-hidden z-20 top-0 left-0 border-2 border-t-slate-500">
                 <ReactToPrint
-                    trigger={() => <button type='button' className='flex justify-center items-center text-[1.2rem] gap-2 w-[8rem] h-[2.5rem] bg-blue-500 absolute rounded-md right-0 m-4 text-white font-semibold'><BiPrinter /> Print</button>}
+                    trigger={() => <button type='button' className='flex justify-center items-center text-[1.2rem] gap-2 w-[8rem] h-[2.5rem] bg-blue-500 absolute rounded-sm left-0 top-[6rem] m-4 text-white font-semibold'><BiPrinter /> Print</button>}
                     content={() => ComponentRef.current}
                 />
                 <div className="back_button flex flex-col">
-                    <button className="absolute text-[0.9rem] text-center w-[6rem] h-[2rem] bg-blue-500 rounded-md left-4 top-4 text-white font-semibold" onClick={MoveBack}>Back</button>
-                    {/* {
-                        ActiveKot.map(val => {
-                            return <Link to='/bill' key={val.id} className="absolute text-[0.9rem] flex justify-center items-center w-[8rem] h-[2rem] bg-amber-500 rounded-md left-4 top-14 text-black font-semibold" onClick={() => GenerateBill(val.id)}>Generate Bill</Link>
-                        })
-                    } */}
+                    <button className="absolute text-[0.9rem] text-center w-[8rem] h-[2rem] bg-blue-500 rounded-sm left-4 top-4 text-white font-semibold" onClick={MoveBack}>Back</button>
+                    <Link to='/bill' className="absolute text-[0.9rem] flex justify-center items-center w-[8rem] h-[2.5rem] bg-green-600 rounded-sm left-4 top-14 text-white font-semibold" onClick={generateBill}>Generate Bill</Link>
                 </div>
                 <div className="Invoice w-[377.95px] m-auto mt-4" ref={ComponentRef} target="-blank">
                     {

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 
-const AddStaff = () => {
+const AddStaff = ({ setStaffSection }) => {
     var api = process.env.REACT_APP_BASE_URL
     const [StaffName, setStaffName] = useState('');
     const [StaffContact, setStaffContact] = useState('');
@@ -54,6 +54,9 @@ const AddStaff = () => {
                         progress: undefined,
                         theme: "dark",
                     });
+                    setTimeout(() => {
+                        setStaffSection(false);
+                    }, 1500);
                 }
             });
     }
@@ -82,7 +85,7 @@ const AddStaff = () => {
                         <input type="date" name='date_of_joining' className='mx-2 p-2 border border-slate-300 rounded-md' onChange={handleDateOfJoining} />
                     </div>
                     <div className="button flex justify-end items-center gap-4 mx-2 mt-6">
-                        <Link to={"/setting"} type='button' className='w-[8rem] h-[2.5rem] border-2 border-red-500 flex justify-center items-center rounded-md text-red-500'>Cancel</Link>
+                        <button type='button' className='w-[8rem] h-[2.5rem] border-2 border-red-500 flex justify-center items-center rounded-md text-red-500' onClick={() => setStaffSection(false)}>Cancel</button>
                         <button type='submit' className='w-[8rem] h-[2.5rem] hover:border-2 hover:border-green-600 flex justify-center items-center rounded-md hover:text-green-500 bg-green-600 hover:bg-black/50 text-white'>Save</button>
                     </div>
                 </form>

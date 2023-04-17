@@ -43,8 +43,8 @@ const TableOrederedItem = ({ mode, ActiveKot, getkotTable }) => {
     return (
         <>
             {
-                ActiveKot.map(val => {
-                    return <div key={val.id} className={`relative border rounded-md overflow-hidden ${mode === 'black' ? 'border-green-600 bg-transparent text-white' : 'border-slate-300 bg-blue-100'}`}>
+                ActiveKot.map((val, index) => {
+                    return <div key={index} className={`relative border rounded-md overflow-hidden ${mode === 'black' ? 'border-green-600 bg-transparent text-white' : 'border-slate-300 bg-blue-100'}`}>
                         <input type="checkbox" className='absolute top-0 inset-x-0 w-full h-10 opacity-0 peer' />
                         <div className='font-bold mx-3'>
                             <span className='flex items-center h-[40px]'>Table : {val.table}</span>

@@ -52,21 +52,23 @@ const ItemList = ({ id, dish_id, name, size, quantity, cost, index, GeneratedBil
 
     return (
         <>
-            <div className="heading grid grid-cols-10">
-                <span className={`border ${mode === 'black' ? 'border-slate-500 text-white' : 'border-slate-300'} flex justify-center items-center  py-1 font-semibold`}>{index + 1}</span>
-                <span className={`col-span-3 border ${mode === 'black' ? 'border-slate-500 text-white' : 'border-slate-300'} flex justify-center items-center  py-1 font-semibold`}>{name}</span>
-                <span className={`inWhite border ${mode === 'black' ? 'border-slate-500 text-white inBlack' : 'inWhite border-slate-300'} flex justify-center items-center  py-1 font-medium`}>{cost}</span>
-
-                {/* add dropdown if required here  */}
-                <span name="size" id="size" className={`inWhite flex justify-center items-center py-1 border ${mode === 'black' ? 'border-slate-500 text-white inBlack' : 'inWhite border-slate-300 text-black'} outline-none`}>{size}</span>
-                <div className={`col-span-2 border ${mode === 'black' ? 'border-slate-500 text-white' : 'border-slate-300'} flex justify-center items-center  py-1 font-medium`}>
-                    <button type='button' className={`w-6 h-4 bg-green-600 flex justify-center items-center text-white rounded-sm mx-4 font-bold cursor-pointer text-[0.8rem]`} onClick={() => Increase(dish_id)}>+</button>
-                    <span>{quantitySize <= 0 ? 1 : quantitySize}</span>
-                    <button type='button' className={`w-6 h-4 bg-red-500 flex justify-center items-center text-white rounded-sm mx-4 font-bold cursor-pointer text-[1.2rem]`} onClick={() => Decrease(dish_id)}>-</button>
-                </div>
-                <span className={`border ${mode === 'black' ? 'border-slate-500 text-white inBlack' : 'inWhite border-slate-300'} flex justify-center items-center py-1 font-medium`}>{quantitySize <= 0 ? cost * 1 : cost * quantitySize}</span>
-                <span className={`border ${mode === 'black' ? 'border-slate-500 text-white inBlack' : 'inWhite border-slate-300'} flex justify-center items-center`}><RiDeleteBin2Fill className={`text-red-500 text-[1rem] cursor-pointer`} onClick={() => DeleteDishFromList(id)} /></span>
-            </div>
+            <tbody>
+                <tr>
+                    <td>{index + 1}</td>
+                    <td>{name}</td>
+                    <td>{cost}</td>
+                    <td>{size}</td>
+                    <td>
+                        <div className={`col-span-2 flex justify-center items-center  py-1 font-medium`}>
+                            <button type='button' className={`w-6 h-4 bg-green-600 flex justify-center items-center text-white rounded-sm mx-4 font-bold cursor-pointer text-[0.8rem]`} onClick={() => Increase(dish_id)}>+</button>
+                            <span>{quantitySize <= 0 ? 1 : quantitySize}</span>
+                            <button type='button' className={`w-6 h-4 bg-red-500 flex justify-center items-center text-white rounded-sm mx-4 font-bold cursor-pointer text-[1.2rem]`} onClick={() => Decrease(dish_id)}>-</button>
+                        </div>
+                    </td>
+                    <td>{quantitySize <= 0 ? cost * 1 : cost * quantitySize}</td>
+                    <td><RiDeleteBin2Fill className={`text-red-500 text-[1rem] cursor-pointer flex justify-center ml-4`} onClick={() => DeleteDishFromList(id)} /></td>
+                </tr>
+            </tbody>
             <ToastContainer position="top-right"
                 autoClose={1000}
                 hideProgressBar

@@ -81,16 +81,20 @@ const EditDishItem = ({ setEditedDishForm, Dish, SubmitForm, GetAllDish, GetAllC
             <div className='fixed drop-shadow-sm bg-black/50 w-[100%] h-[100vh] overflow-hidden z-10 top-0 left-0'>
                 {
                     OneDish.map(val => {
-                        return <form key={val.id} className='absolute border border-slate-300 rounded-md w-[50%] m-auto p-3 left-[25%] top-[5rem] bg-white' onSubmit={SubmitForm}>
+                        return <form key={val.id} className='md:absolute border border-slate-300 rounded-md w-[96%] md:w-[50%] m-auto p-3 left-[25%] top-[5rem] bg-white mt-[3rem] md:mt-0' onSubmit={SubmitForm}>
                             {/* <div> */}
-                            <h1 className='text-[1.2rem] mb-6 mx-2 font-bold text-black'>Edit Dish</h1>
-                            <div className='absolute top-10 left-2 w-[97%] h-[2px] bg-blue-500'></div>
+                            <h1 className='text-[1.2rem] mb-2 md:mb-6 mx-2 font-bold text-black'>Edit Dish</h1>
+                            <div className='absolute top-[5.5rem] md:top-10 left-2 w-[86%] md:w-[97%] h-[2px] bg-blue-500'></div>
                             <span className='absolute top-2 right-3 text-[1.5rem] cursor-pointer ' onClick={() => setAdditemForm(false)}>
                                 <RxCross2 className='text-black bg-black' />
                             </span>
-                            <span className='absolute top-2 right-3 text-[1.5rem] cursor-pointer text-white' onClick={() => setEditedDishForm(false)}><RxCross2 /></span>
+                            <span className='absolute top-[3.2rem] md:top-2 right-3 text-[1.5rem] cursor-pointer text-white' onClick={() => setEditedDishForm(false)}><RxCross2 /></span>
                             {/* </div> */}
                             <div className='mt-2'>
+                                <div className='flex flex-col mt-1'>
+                                    <label htmlFor="category" className='text-[0.8rem] text-black font-bold mx-1'>DISH NAME <b className='text-red-500'>*</b></label>
+                                    <input type="text" name='name' value={EditDishName} placeholder='Enter Item name' className='border text-[0.9rem] p-2 rounded-sm border-slate-400 w-full bg-gray-100/40' onChange={EditItemName} />
+                                </div>
                                 <div className='flex flex-col '>
                                     <label htmlFor="category" className='text-[0.8rem] text-black font-bold mx-1'>CATEGORY NAME <b className='text-red-500'>*</b></label>
                                     <input list='category' name='category_name' value={EditedCategory} placeholder='Enter Category' className='border text-[0.9rem] p-2 rounded-sm border-slate-400 w-full bg-gray-100/40' onChange={EditCategory} />
@@ -102,10 +106,6 @@ const EditDishItem = ({ setEditedDishForm, Dish, SubmitForm, GetAllDish, GetAllC
                                             })
                                         }
                                     </datalist>
-                                </div>
-                                <div className='flex flex-col mt-1'>
-                                    <label htmlFor="category" className='text-[0.8rem] text-black font-bold mx-1'>DISH NAME <b className='text-red-500'>*</b></label>
-                                    <input type="text" name='name' value={EditDishName} placeholder='Enter Item name' className='border text-[0.9rem] p-2 rounded-sm border-slate-400 w-full bg-gray-100/40' onChange={EditItemName} />
                                 </div>
                                 <div className='flex flex-col mt-1'>
                                     <label htmlFor="category" className='text-[0.8rem] text-black font-bold mx-1'>DISH TYPE <b className='text-red-500'>*</b></label>

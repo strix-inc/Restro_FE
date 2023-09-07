@@ -62,6 +62,7 @@ const Dashboard = (props) => {
         setLoading(true);
 
 
+        // some comment 
         if (FromDate) {
             base_url += "&from=" + FromDate;
         }
